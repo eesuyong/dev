@@ -236,7 +236,14 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .tok.punct{ cursor:default }
 .tok.punct:hover{ background:none }
 .tok.sel{ background:var(--accent-soft) }
-.gaps .lyric .tok:not(.punct){ box-shadow:inset 0 -2px 0 var(--rule-2); margin-inline:.08em }
+.gaps .lyric .tok:not(.punct){ margin-inline:.08em }
+.gaps .lyric .tok:not(.punct) > .tok-jp{ box-shadow:inset 0 -2px 0 var(--rule-2) }
+.tok-kr{ display:none }
+.show-kr .kr-map{ line-height:1.2; row-gap:0 }
+.show-kr .kr-map .tok-jp{ line-height:2.1 }
+.no-furi.show-kr .kr-map .tok-jp{ line-height:1.6 }
+.show-kr .kr-map .tok{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:bottom; padding-bottom:2px }
+.show-kr .kr-map .tok-kr{ display:block; font-family:var(--font-ui); font-weight:500; font-size:.72rem; line-height:1.2; color:var(--ink-2); white-space:nowrap; letter-spacing:0 }
 .kr-line{ display:none; padding:0 16px; font-size:.88rem; line-height:1.5; color:var(--ink-2) }
 .show-kr .kr-line{ display:block }
 .romaji{ display:none; padding:0 16px; font:400 .82rem/1.5 var(--font-mono); color:var(--ink-3) }
@@ -267,6 +274,8 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .chip-m{ font-size:.72rem; color:var(--ink-3); max-width:8.5em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
 .tokpanel{ display:grid; gap:12px; margin-top:10px; padding:12px 14px 14px; background:var(--sheet-2); border:1px solid var(--rule); border-radius:10px }
 .tp-head{ display:flex; align-items:center; gap:4px }
+.tp-step{ display:inline-flex; gap:0; padding-inline:2px; border-inline:1px solid var(--rule) }
+.tp-step .ico:disabled{ opacity:.3; cursor:default }
 .tp-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.8rem; line-height:1.85; margin-right:auto; min-width:0 }
 .kv{ display:grid; grid-template-columns:4.2rem minmax(0,1fr); gap:6px 12px; font-size:.93rem }
 .kv dt{ color:var(--ink-3); font-size:.8rem; padding-top:.18em }
@@ -795,6 +804,25 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       out += (out && !it.glue && !/[\s「『（]$/.test(out) ? ' ' : '') + kanaToHangul(k, nx ? nx.k[0] : '', keep);
     });
     return out.replace(/\s+/g, ' ').trim();
+  }
+  /* 단어(토큰)마다 한글 발음. 줄 단위(lineHangul)와 같은 규칙을 쓰되, 단어 첫머리의 っ·ん·ー는 앞 단어 쪽으로 넘겨요(言って → 잇 테가 아니라 잇테처럼). */
+  function tokHangul(l) {
+    const it = l.toks.map((t) => {
+      if (t.kind === 'punct') return null;
+      const k = kanaOf(t), keepU = /^(보조)?동사/.test(t.p || '') && /う$/.test(k) && (!t.b || plainOf(t.b) === t.plain);
+      return { k: k, keep: keepU ? [k.length - 1] : null };
+    });
+    let prev = null;
+    it.forEach((x) => {
+      if (!x) return;
+      while (prev && /^[っんー]/.test(x.k) && x.k.length > 1) { prev.k += x.k[0]; x.k = x.k.slice(1); x.keep = x.keep && x.keep.map((n) => n - 1); }
+      prev = x;
+    });
+    return it.map((x, i) => {
+      if (!x) return '';
+      const nx = it.slice(i + 1).find(Boolean);
+      return kanaToHangul(x.k, nx ? nx.k[0] : '', x.keep);
+    });
   }
 
   /* ── 곡 데이터 준비 ────────────────────────────────────── */
@@ -1765,8 +1793,10 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<div class="line-head"><span class="ln">' + String(l.no).padStart(2, '0') + '</span>' + (l.rep ? '<span class="rep-tag">반복 · ' + String(l.rep).padStart(2, '0') + '</span>' : '') + '<span class="grow"></span>'
       + '<button class="ico" data-a="speak-line" aria-label="이 줄 듣기" title="이 줄 듣기">' + I.speaker + '</button>'
       + '<button class="check" data-a="toggle-line" data-lk="' + esc(l.key) + '" aria-pressed="' + done + '" aria-label="이해했어요" title="이해했어요">' + I.check + '</button></div>'
-      + '<p class="lyric" lang="ja">' + l.toks.map((t, i) => '<span class="tok' + (t.kind === 'punct' ? ' punct' : '') + '" data-i="' + i + '">' + renderJP(t.t) + '</span>').join('') + '</p>'
-      + '<p class="kr-line">' + esc(lineHangul(l)) + '</p>'
+      + (() => { const hg = l.kr ? null : tokHangul(l);
+        return '<p class="lyric' + (hg ? ' kr-map' : '') + '" lang="ja">' + l.toks.map((t, i) => '<span class="tok' + (t.kind === 'punct' ? ' punct' : '') + '" data-i="' + i + '"><span class="tok-jp">' + renderJP(t.t) + '</span>'
+          + (hg ? '<span class="tok-kr" lang="ko">' + esc(hg[i]) + '</span>' : '') + '</span>').join('') + '</p>'
+          + (hg ? '' : '<p class="kr-line">' + esc(lineHangul(l)) + '</p>'); })()
       + '<p class="romaji">' + esc(lineRomaji(l)) + '</p>'
       + (l.ko ? '<div class="ko-wrap" data-a="reveal"><p class="ko">' + rich(l.ko) + '</p><span class="ko-hint">눌러서 해석 보기</span></div>' : '')
       + '<button class="more" data-a="expand" aria-expanded="false">' + I.chev + '<span>자세히 보기</span></button>'
@@ -1782,10 +1812,13 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + (l.s ? dBlock('표기 포인트', '<p>' + rich(l.s) + '</p>') : '')
       + (l.c ? dBlock('문화·뉘앙스', '<p>' + rich(l.c) + '</p>', '', 'd-culture') : '');
   }
-  function tokPanelHTML(t) {
+  /* prev·next: 앞뒤 단어의 번호(문장 부호는 건너뜀). 없으면 null이라 버튼이 꺼져요. */
+  function tokPanelHTML(t, prev, next) {
     const why = t.w || whyAuto(t), on = t.isVocab && Progress.has('w', t.vkey);
     const extra = t.isVocab ? wordExtraHTML(t.vkey, t.b || t.t, new Map([[t.plain, t.t]])) : '';
-    return '<div class="tp-head"><span class="tp-jp" lang="ja">' + renderJP(t.t) + '</span>' + speakBtn(sayOf(t)) + '<button class="ico" data-a="tok-close" aria-label="닫기">' + I.close + '</button></div>'
+    return '<div class="tp-head"><span class="tp-jp" lang="ja">' + renderJP(t.t) + '</span>' + speakBtn(sayOf(t)) + '<span class="tp-step"><button class="ico" data-a="tok-step" data-i="' + prev + '" aria-label="앞 단어" title="앞 단어"' + (prev == null ? ' disabled' : '') + '><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'
+      + '<button class="ico" data-a="tok-step" data-i="' + next + '" aria-label="뒤 단어" title="뒤 단어"' + (next == null ? ' disabled' : '') + '><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></span>'
+      + '<button class="ico" data-a="tok-close" aria-label="닫기">' + I.close + '</button></div>'
       + '<dl class="kv"><dt>읽기</dt><dd><span class="jp" lang="ja">' + esc(t.reading) + '</span> · ' + esc(kanaToHangul(kanaOf(t))) + ' <span class="mono muted">' + esc(tokRomaji(t)) + '</span></dd>'
       + (t.m ? '<dt>뜻</dt><dd>' + rich(t.m) + '</dd>' : '')
       + (t.b && t.b !== t.t ? '<dt>사전형</dt><dd><span class="jp" lang="ja">' + renderJP(t.b) + '</span>' + (t.bm ? ' — ' + rich(t.bm) : '') + '</dd>' : '')
@@ -1891,7 +1924,8 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     li.dataset.sel = String(i);
     const tk = li.querySelector('.lyric .tok[data-i="' + i + '"]'); if (tk) tk.classList.add('sel');
     const ch = li.querySelector('.chip[data-i="' + i + '"]'); if (ch) { ch.classList.add('sel'); ch.setAttribute('aria-pressed', 'true'); }
-    const panel = li.querySelector('.tokpanel'); panel.innerHTML = tokPanelHTML(l.toks[i]); panel.hidden = false;
+    const words = l.toks.map((t, j) => (t.kind === 'punct' ? -1 : j)).filter((j) => j >= 0), at = words.indexOf(i);
+    const panel = li.querySelector('.tokpanel'); panel.innerHTML = tokPanelHTML(l.toks[i], at > 0 ? words[at - 1] : null, at < words.length - 1 ? words[at + 1] : null); panel.hidden = false;
     const r = panel.getBoundingClientRect();
     if (r.bottom > window.innerHeight - 70 || r.top < 0) panel.scrollIntoView({ block: 'nearest', behavior: smooth() });
   }
@@ -2028,6 +2062,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         el.textContent = state.allOpen ? '모두 접기' : '모두 펼치기'; break;
       case 'tok': selectTok(li, +el.dataset.i); break;
       case 'tok-close': clearSel(li); break;
+      case 'tok-step': selectTok(li, +el.dataset.i); break;
       case 'reveal': if (ROOT.classList.contains('hide-ko')) el.classList.toggle('revealed'); break;
       case 'speak': speak(el.dataset.say); break;
       case 'speak-line': { const l = lineOf(li); if (l) speak(l.toks.map(sayOf).join('')); break; }
