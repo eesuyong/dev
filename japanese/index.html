@@ -1,0 +1,2089 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>일본어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Klee+One:wght@400;600&display=swap">
+<style>
+/* Layout: 공책 — 데스크톱은 왼쪽 목차(곡·가이드) + 본문, 휴대폰은 상단 바 + 하단 탭. 가사 한 줄 = 노트 카드 한 장.
+   색은 UI가 아니라 '문자 종류'에 쓴다: 한자 紅 · 히라가나 藍 · 가타카나 若竹 · 영어 紫. UI 강조는 山吹 하나. */
+:root{
+  --paper:#F3F4F7; --paper-glass:rgba(243,244,247,.9); --sheet:#FFFFFF; --sheet-2:#F7F8FA;
+  --ink:#1A2030; --ink-2:#465066; --ink-3:#737D92; --rule:#E2E5EB; --rule-2:#CBD1DB;
+  --accent:#A8640F; --accent-ink:#FFFFFF; --accent-soft:#F6EAD6;
+  --kanji:#B0303A; --hira:#24498F; --kata:#17704B; --latin:#6E3F9C;
+  --kanji-tint:#FBECEE; --hira-tint:#EAF0FA; --kata-tint:#E6F3EC; --latin-tint:#F2EBF8;
+  --scrim:rgba(14,18,28,.42); --shadow:0 12px 40px rgba(20,28,45,.16);
+  --font-jp:"Klee One","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+  --font-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --lyric:1.55rem; --topbar-h:56px; --gutter:16px; --radius:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12151C; --paper-glass:rgba(18,21,28,.9); --sheet:#1A1F29; --sheet-2:#151922;
+    --ink:#E7EAF0; --ink-2:#B3BACA; --ink-3:#8A92A5; --rule:#2A303D; --rule-2:#3A4252;
+    --accent:#E2A34A; --accent-ink:#1A1206; --accent-soft:#3A2C17;
+    --kanji:#FF8E93; --hira:#93B4F5; --kata:#6FD4A6; --latin:#CDA6F0;
+    --kanji-tint:#3A2125; --hira-tint:#1E2A42; --kata-tint:#183329; --latin-tint:#2E2340;
+    --scrim:rgba(0,0,0,.6); --shadow:0 12px 40px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#12151C; --paper-glass:rgba(18,21,28,.9); --sheet:#1A1F29; --sheet-2:#151922;
+  --ink:#E7EAF0; --ink-2:#B3BACA; --ink-3:#8A92A5; --rule:#2A303D; --rule-2:#3A4252;
+  --accent:#E2A34A; --accent-ink:#1A1206; --accent-soft:#3A2C17;
+  --kanji:#FF8E93; --hira:#93B4F5; --kata:#6FD4A6; --latin:#CDA6F0;
+  --kanji-tint:#3A2125; --hira-tint:#1E2A42; --kata-tint:#183329; --latin-tint:#2E2340;
+  --scrim:rgba(0,0,0,.6); --shadow:0 12px 40px rgba(0,0,0,.5);
+  color-scheme:dark;
+}
+:root[data-size="s"]{ --lyric:1.3rem }
+:root[data-size="l"]{ --lyric:1.85rem }
+:root[data-size="xl"]{ --lyric:2.2rem }
+
+*,*::before,*::after{ box-sizing:border-box }
+[hidden]{ display:none !important }
+body{ background:var(--paper); color:var(--ink); font:400 1rem/1.65 var(--font-ui); -webkit-text-size-adjust:100% }
+button{ font:inherit; color:inherit; background:none; border:0; padding:0; margin:0; cursor:pointer; text-align:inherit }
+a{ color:inherit }
+h1,h2,h3,h4{ margin:0; text-wrap:balance }
+p,ul,ol,dl{ margin:0 }
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:6px }
+.jp{ font-family:var(--font-jp) }
+.mono{ font-family:var(--font-mono) }
+.muted{ color:var(--ink-3) }
+.grow{ flex:1 }
+.eyebrow{ font:600 .74rem/1.3 var(--font-ui); letter-spacing:.06em; color:var(--ink-3) }
+
+/* 문자 색 */
+.colorize .s-k,.force-color .s-k{ color:var(--kanji) }
+.colorize .s-h,.force-color .s-h{ color:var(--hira) }
+.colorize .s-a,.force-color .s-a{ color:var(--kata) }
+.colorize .s-l,.force-color .s-l{ color:var(--latin) }
+ruby{ ruby-position:over }
+rt{ font-family:var(--font-jp); font-size:.5em; font-weight:400; color:var(--ink-3); letter-spacing:0 }
+ruby.sp .rb{ text-decoration:underline dashed var(--accent) 1.5px; text-underline-offset:.3em }
+ruby.sp rt{ color:var(--accent) }
+.no-furi .lyric rt,.no-furi .chip rt{ display:none }
+
+/* 뼈대 */
+.shell{ display:grid; grid-template-columns:minmax(0,1fr); min-height:100vh }
+.side{ display:none }
+.col{ min-width:0; display:flex; flex-direction:column }
+.topbar{ position:sticky; top:env(safe-area-inset-top,0px); z-index:20; height:var(--topbar-h); display:flex; align-items:center; gap:12px; padding-inline:var(--gutter); background:var(--paper-glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-bottom:1px solid var(--rule) }
+.brand{ display:flex; align-items:baseline; gap:8px }
+.brand-ko{ font-weight:700; letter-spacing:-.01em }
+.view{ width:100%; max-width:1120px; margin-inline:auto; padding-inline:var(--gutter); padding-block:20px calc(100px + env(safe-area-inset-bottom,0px)); min-width:0 }
+.nav-glyph{ display:inline-grid; place-items:center; width:18px; height:18px; font-family:var(--font-jp); font-weight:600; font-size:1rem; line-height:1 }
+.nav-glyph.big{ width:22px; height:22px; font-size:1.2rem }
+.tabbar{ position:fixed; left:0; right:0; bottom:0; z-index:30; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); background:var(--sheet); border-top:1px solid var(--rule); padding-bottom:env(safe-area-inset-bottom,0px) }
+.tabbar button{ display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 0 7px; font-size:.7rem; color:var(--ink-3); text-align:center }
+.tabbar button[aria-current="page"]{ color:var(--ink); font-weight:600 }
+.ico{ flex:none; width:36px; height:36px; display:inline-grid; place-items:center; border-radius:8px; color:var(--ink-3) }
+.ico:hover{ background:var(--sheet-2); color:var(--ink) }
+.hist{ flex:none; display:flex; gap:2px; margin-left:-8px }
+.hist .ico{ color:var(--ink-2) }
+.hist .ico:disabled{ opacity:.3; cursor:default; background:none; color:var(--ink-3) }
+.no-tts [data-a="speak"],.no-tts [data-a="speak-line"],.no-tts [data-tts]{ display:none }
+html:not(.can-dl) [data-dl]{ display:none }
+
+@media (min-width:960px){
+  :root{ --topbar-h:0px; --gutter:44px }
+  .shell{ grid-template-columns:256px minmax(0,1fr) }
+  .side{ display:flex; flex-direction:column; gap:26px; position:sticky; top:env(safe-area-inset-top,0px); height:100vh; overflow-y:auto; padding:28px 18px; border-right:1px solid var(--rule); background:var(--sheet) }
+  .topbar,.tabbar{ display:none }
+  .view{ padding-block:40px 80px }
+  .side .hist{ margin:-12px 0 -14px 2px }
+}
+.side-brand{ display:grid; gap:2px; padding-inline:10px }
+.side-brand .brand-ko{ font-size:1.12rem }
+.side-nav{ display:grid; gap:2px }
+.nav-item{ width:100%; display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:8px; color:var(--ink-2); font-weight:500; font-size:.95rem; text-decoration:none }
+.nav-item:hover{ background:var(--sheet-2); color:var(--ink) }
+.nav-item[aria-current="page"]{ background:var(--paper); color:var(--ink); font-weight:600 }
+.side-h{ padding-inline:10px; margin-bottom:4px }
+.song-item .si-t{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.si-tag{ flex:none; font-size:.7rem; color:var(--ink-3); border:1px solid var(--rule); border-radius:999px; padding:1px 7px }
+.song-item.soon{ color:var(--ink-3); cursor:default }
+.song-item.soon:hover{ background:none; color:var(--ink-3) }
+.side-foot{ margin-top:auto; display:grid; gap:6px }
+.side-sync{ display:flex; align-items:center; gap:8px; padding-inline:10px; font-size:.76rem; color:var(--ink-3) }
+.side-sync::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--rule-2) }
+.side-sync[data-on="1"]::before{ background:var(--kata) }
+
+/* 공통 블록 */
+.block{ display:grid; gap:16px; padding-block:32px }
+.block + .block{ border-top:1px solid var(--rule) }
+.block-head{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 16px }
+.h2{ font-size:1.3rem; font-weight:700; letter-spacing:-.01em }
+.page-head{ display:grid; gap:10px; padding-bottom:24px; border-bottom:1px solid var(--rule) }
+.page-title{ font-size:clamp(1.8rem,5vw,2.6rem); font-weight:700; letter-spacing:-.02em; line-height:1.2 }
+.lede{ max-width:40rem; color:var(--ink-2); font-size:1.03rem }
+.empty{ padding:32px 16px; text-align:center; color:var(--ink-3); border:1px dashed var(--rule-2); border-radius:12px; list-style:none }
+.tg{ flex:none; display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; border:1px solid var(--rule-2); background:var(--sheet); font-size:.85rem; color:var(--ink-2); white-space:nowrap }
+.tg:hover{ border-color:var(--ink-3); color:var(--ink) }
+.tg[aria-pressed="true"]{ background:var(--ink); color:var(--paper); border-color:var(--ink) }
+.tg.sm{ padding:4px 10px; font-size:.8rem }
+.tg-sep{ flex:none; width:1px; height:20px; background:var(--rule-2); margin-inline:2px }
+.aside-box{ display:grid; gap:4px; padding:14px 16px; border-radius:var(--radius); background:var(--sheet-2); border:1px dashed var(--rule-2); font-size:.93rem; color:var(--ink-2) }
+.ref{ font-size:.76rem; color:var(--ink-2); text-decoration:underline; text-underline-offset:2px; text-decoration-color:var(--rule-2) }
+.ref:hover{ color:var(--ink); text-decoration-color:currentColor }
+
+/* 홈 */
+.hero{ display:grid; gap:18px; padding-block:8px 32px }
+.hero-title{ font-weight:700; font-size:clamp(2rem,7.5vw,3.6rem); line-height:1.3; letter-spacing:-.01em }
+.legend{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px }
+@media (min-width:640px){ .legend{ grid-template-columns:repeat(4,minmax(0,1fr)) } }
+.lg{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--radius); background:var(--sheet); border:1px solid var(--rule); min-width:0 }
+.lg-ch{ flex:none; font-family:var(--font-jp); font-weight:600; font-size:1.9rem; line-height:1; width:1.15em; text-align:center }
+.lg-k .lg-ch{ color:var(--kanji) } .lg-h .lg-ch{ color:var(--hira) } .lg-a .lg-ch{ color:var(--kata) } .lg-l .lg-ch{ color:var(--latin) }
+.lg b{ display:block; font-size:.95rem }
+.lg small{ display:block; color:var(--ink-3); font-size:.78rem; line-height:1.4 }
+.resume{ justify-self:start; display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; background:var(--accent-soft); color:var(--ink); font-size:.9rem; font-weight:500 }
+.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:14px }
+.song-card{ display:grid; align-content:start; gap:10px; padding:18px; border-radius:12px; background:var(--sheet); border:1px solid var(--rule); text-decoration:none; transition:border-color .15s,transform .15s }
+a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
+.song-card.soon{ background:transparent; border-style:dashed }
+.sc-top{ display:flex; justify-content:space-between; align-items:center; gap:8px }
+.pill{ font:500 .72rem/1 var(--font-ui); padding:5px 9px; border-radius:999px; background:var(--sheet-2); color:var(--ink-2); border:1px solid var(--rule); white-space:nowrap }
+.pill.ready{ background:var(--kata-tint); color:var(--kata); border-color:transparent }
+.pill.demo{ background:var(--accent-soft); color:var(--accent); border-color:transparent }
+.sc-meta{ font-size:.76rem; color:var(--ink-3); text-align:right }
+.sc-title{ font-size:1.45rem; font-weight:700; letter-spacing:-.01em; line-height:1.25 }
+.sc-sub{ color:var(--ink-2); font-size:.9rem }
+.prog{ display:grid; gap:6px }
+.prog-bar{ height:6px; border-radius:99px; background:var(--rule); overflow:hidden }
+.prog-bar i{ display:block; height:100%; width:0; background:var(--accent); border-radius:inherit; transition:width .3s }
+.prog-txt{ display:flex; justify-content:space-between; gap:8px; font:400 .74rem/1.2 var(--font-mono); color:var(--ink-3); font-variant-numeric:tabular-nums }
+.steps{ list-style:none; padding:0; display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); counter-reset:step }
+.steps li{ counter-increment:step; display:grid; align-content:start; gap:6px; padding-top:14px; border-top:2px solid var(--ink) }
+.steps li::before{ content:counter(step,decimal-leading-zero); font:500 .8rem var(--font-mono); color:var(--accent) }
+.steps b{ font-size:1rem }
+.steps p{ font-size:.9rem; color:var(--ink-2) }
+.band{ display:grid; gap:28px }
+@media (min-width:860px){ .band{ grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) } }
+.band-text{ display:grid; align-content:start; gap:14px }
+.band-text > p{ color:var(--ink-2) }
+.members{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px }
+.member{ display:grid; padding:10px 12px; background:var(--sheet); border:1px solid var(--rule); border-radius:8px; min-width:0 }
+.member .jp{ font-weight:600; font-size:1.05rem; line-height:1.9 }
+.member small{ color:var(--ink-3); font-size:.78rem }
+.timeline{ list-style:none; padding:0; display:grid; margin-top:8px }
+.timeline li{ display:grid; grid-template-columns:3.2rem minmax(0,1fr); gap:12px; padding:10px 0; border-bottom:1px solid var(--rule) }
+.tl-y{ font:500 .85rem/1.6 var(--font-mono); color:var(--accent); font-variant-numeric:tabular-nums }
+.tl-t{ font-weight:600 }
+.tl-d{ display:block; font-size:.84rem; color:var(--ink-2) }
+
+/* 곡 페이지 */
+.song-head{ display:grid; gap:8px; padding-bottom:22px }
+.back{ display:inline-flex; align-items:center; gap:4px; font-size:.85rem; color:var(--ink-3); width:max-content; margin-bottom:6px }
+.back:hover{ color:var(--ink) }
+.song-title{ font-size:clamp(2rem,6vw,3rem); font-weight:700; letter-spacing:-.02em; line-height:1.15 }
+.song-sub{ color:var(--ink-2); max-width:40rem }
+.song-head .prog{ max-width:420px; margin-top:8px }
+.tabs{ display:flex; gap:2px; border-bottom:1px solid var(--rule); overflow-x:auto; scrollbar-width:none; margin-bottom:6px }
+.tabs::-webkit-scrollbar{ display:none }
+.tab{ flex:none; padding:10px 14px; color:var(--ink-3); font-weight:500; border-bottom:2px solid transparent; margin-bottom:-1px; text-decoration:none }
+.tab:hover{ color:var(--ink) }
+.tab[aria-selected="true"]{ color:var(--ink); border-color:var(--ink); font-weight:600 }
+.tab .cnt{ font:400 .72rem var(--font-mono); color:var(--ink-3); margin-left:5px }
+.toolbar{ position:sticky; top:calc(env(safe-area-inset-top,0px) + var(--topbar-h)); z-index:10; display:flex; align-items:center; gap:6px; overflow-x:auto; scrollbar-width:none; margin-inline:calc(-1 * var(--gutter)); padding:10px var(--gutter); background:var(--paper-glass); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px) }
+.toolbar::-webkit-scrollbar{ display:none }
+.song-layout{ display:grid; gap:32px; padding-top:10px }
+.lines-col{ min-width:0; max-width:780px }
+.rail{ display:none }
+@media (min-width:1240px){
+  .song-layout{ grid-template-columns:minmax(0,1fr) 220px }
+  .rail{ display:block; position:sticky; top:72px; align-self:start }
+  .sec-jump{ display:none }
+}
+.rail-box{ display:grid; gap:8px; padding-bottom:18px; margin-bottom:18px; border-bottom:1px solid var(--rule) }
+.rail-link{ display:flex; justify-content:space-between; gap:8px; padding:3px 0; font-size:.88rem; color:var(--ink-2) }
+.rail-link:hover{ color:var(--ink) }
+.rail-link .mono{ font-size:.75rem; color:var(--ink-3) }
+.legend-inline{ display:none; flex-wrap:wrap; gap:4px 14px; font-size:.78rem; color:var(--ink-3); margin-bottom:14px }
+.colorize .legend-inline{ display:flex }
+.legend-inline span{ display:inline-flex; align-items:center; gap:6px }
+.legend-inline span::before{ content:""; width:.62em; height:.62em; border-radius:2px; background:var(--rule-2) }
+.legend-inline .li-k::before{ background:var(--kanji) } .legend-inline .li-h::before{ background:var(--hira) }
+.legend-inline .li-a::before{ background:var(--kata) } .legend-inline .li-l::before{ background:var(--latin) }
+.legend-inline .li-sp::before{ width:1.1em; height:0; border-radius:0; background:none; border-bottom:1.5px dashed var(--accent) }
+.sec-jump{ display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; margin-bottom:16px }
+.sec{ display:grid; gap:10px; margin-bottom:30px; scroll-margin-top:calc(var(--topbar-h) + 64px) }
+.sec.cont{ margin-top:-12px }
+.sec-h{ display:flex; align-items:center; gap:10px; font-size:.8rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3); padding-block:4px }
+.sec-h::after{ content:""; flex:1; height:1px; background:var(--rule) }
+.sec-note{ font-size:.9rem; color:var(--ink-2) }
+.line-list{ list-style:none; padding:0; display:grid; gap:10px }
+.line{ background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius); scroll-margin-top:calc(var(--topbar-h) + 72px) }
+.line.open{ border-color:var(--rule-2) }
+.line.flash{ animation:flash 1.6s ease-out }
+@keyframes flash{ 0%,30%{ box-shadow:0 0 0 3px var(--accent) } 100%{ box-shadow:0 0 0 0 transparent } }
+.line-head{ display:flex; align-items:center; gap:4px; padding:8px 10px 0 16px }
+.ln{ font:500 .75rem var(--font-mono); color:var(--ink-3); font-variant-numeric:tabular-nums }
+.line.done .ln{ color:var(--accent) }
+.check{ flex:none; width:30px; height:30px; display:inline-grid; place-items:center; border-radius:50%; border:1.5px solid var(--rule-2); color:transparent; margin-left:4px }
+.check:hover{ border-color:var(--accent); color:var(--accent) }
+.check[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink) }
+.lyric{ font-family:var(--font-jp); font-weight:600; font-size:var(--lyric); line-height:2.1; padding:0 16px; line-break:strict; overflow-wrap:anywhere }
+.no-furi .lyric{ line-height:1.75; padding-block:4px }
+.tok{ cursor:pointer; border-radius:4px; transition:background-color .12s }
+.tok:hover{ background:var(--sheet-2) }
+.tok.punct{ cursor:default }
+.tok.punct:hover{ background:none }
+.tok.sel{ background:var(--accent-soft) }
+.gaps .lyric .tok:not(.punct){ box-shadow:inset 0 -2px 0 var(--rule-2); margin-inline:.08em }
+.kr-line{ display:none; padding:0 16px; font-size:.88rem; line-height:1.5; color:var(--ink-2) }
+.show-kr .kr-line{ display:block }
+.romaji{ display:none; padding:0 16px; font:400 .82rem/1.5 var(--font-mono); color:var(--ink-3) }
+.show-romaji .romaji{ display:block }
+.rep-tag{ margin-left:8px; padding:1px 8px; border:1px solid var(--rule); border-radius:999px; font-size:.7rem; color:var(--ink-3); font-variant-numeric:tabular-nums }
+.rep-note{ font-size:.88rem; color:var(--ink-2); padding:10px 12px; border-radius:8px; background:var(--sheet-2) }
+.ko-wrap{ position:relative; padding:6px 16px 0 }
+.ko-hint{ display:none }
+.hide-ko .ko-wrap:not(.revealed){ cursor:pointer }
+.hide-ko .ko-wrap:not(.revealed) .ko{ filter:blur(6px); opacity:.5; -webkit-user-select:none; user-select:none }
+.hide-ko .ko-wrap:not(.revealed) .ko-hint{ position:absolute; inset:6px 16px 0; display:flex; align-items:center; font-size:.84rem; font-weight:600; color:var(--ink-2) }
+.more{ display:inline-flex; align-items:center; gap:6px; margin:6px 8px 8px; padding:6px 8px; font-size:.85rem; color:var(--ink-2); border-radius:6px }
+.more:hover{ background:var(--sheet-2); color:var(--ink) }
+.more svg{ transition:transform .2s }
+.line.open .more svg{ transform:rotate(180deg) }
+.detail{ display:grid; gap:20px; padding:16px; border-top:1px dashed var(--rule-2) }
+.d-label{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 8px; font-size:.76rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3); margin-bottom:8px }
+.d-label small{ font-weight:400; letter-spacing:0 }
+.d-block p{ font-size:.95rem }
+.lit{ color:var(--ink-2) }
+.d-culture{ padding:12px 14px; border-radius:8px; background:var(--sheet-2) }
+.chips{ display:flex; flex-wrap:wrap; gap:6px }
+.chip{ display:inline-grid; justify-items:center; padding:2px 10px 6px; border:1px solid var(--rule-2); border-radius:8px; background:var(--sheet); min-width:2.6rem; text-align:center }
+.chip:hover{ border-color:var(--ink-3) }
+.chip.func{ background:var(--sheet-2); border-style:dashed }
+.chip.sel{ border-color:var(--ink); box-shadow:0 0 0 1px var(--ink) }
+.chip-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.15rem; line-height:1.95 }
+.chip-m{ font-size:.72rem; color:var(--ink-3); max-width:8.5em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.tokpanel{ display:grid; gap:12px; margin-top:10px; padding:12px 14px 14px; background:var(--sheet-2); border:1px solid var(--rule); border-radius:10px }
+.tp-head{ display:flex; align-items:center; gap:4px }
+.tp-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.8rem; line-height:1.85; margin-right:auto; min-width:0 }
+.kv{ display:grid; grid-template-columns:4.2rem minmax(0,1fr); gap:6px 12px; font-size:.93rem }
+.kv dt{ color:var(--ink-3); font-size:.8rem; padding-top:.18em }
+.kv dd{ margin:0; min-width:0 }
+.why,.tnote{ display:grid; gap:4px; font-size:.93rem }
+.why h4,.tnote h4{ font-size:.78rem; font-weight:600; color:var(--ink-3) }
+.why{ padding:10px 12px; border-radius:8px; background:var(--sheet); border:1px solid var(--rule) }
+.learn{ justify-self:start; display:inline-flex; align-items:center; gap:6px; padding:7px 14px 7px 10px; border-radius:999px; border:1px solid var(--rule-2); background:var(--sheet); font-size:.85rem }
+.learn svg{ color:var(--ink-3) }
+.learn[aria-pressed="true"]{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent) }
+.learn[aria-pressed="true"] svg{ color:inherit }
+.gram{ list-style:none; padding:0; display:grid; gap:12px }
+.gram li{ display:grid; gap:2px }
+.gram li + li{ padding-top:12px; border-top:1px dotted var(--rule-2) }
+.g-k{ font-family:var(--font-jp); font-weight:600; font-size:1.08rem; line-height:1.9 }
+.g-d{ font-size:.93rem; color:var(--ink-2) }
+.tab-lede{ font-size:.92rem; padding-block:14px }
+.gram.big{ background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius); padding:16px; max-width:780px }
+.gram.big .g-k{ font-size:1.25rem }
+.notes-layout{ display:grid; gap:16px; max-width:780px; padding-top:16px }
+.intro{ display:grid; gap:10px; font-size:1.02rem; color:var(--ink-2) }
+.facts{ display:grid; grid-template-columns:5rem minmax(0,1fr); gap:8px 14px; padding:14px 16px; border-radius:var(--radius); background:var(--sheet); border:1px solid var(--rule); font-size:.93rem }
+.facts dt{ color:var(--ink-3) }
+.facts dd{ margin:0; min-width:0 }
+.note-card{ display:grid; gap:8px; padding:18px; border-radius:var(--radius); background:var(--sheet); border:1px solid var(--rule) }
+.note-card h3{ font-size:1.08rem; font-weight:700 }
+.note-card p{ color:var(--ink-2); font-size:.95rem }
+a.ext{ justify-self:start; font-weight:600; font-size:.92rem }
+
+/* 단어장 */
+.vtools{ display:grid; gap:10px; padding-block:16px 10px }
+.search{ width:100%; padding:10px 14px; border-radius:10px; border:1px solid var(--rule-2); background:var(--sheet); font:inherit; color:var(--ink) }
+.search::placeholder{ color:var(--ink-3) }
+.vtools-row{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px }
+.seg{ display:flex; flex-wrap:wrap; gap:6px }
+.mini-sw{ display:inline-flex; align-items:center; gap:8px; font-size:.85rem; color:var(--ink-2); cursor:pointer }
+.switch{ -webkit-appearance:none; appearance:none; flex:none; width:42px; height:24px; margin:0; border-radius:99px; background:var(--rule-2); position:relative; cursor:pointer; transition:background-color .15s }
+.switch::after{ content:""; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:var(--sheet); box-shadow:0 1px 2px rgba(0,0,0,.25); transition:transform .15s }
+.switch:checked{ background:var(--ink) }
+.switch:checked::after{ transform:translateX(18px) }
+.mini-sw .switch{ width:36px; height:20px }
+.mini-sw .switch::after{ width:14px; height:14px }
+.mini-sw .switch:checked::after{ transform:translateX(16px) }
+.vcount{ font:400 .78rem var(--font-mono); color:var(--ink-3); padding-bottom:8px; font-variant-numeric:tabular-nums }
+.vlist{ list-style:none; padding:0; display:grid; border-top:1px solid var(--rule); max-width:860px }
+.vrow{ border-bottom:1px solid var(--rule) }
+.v-top{ display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:8px }
+.v-main{ display:grid; grid-template-columns:minmax(4.2rem,auto) minmax(0,1fr) auto; gap:14px; align-items:center; width:100%; padding:12px 2px; border-radius:8px }
+.v-main:hover .v-chev{ color:var(--ink) }
+.vrow.learned .v-jp,.vrow.learned .v-mean{ opacity:.5 }
+.v-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.4rem; line-height:1.9 }
+.v-body{ display:grid; gap:2px; min-width:0 }
+.v-line1{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 8px; font-size:.8rem; color:var(--ink-3) }
+.v-mean{ font-size:.96rem }
+.v-chev{ display:inline-grid; color:var(--ink-3); transition:transform .2s }
+.vrow.open .v-chev{ transform:rotate(180deg) }
+.v-act{ display:flex; align-items:center; gap:2px }
+.vtools-r{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:10px }
+.seg-label{ align-self:center; min-width:2.6rem; font-size:.74rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3) }
+.tg .cnt{ font:400 .7rem var(--font-mono); opacity:.7 }
+.lv{ display:inline-block; padding:0 6px; border:1px solid var(--ink-3); border-radius:4px; font:600 .7rem/1.5 var(--font-mono); color:var(--ink); background:var(--sheet); white-space:nowrap; font-variant-numeric:tabular-nums }
+.lv.base{ border-style:dashed }
+.lv.none{ border-color:var(--rule-2); color:var(--ink-3); font-family:var(--font-ui); font-weight:500 }
+.v-detail{ display:grid; gap:18px; margin:0 0 14px; padding:16px 18px 18px; border:1px solid var(--rule-2); border-radius:12px; background:var(--sheet) }
+@media (min-width:880px){ .v-detail{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); column-gap:28px; align-items:start } }
+.wd-block{ display:grid; gap:8px; min-width:0 }
+.wd-block .d-label{ margin-bottom:0 }
+.ctx{ display:grid; gap:2px; padding:10px 12px; border-radius:8px; background:var(--sheet-2) }
+.ctx-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.12rem; line-height:1.95; overflow-wrap:anywhere }
+.ctx-jp mark.hl{ background:var(--accent-soft); color:inherit; border-radius:3px; padding:0 .08em }
+.ctx-ko{ font-size:.88rem; color:var(--ink-2) }
+.ctx-meta{ font-size:.75rem; color:var(--ink-3) }
+.wex{ display:grid; gap:0 }
+.wex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:600; font-size:1.12rem; line-height:1.95 }
+.cls-note{ font-size:.8rem; color:var(--ink-3) }
+.cls-note b{ color:var(--ink-2) }
+.forms{ display:grid; grid-template-columns:repeat(auto-fill,minmax(8.6rem,1fr)); gap:6px }
+.form{ display:grid; padding:5px 10px 4px; border:1px solid var(--rule); border-radius:8px; background:var(--sheet); min-width:0 }
+.form small{ font-size:.7rem; color:var(--ink-3); line-height:1.4 }
+.form .jp{ font-weight:600; font-size:1.02rem; line-height:1.9 }
+.form.in-lyric{ border-color:var(--accent); background:var(--accent-soft) }
+.rels{ display:flex; flex-wrap:wrap; gap:6px }
+.rel{ display:inline-grid; padding:2px 10px 6px; border:1px solid var(--rule-2); border-radius:8px; background:var(--sheet); max-width:100% }
+.rel-top{ display:flex; align-items:baseline; gap:6px }
+.rel .jp{ font-weight:600; font-size:1.02rem; line-height:1.9 }
+.rel-r{ font-size:.66rem; font-weight:600; color:var(--accent); white-space:nowrap }
+.rel small{ font-size:.76rem; color:var(--ink-2) }
+.tp-more{ border-top:1px dashed var(--rule-2); padding-top:10px }
+.tp-more summary{ cursor:pointer; font-size:.84rem; font-weight:600; color:var(--ink-2) }
+.tp-more-body{ display:grid; gap:14px; margin-top:12px }
+
+/* 가이드 */
+.toc{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px }
+.gsec{ display:grid; gap:14px; padding-block:32px; border-bottom:1px solid var(--rule); max-width:780px; scroll-margin-top:calc(var(--topbar-h) + 12px) }
+.gsec h2{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:1.35rem; font-weight:700 }
+.gsec h2 .jp{ font-size:1rem; font-weight:600 }
+.gsec h2 rt{ font-size:.5em }
+.gsec > p{ color:var(--ink-2) }
+.gsec b{ color:var(--ink) }
+.ex{ display:grid; gap:2px; padding:12px 16px 14px; background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius) }
+.ex-row{ display:flex; align-items:center; gap:8px }
+.ex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:600; font-size:1.5rem; line-height:2.05 }
+.ex-ko{ font-size:.9rem; color:var(--ink-2) }
+.ex-grid{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr)) }
+.ex-grid .ex-jp{ font-size:1.35rem }
+.roles{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr)) }
+.role{ display:grid; align-content:start; gap:4px; padding:14px 16px; border-radius:var(--radius); font-size:.9rem; color:var(--ink-2) }
+.role h3{ font-size:1rem }
+.role.k{ background:var(--kanji-tint) } .role.k h3{ color:var(--kanji) }
+.role.h{ background:var(--hira-tint) } .role.h h3{ color:var(--hira) }
+.role.a{ background:var(--kata-tint) } .role.a h3{ color:var(--kata) }
+.rules{ padding-left:1.2em; display:grid; gap:10px; color:var(--ink-2) }
+.rules li::marker{ color:var(--ink-3) }
+.ex-inline{ font-weight:600; font-size:1.08em }
+.table-wrap{ overflow-x:auto; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
+table{ border-collapse:collapse; width:100%; min-width:520px; font-size:.92rem }
+th,td{ text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule); vertical-align:middle }
+th{ font-size:.74rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3); background:var(--sheet-2) }
+tr:last-child td{ border-bottom:0 }
+td.p-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.2rem; color:var(--hira); white-space:nowrap }
+td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
+
+/* 히라가나·가타카나 */
+.hero-links{ display:flex; flex-wrap:wrap; gap:8px }
+.gsec.wide{ max-width:none }
+.kana-wrap{ display:grid; gap:24px }
+.kana-main{ display:grid; gap:14px; min-width:0; max-width:780px }
+.kana-side{ display:none }
+@media (min-width:1000px){
+  .kana-wrap{ grid-template-columns:minmax(0,1fr) 300px; align-items:start }
+  .kana-side{ display:block; position:sticky; top:24px }
+}
+.k-sub{ font-size:1.05rem; font-weight:700; margin-top:12px; scroll-margin-top:calc(var(--topbar-h) + 12px) }
+.k-p{ color:var(--ink-2); font-size:.94rem }
+.kgrid{ display:grid; grid-template-columns:2.6rem repeat(var(--cols,5),minmax(0,1fr)); gap:4px; max-width:560px }
+.kg-head{ text-align:center; font:500 .72rem var(--font-mono); color:var(--ink-3); padding-bottom:2px }
+.kg-row{ align-self:center; font-family:var(--font-jp); font-size:.82rem; font-weight:600; color:var(--ink-3); text-align:center }
+.kcell{ display:grid; justify-items:center; gap:0; padding:5px 2px 4px; min-width:0; border:1px solid var(--rule); border-radius:8px; background:var(--sheet); text-align:center }
+.kcell:hover{ border-color:var(--ink-3) }
+.kcell.sel{ border-color:var(--ink); box-shadow:0 0 0 1px var(--ink) }
+.kcell.empty{ border:0; background:none }
+.kc-chars{ display:flex; align-items:baseline; justify-content:center; gap:3px; font-family:var(--font-jp); font-weight:600; line-height:1.25 }
+.kh{ font-size:1.45rem; color:var(--hira) }
+.kk{ font-size:1rem; color:var(--kata) }
+.kmode-h .kk,.kmode-k .kh{ display:none }
+.kmode-k .kk{ font-size:1.45rem }
+.kcell small{ font:400 .66rem var(--font-mono); color:var(--ink-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100% }
+.kdetail{ display:grid; gap:12px; padding:16px; background:var(--sheet); border:1px solid var(--rule-2); border-radius:12px; max-width:560px }
+.kgrid > .kdetail{ grid-column:1 / -1; max-width:none; margin-block:4px }
+.kd-one{ display:grid; justify-items:center; gap:2px; padding:10px 6px; border-radius:10px }
+.kd-one.h{ background:var(--hira-tint) }
+.kd-one.a{ background:var(--kata-tint) }
+.kd-label{ font-size:.72rem; font-weight:600; color:var(--ink-3) }
+.kd-big{ font-family:var(--font-jp); font-weight:600; font-size:3rem; line-height:1.25 }
+.kd-one.h .kd-big{ color:var(--hira) }
+.kd-one.a .kd-big{ color:var(--kata) }
+.kd-src{ font-size:.78rem; color:var(--ink-2); text-align:center }
+.kd-src .jp{ font-size:1.15rem; font-weight:600; color:var(--kanji) }
+.kd-read{ display:flex; align-items:center; gap:10px; font-size:1rem }
+.kd-ro{ font:500 1rem var(--font-mono) }
+.ext-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,10.5rem),1fr)); grid-auto-rows:1fr; gap:8px }
+.ext{ display:grid; gap:1px; padding:10px 12px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
+.ext-k{ font-family:var(--font-jp); font-weight:600; font-size:1.5rem; line-height:1.3; color:var(--kata) }
+.ext-ro{ font:400 .74rem var(--font-mono); color:var(--ink-3) }
+.ext-w{ font-size:.85rem; color:var(--ink-2) }
+.ext-w .jp{ font-weight:600 }
+.conf-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr)); gap:8px }
+.conf-grid.twins{ grid-template-columns:repeat(auto-fill,minmax(min(100%,9rem),1fr)) }
+.conf{ display:grid; gap:4px; padding:12px 14px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
+.conf-k{ font-family:var(--font-jp); font-weight:600; font-size:1.7rem; line-height:1.3; letter-spacing:.05em }
+.conf p{ font-size:.86rem; color:var(--ink-2) }
+.quiz{ display:grid; gap:12px; max-width:560px }
+.q-top{ display:flex; flex-wrap:wrap; gap:8px 16px }
+.q-card{ display:grid; justify-items:center; gap:14px; padding:20px 16px; border:1px solid var(--rule-2); border-radius:14px; background:var(--sheet) }
+.q-char{ font-family:var(--font-jp); font-weight:600; font-size:4.5rem; line-height:1.15 }
+.q-choices{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100% }
+.q-btn{ padding:12px 8px; border:1px solid var(--rule-2); border-radius:10px; background:var(--sheet-2); font:500 1rem var(--font-ui); text-align:center }
+.q-btn:hover:not(:disabled){ border-color:var(--ink-3) }
+.q-btn:disabled{ cursor:default; opacity:.6 }
+.q-btn.right{ opacity:1; border-color:var(--kata); background:var(--kata-tint); color:var(--kata) }
+.q-btn.wrong{ opacity:1; border-color:var(--kanji); background:var(--kanji-tint); color:var(--kanji) }
+.q-fb{ font-size:.92rem; color:var(--ink-2); text-align:center }
+.q-score{ font:400 .8rem var(--font-mono); color:var(--ink-3); font-variant-numeric:tabular-nums }
+
+/* 설정 시트 */
+.scrim{ position:fixed; inset:0; z-index:40; background:var(--scrim) }
+.sheet{ position:fixed; z-index:50; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; display:grid; gap:22px; padding:18px 16px calc(22px + env(safe-area-inset-bottom,0px)); background:var(--sheet); border-radius:16px 16px 0 0; box-shadow:var(--shadow) }
+@media (min-width:720px){ .sheet{ left:auto; right:24px; top:24px; bottom:auto; width:400px; max-height:calc(100vh - 48px); border-radius:16px; padding-bottom:22px } }
+.sheet-head{ display:flex; align-items:center; justify-content:space-between }
+.sheet-head h2{ font-size:1.1rem; font-weight:700 }
+.set-group{ display:grid; gap:8px }
+.sw{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:9px 0; border-bottom:1px solid var(--rule); cursor:pointer }
+.sw small{ display:block; color:var(--ink-3); font-size:.8rem; line-height:1.4 }
+.segs{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:4px; padding:4px; border-radius:10px; background:var(--sheet-2); border:1px solid var(--rule) }
+.segs.three{ grid-template-columns:repeat(3,minmax(0,1fr)) }
+.segs button{ padding:7px 0; border-radius:7px; font-size:.85rem; color:var(--ink-2); text-align:center }
+.segs button[aria-pressed="true"]{ background:var(--sheet); color:var(--ink); font-weight:600; box-shadow:0 1px 3px rgba(0,0,0,.14) }
+.hint{ font-size:.8rem; color:var(--ink-3) }
+.sync{ font-size:.86rem; color:var(--ink-2); padding:12px 14px; border-radius:10px; background:var(--sheet-2) }
+.danger{ justify-self:start; padding:8px 12px; border-radius:8px; border:1px solid var(--rule-2); color:var(--kanji); font-size:.85rem }
+.danger.armed{ background:var(--kanji); border-color:var(--kanji); color:var(--sheet) }
+.dl-btn{ justify-self:start; padding:8px 12px; border-radius:8px; border:1px solid var(--rule-2); color:var(--ink); font-size:.85rem; font-weight:500 }
+.dl-btn:disabled{ opacity:.55 }
+.tg:disabled{ opacity:.45; cursor:default }
+.mode-tg{ flex-wrap:nowrap; gap:4px }
+.lang-back{ padding-inline:10px; font-size:.8rem; color:var(--ink-3) }
+.lang-back:hover{ color:var(--ink) }
+.side .mode-tg{ padding-inline:10px }
+.food-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,13.5rem),1fr)); gap:8px }
+.food{ display:grid; align-content:start; gap:3px; padding:10px 12px 12px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
+.food-top{ display:flex; align-items:center; justify-content:space-between; gap:6px }
+.food-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.35rem; line-height:1.9 }
+.food-hg{ font-size:.8rem; color:var(--ink-3) }
+.food-m{ font-size:.95rem; font-weight:600 }
+.food-n{ font-size:.82rem; color:var(--ink-2) }
+.food-talk{ display:grid; gap:8px }
+.food-who{ flex:none; padding:1px 7px; border-radius:5px; font-size:.72rem; font-weight:600; color:var(--ink-2); background:var(--sheet-2); border:1px solid var(--rule) }
+.toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:calc(78px + env(safe-area-inset-bottom,0px)); z-index:60; max-width:calc(100vw - 32px); padding:9px 16px; border-radius:999px; background:var(--ink); color:var(--paper); font-size:.86rem; box-shadow:var(--shadow); text-align:center }
+@media (min-width:960px){ .toast{ bottom:28px } }
+@media (prefers-reduced-motion:reduce){ *,*::before,*::after{ transition:none!important; animation:none!important; scroll-behavior:auto!important } }
+</style>
+
+<div class="shell" lang="ko">
+  <aside class="side" aria-label="탐색">
+    <div class="hist" role="group" aria-label="화면 이동">
+      <button class="ico" data-a="hist" data-d="-1" aria-label="뒤로" title="뒤로" disabled><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="ico" data-a="hist" data-d="1" aria-label="앞으로" title="앞으로" disabled><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <a class="lang-back" href="../" data-lang-back hidden>← 언어 선택</a>
+    <button class="side-brand" data-a="nav" data-to="home">
+      <span class="brand-ko">일본어</span>
+    </button>
+    <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button></div>
+    <nav class="side-nav" aria-label="주요 메뉴">
+      <button class="nav-item" data-a="nav" data-to="home" data-nav="home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>홈</span></button>
+      <button class="nav-item" data-a="nav" data-to="kana" data-nav="kana"><span class="nav-glyph" lang="ja" aria-hidden="true">あ</span><span>히라가나·가타카나</span></button>
+      <button class="nav-item" data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>문자 가이드</span></button>
+      <button class="nav-item" data-a="nav" data-to="vocab" data-nav="vocab"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3.5" y="7" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>단어장</span></button>
+    </nav>
+    <div id="side-songs-wrap">
+      <p class="eyebrow side-h">곡</p>
+      <div class="side-nav" id="side-songs"></div>
+    </div>
+    <div class="side-foot">
+      <button class="nav-item" data-a="open-settings"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span>보기 설정</span></button>
+      <p class="side-sync" id="side-sync">이 브라우저에만 저장</p>
+    </div>
+  </aside>
+
+  <div class="col">
+    <header class="topbar">
+      <div class="hist" role="group" aria-label="화면 이동">
+        <button class="ico" data-a="hist" data-d="-1" aria-label="뒤로" title="뒤로" disabled><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="ico" data-a="hist" data-d="1" aria-label="앞으로" title="앞으로" disabled><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
+      <button class="brand" data-a="nav" data-to="home"><span class="brand-ko">일본어</span></button>
+      <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button></div>
+      <span class="grow"></span>
+      <a class="ico" href="../" data-lang-back hidden aria-label="언어 선택" title="언어 선택"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5s1.2-6.1 3.6-8.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
+      <button class="ico" data-a="open-settings" aria-label="보기 설정"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+    </header>
+    <main id="view" class="view"></main>
+  </div>
+</div>
+
+<nav class="tabbar" aria-label="주요 메뉴" lang="ko">
+  <button data-a="nav" data-to="home" data-nav="home"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>홈</button>
+  <button data-a="nav" data-to="kana" data-nav="kana"><span class="nav-glyph big" lang="ja" aria-hidden="true">あ</span>가나</button>
+  <button data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>문자 가이드</button>
+  <button data-a="nav" data-to="vocab" data-nav="vocab"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="7" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>단어장</button>
+  <button data-a="open-settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>설정</button>
+</nav>
+
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" lang="ko" hidden>
+  <div class="sheet-head">
+    <h2 id="sheet-title">보기 설정</h2>
+    <button class="ico" data-a="close-settings" aria-label="설정 닫기"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="set-group">
+    <p class="eyebrow">가사 표시</p>
+    <label class="sw" for="opt-furi"><span>후리가나<small>한자 위에 읽는 법을 작게 표시</small></span><input class="switch" type="checkbox" id="opt-furi" data-opt="furi"></label>
+    <label class="sw" for="opt-kr"><span>한글 발음<small>한국어로 적은 대략적인 발음 (장음은 -)</small></span><input class="switch" type="checkbox" id="opt-kr" data-opt="kr"></label>
+    <label class="sw" for="opt-romaji"><span>로마자<small>알파벳으로 쓴 발음</small></span><input class="switch" type="checkbox" id="opt-romaji" data-opt="romaji"></label>
+    <label class="sw" for="opt-color"><span>문자 색상 구분<small>한자·히라가나·가타카나·영어를 색으로 구분</small></span><input class="switch" type="checkbox" id="opt-color" data-opt="color"></label>
+    <label class="sw" for="opt-hideko"><span>해석 가리기<small>먼저 뜻을 떠올려 본 뒤 눌러서 확인</small></span><input class="switch" type="checkbox" id="opt-hideko" data-opt="hideKo"></label>
+  </div>
+  <div class="set-group">
+    <p class="eyebrow">가사 글자 크기</p>
+    <div class="segs" role="group" aria-label="가사 글자 크기">
+      <button data-a="set" data-key="size" data-val="s">작게</button>
+      <button data-a="set" data-key="size" data-val="m">보통</button>
+      <button data-a="set" data-key="size" data-val="l">크게</button>
+      <button data-a="set" data-key="size" data-val="xl">아주 크게</button>
+    </div>
+  </div>
+  <div class="set-group" data-tts>
+    <p class="eyebrow">발음 듣기 속도</p>
+    <div class="segs three" role="group" aria-label="발음 듣기 속도">
+      <button data-a="set" data-key="rate" data-val="0.7">느리게</button>
+      <button data-a="set" data-key="rate" data-val="0.9">보통</button>
+      <button data-a="set" data-key="rate" data-val="1.1">빠르게</button>
+    </div>
+    <p class="hint">기기에 설치된 일본어 음성으로 읽어요. 실제 노래의 발음·억양과는 다를 수 있어요.</p>
+  </div>
+  <div class="set-group">
+    <p class="eyebrow">학습 기록</p>
+    <p class="sync" id="sync-label">이해한 줄과 외운 단어가 이 브라우저에만 저장돼요.</p>
+    <button class="danger" data-a="reset">학습 기록 지우기</button>
+  </div>
+  <div class="set-group" data-dl>
+    <p class="eyebrow">내려받기</p>
+    <button class="dl-btn" data-a="download">HTML 파일로 내려받기</button>
+    <p class="hint">모든 곡의 해석, 단어장, 가나 표를 담은 파일 하나예요. 인터넷 없이 브라우저로 열 수 있어서 다른 사람에게 그대로 보내 줄 수 있어요. 학습 기록은 담기지 않아요.</p>
+  </div>
+</section>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── 곡 목록 ───────────────────────────────────────────────
+     곡을 추가할 때: 여기 한 줄 + songs/<id>.json 파일.
+     곡 파일 형식
+     { id, title, sub?, eyebrow?, artist?, year?, release?, tieIn?, lyricist?, composer?, listen?, intro?,
+       notes?: [{ tag, title, body }],
+       dict?: { "<표기>": { p, m, b, bm, w, n } }   ← 곡 안에서 반복되는 단어의 기본값 (토큰 값이 우선)
+       sections: [{ label, part?(1절·2절·마지막 묶음 이름, 없으면 label로 짐작), note?, lines: [{
+         id?, same?(앞 줄 id: 반복 가사), ko(해석), lit?(직역), s?(표기 포인트), c?(문화·뉘앙스), g?: [{ k, d }](문법), kr?(한글 발음 덮어쓰기),
+         tk: [{ t(표기), p?(품사), m?(뜻), b?(사전형), bm?(사전형 뜻), w?(왜 이 문자), n?(메모),
+                ro?(로마자 덮어쓰기), v?(단어장 포함 여부), k?(단어 키), lv?(JLPT) }] }] }] }
+     표기 마크업: {漢字|かんじ} 루비 · {本気|マジ|*} 특수 읽기 · [[…]] 색 구분 예문 · **굵게** */
+  const CATALOG = [
+    { id: 'film', file: 'songs/film.json', status: 'ready',
+      title: '115{万|まん}キロのフィルム', sub: '앨범 『エスカパレード』 수록 · 영화 「思い、思われ、ふり、ふられ」(2020) 주제가', meta: '2018 · 작사·작곡 藤原聡' },
+    { id: 'pretender', file: 'songs/pretender.json', status: 'ready',
+      title: 'Pretender', sub: '영화 「コンフィデンスマンJP ロマンス編」 주제가', meta: '2019 · 작사·작곡 藤原聡' },
+    { id: 'shukumei', file: 'songs/shukumei.json', status: 'ready',
+      title: '{宿命|しゅくめい}', sub: '고교야구 프로그램 「熱闘甲子園」 2019 테마송', meta: '2019 · 작사·작곡 藤原聡' },
+    { id: 'laughter', file: 'songs/laughter.json', status: 'ready',
+      title: 'Laughter', sub: '영화 「コンフィデンスマンJP プリンセス編」 주제가', meta: '2020 · 작사·작곡 藤原聡' },
+    { id: 'rashisa', file: 'songs/rashisa.json', status: 'ready',
+      title: 'らしさ', sub: '극장 애니메이션 「ひゃくえむ。」 주제가', meta: '2025 · 작사·작곡 藤原聡' }
+  ];
+
+  const ROOT = document.documentElement;
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const ESC = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ESC[c]);
+  const smooth = () => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 저장 불가 환경 */ } }
+  };
+  const state = { route: 'home', rendered: null, song: null, pendingLine: null, allOpen: false,
+    vf: { cat: 'all', lv: 'all', q: '', hide: false }, vopen: new Set(), lastFocus: null, toastT: 0, resetT: 0,
+    mode: 'song', ksel: null, kmode: 'h', quiz: { mode: 'h', cur: null, right: 0, total: 0, streak: 0, best: +store.get('hgn.kanaBest', 0) || 0 } };
+
+  const I = {
+    speaker: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+    check: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5.5 12.5l4 4L18.5 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    chev: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    close: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    back: '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+
+  /* ── 문자 판별과 표기 렌더링 ───────────────────────────── */
+  function sc(ch) {
+    const c = ch.codePointAt(0);
+    if (c >= 0x3041 && c <= 0x309F) return 'h';
+    if (c === 0x30FB) return 'p';
+    if ((c >= 0x30A0 && c <= 0x30FF) || (c >= 0x31F0 && c <= 0x31FF) || (c >= 0xFF66 && c <= 0xFF9F)) return 'a';
+    if ((c >= 0x4E00 && c <= 0x9FFF) || (c >= 0x3400 && c <= 0x4DBF) || (c >= 0xF900 && c <= 0xFAFF) || c === 0x3005 || c === 0x3006) return 'k';
+    if (/[A-Za-z0-9０-９Ａ-Ｚａ-ｚ]/.test(ch)) return 'l';
+    return 'p';
+  }
+  function scriptsOf(str) {
+    const set = new Set(); let prev = null;
+    for (const ch of str) { let k = sc(ch); if (ch === 'ー' && prev) k = prev; if (k !== 'p') { set.add(k); prev = k; } }
+    return ['k', 'h', 'a', 'l'].filter((k) => set.has(k));
+  }
+  function paint(str) {
+    let out = '', cur = null, buf = '';
+    const flush = () => { if (buf) { out += cur === 'p' ? esc(buf) : '<span class="s-' + cur + '">' + esc(buf) + '</span>'; buf = ''; } };
+    for (const ch of str) { let k = sc(ch); if (ch === 'ー' && cur && cur !== 'p') k = cur; if (k !== cur) { flush(); cur = k; } buf += ch; }
+    flush(); return out;
+  }
+  const RUBY_RE = /\{([^{}|]+)\|([^{}|]+)(?:\|(\*))?\}/g;
+  function segs(str) {
+    const out = []; let last = 0; str = String(str || '');
+    str.replace(RUBY_RE, (m, b, r, f, idx) => { if (idx > last) out.push({ t: str.slice(last, idx) }); out.push({ t: b, r: r, sp: !!f }); last = idx + m.length; return m; });
+    if (last < str.length) out.push({ t: str.slice(last) });
+    return out;
+  }
+  const plainOf = (s) => segs(s).map((x) => x.t).join('');
+  const readingOf = (s) => segs(s).map((x) => x.r || x.t).join('');
+  const speechOf = (s) => segs(s).map((x) => (x.sp ? x.r : x.t)).join('');
+  function renderJP(s) {
+    return segs(s).map((x) => (x.r
+      ? '<ruby' + (x.sp ? ' class="sp"' : '') + '><span class="rb">' + paint(x.t) + '</span><rt>' + esc(x.r) + '</rt></ruby>'
+      : paint(x.t))).join('');
+  }
+  const JP_RUN = /[぀-ヿ㐀-鿿豈-﫿々〆〜「」『』、。]+/g;
+  function richPlain(s) {
+    return segs(s).map((x) => (x.r
+      ? '<ruby class="jp' + (x.sp ? ' sp' : '') + '" lang="ja"><span class="rb">' + esc(x.t) + '</span><rt>' + esc(x.r) + '</rt></ruby>'
+      : esc(x.t).replace(JP_RUN, (m) => '<span class="jp" lang="ja">' + m + '</span>'))).join('');
+  }
+  function rich(src) {
+    if (src == null || src === '') return '';
+    return String(src).split(/(\[\[[^\]]+\]\])/).map((part) => (part.indexOf('[[') === 0
+      ? '<span class="jp ex-inline force-color" lang="ja">' + renderJP(part.slice(2, -2)) + '</span>'
+      : richPlain(part))).join('').replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  }
+  const paras = (t) => String(t || '').split(/\n{2,}/).map((p) => '<p>' + rich(p) + '</p>').join('');
+
+  /* ── 가나 → 로마자 ─────────────────────────────────────── */
+  const KANA = { 'あ':'a','い':'i','う':'u','え':'e','お':'o','か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko','さ':'sa','し':'shi','す':'su','せ':'se','そ':'so','た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to','な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no','は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho','ま':'ma','み':'mi','む':'mu','め':'me','も':'mo','や':'ya','ゆ':'yu','よ':'yo','ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro','わ':'wa','ゐ':'i','ゑ':'e','を':'wo','ん':'n','が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go','ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo','だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do','ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo','ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po','ゔ':'vu','ぁ':'a','ぃ':'i','ぅ':'u','ぇ':'e','ぉ':'o','ゃ':'ya','ゅ':'yu','ょ':'yo','ゎ':'wa' };
+  const toHira = (s) => String(s).replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  function syl(s, i) {
+    const c = s[i], n = s[i + 1], b = KANA[c];
+    if (!b) return null;
+    if (n && 'ゃゅょ'.indexOf(n) >= 0) {
+      const v = { 'ゃ': 'a', 'ゅ': 'u', 'ょ': 'o' }[n];
+      const st = b.endsWith('i') && b.length > 1 ? b.slice(0, -1) : b.replace(/[aeiou]+$/, '');
+      return { ro: (['sh', 'ch', 'j'].indexOf(st) >= 0 ? st : st + 'y') + v, len: 2 };
+    }
+    if (n && 'ぁぃぅぇぉ'.indexOf(n) >= 0) {
+      const st = b.replace(/[aeiou]+$/, '') || 'w';
+      return { ro: st + KANA[n], len: 2 };
+    }
+    return { ro: b, len: 1 };
+  }
+  function kanaToRomaji(src) {
+    const s = toHira(src); let out = '';
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i], n = s[i + 1];
+      if (c === 'っ') { const nx = n ? syl(s, i + 1) : null; if (nx) out += nx.ro.indexOf('ch') === 0 ? 't' : nx.ro[0]; continue; }
+      if (c === 'ー') { const m = out.match(/[aeiou](?=[^aeiou]*$)/); out += m ? m[0] : ''; continue; }
+      if (c === 'ん') { out += n && /[あいうえおやゆよ]/.test(n) ? "n'" : 'n'; continue; }
+      const r = syl(s, i);
+      if (r) { out += r.ro; i += r.len - 1; } else out += c;
+    }
+    return out;
+  }
+  const PUNCT_RO = { '、': ',', '。': '.', '　': ' ', '！': '!', '？': '?', '「': '“', '」': '”', '『': '“', '』': '”', '（': '(', '）': ')', '・': ' ', '〜': '~' };
+  const isParticle = (t) => (t.p || '').indexOf('조사') === 0;
+  /* 조사의 は・へ는 소리대로(わ・え). には・では처럼 끝이 は인 복합 조사도 포함. を는 글자 그대로 두고 로마자만 o */
+  const kanaOf = (t) => (!isParticle(t) ? t.reading : t.reading === 'へ' ? 'え' : t.reading.replace(/は$/, 'わ'));
+  function tokRomaji(t) {
+    if (t.ro) return t.ro;
+    if (t.kind === 'punct') return Array.from(t.plain).map((c) => (PUNCT_RO[c] != null ? PUNCT_RO[c] : c)).join('');
+    if (isParticle(t) && t.reading === 'を') return 'o';
+    return kanaToRomaji(kanaOf(t));
+  }
+  function lineRomaji(l) {
+    let out = '';
+    l.toks.forEach((t) => {
+      const r = tokRomaji(t);
+      if (t.kind === 'punct') out += (/^[“(]/.test(r) && out && !/\s$/.test(out) ? ' ' : '') + r;
+      else out += (out && !/[\s“(]$/.test(out) ? ' ' : '') + r;
+    });
+    return out.trim();
+  }
+  const sayOf = (t) => (isParticle(t) && t.reading !== kanaOf(t) ? kanaOf(t) : speechOf(t.t));
+
+  /* ── 가나 → 한글 발음 (っ은 ㅅ받침, ん은 뒷소리에 따라 ㄴ/ㅁ/ㅇ, 장음은 -) ── */
+  const HG = { 'あ':'아','い':'이','う':'우','え':'에','お':'오','か':'카','き':'키','く':'쿠','け':'케','こ':'코','が':'가','ぎ':'기','ぐ':'구','げ':'게','ご':'고','さ':'사','し':'시','す':'스','せ':'세','そ':'소','ざ':'자','じ':'지','ず':'즈','ぜ':'제','ぞ':'조','た':'타','ち':'치','つ':'츠','て':'테','と':'토','だ':'다','ぢ':'지','づ':'즈','で':'데','ど':'도','な':'나','に':'니','ぬ':'누','ね':'네','の':'노','は':'하','ひ':'히','ふ':'후','へ':'헤','ほ':'호','ば':'바','び':'비','ぶ':'부','べ':'베','ぼ':'보','ぱ':'파','ぴ':'피','ぷ':'푸','ぺ':'페','ぽ':'포','ま':'마','み':'미','む':'무','め':'메','も':'모','や':'야','ゆ':'유','よ':'요','ら':'라','り':'리','る':'루','れ':'레','ろ':'로','わ':'와','を':'오','ゔ':'부','ぁ':'아','ぃ':'이','ぅ':'우','ぇ':'에','ぉ':'오','ゃ':'야','ゅ':'유','ょ':'요' };
+  const HG_Y = { 'き':['캬','큐','쿄'],'ぎ':['갸','규','교'],'し':['샤','슈','쇼'],'じ':['쟈','쥬','죠'],'ち':['챠','츄','쵸'],'に':['냐','뉴','뇨'],'ひ':['햐','휴','효'],'び':['뱌','뷰','뵤'],'ぴ':['퍄','퓨','표'],'み':['먀','뮤','묘'],'り':['랴','류','료'] };
+  const HG_X = { 'ふぁ':'파','ふぃ':'피','ふぇ':'페','ふぉ':'포','てぃ':'티','でぃ':'디','うぃ':'위','うぇ':'웨','うぉ':'워','ちぇ':'체','しぇ':'셰','じぇ':'제','とぅ':'투','どぅ':'두','ゔぁ':'바','ゔぃ':'비','ゔぇ':'베','ゔぉ':'보' };
+  const HG_PUNCT = { '　': ' ', '、': ', ', '。': '. ', '？': '?', '！': '!' };
+  function addJong(out, j) {
+    const c = out.charCodeAt(out.length - 1);
+    return c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 === 0 ? out.slice(0, -1) + String.fromCharCode(c + j) : out;
+  }
+  function kanaToHangul(src, nextChar, keep) {
+    const s = toHira(src); let out = '';
+    for (let i = 0; i < s.length; i++) {
+      const c = s[i], n = s[i + 1];
+      if (c === 'っ') { out = addJong(out, 19); continue; }
+      if (c === 'ん') {
+        const nx = toHira(n || nextChar || '');
+        const j = /^[まみむめもばびぶべぼぱぴぷぺぽ]/.test(nx) ? 16 : /^[かきくけこがぎぐげごあいうえおやゆよわ]/.test(nx) ? 21 : 4;
+        // 받침을 붙일 글자가 없으면(シーン처럼 장음 - 뒤) 음·응·은으로 따로 적는다
+        const withJ = addJong(out, j);
+        out = withJ !== out ? withJ : out + (j === 16 ? '음' : j === 21 ? '응' : '은');
+        continue;
+      }
+      if (c === 'ー') { out += '-'; continue; }
+      if (n && 'ゃゅょ'.indexOf(n) >= 0 && HG_Y[c]) { out += HG_Y[c]['ゃゅょ'.indexOf(n)]; i++; continue; }
+      if (n && 'ぁぃぅぇぉ'.indexOf(n) >= 0 && HG_X[c + n]) { out += HG_X[c + n]; i++; continue; }
+      if (!HG[c]) { out += c; continue; }
+      const last = out.charCodeAt(out.length - 1), jung = Math.floor(((last - 0xAC00) % 588) / 28);
+      const open = last >= 0xAC00 && last <= 0xD7A3 && (last - 0xAC00) % 28 === 0;
+      const long = open && !(keep && keep.indexOf(i) >= 0) && (((c === 'う' || c === 'お') && (jung === 8 || jung === 12)) || (c === 'う' && (jung === 13 || jung === 17)));
+      out += long ? '-' : HG[c];
+    }
+    return out;
+  }
+  /* 한글 발음은 어절 단위로 띄어 쓴다: 조사·조동사·접미사는 앞말에 붙임 */
+  function lineHangul(l) {
+    if (l.kr) return l.kr;
+    const items = [];
+    l.toks.forEach((t) => {
+      if (t.kind === 'punct') { items.push({ p: t.plain }); return; }
+      const last = items[items.length - 1];
+      const attach = t.isFunc || (t.p || '').indexOf('접미사') === 0, k = kanaOf(t);
+      // 사전형 동사 끝의 う(思う·迷う)는 장음이 아니라 따로 소리 낸다. 의지형(しよう)처럼 b가 다른 활용형은 장음 그대로
+      const keepU = /^(보조)?동사/.test(t.p || '') && /う$/.test(k) && (!t.b || plainOf(t.b) === t.plain);
+      if (attach && last && last.k != null) { if (keepU) (last.keep = last.keep || []).push(last.k.length + k.length - 1); last.k += k; }
+      else items.push({ k: k, glue: attach && !!last && /[」』）]$/.test(last.p || ''), keep: keepU ? [k.length - 1] : null });
+    });
+    let out = '';
+    items.forEach((it, i) => {
+      if (it.p != null) {
+        const p = Array.from(it.p).map((c) => (HG_PUNCT[c] != null ? HG_PUNCT[c] : c)).join('');
+        out += (/^[「『（]/.test(p) && out && !/\s$/.test(out) ? ' ' : '') + p;
+        return;
+      }
+      const nx = items.slice(i + 1).find((x) => x.k != null);
+      let k = it.k;
+      let keep = it.keep;
+      if (it.glue && k[0] === 'っ') { const m = out.match(/^([\s\S]*?)([」』）]+)$/); if (m) { out = addJong(m[1], 19) + m[2]; k = k.slice(1); keep = keep && keep.map((x) => x - 1); } }
+      out += (out && !it.glue && !/[\s「『（]$/.test(out) ? ' ' : '') + kanaToHangul(k, nx ? nx.k[0] : '', keep);
+    });
+    return out.replace(/\s+/g, ' ').trim();
+  }
+
+  /* ── 곡 데이터 준비 ────────────────────────────────────── */
+  const FUNC_POS = ['조사', '조동사', '기호'];
+  function prepTok(raw) {
+    const t = Object.assign({}, raw);
+    t.plain = plainOf(t.t); t.reading = readingOf(t.t); t.scripts = scriptsOf(t.plain);
+    t.kind = t.scripts.length ? 'word' : 'punct';
+    t.isFunc = FUNC_POS.some((x) => (t.p || '').indexOf(x) === 0);
+    t.isVocab = t.kind === 'word' && t.v !== false && (t.v === true || (!t.isFunc && !!t.m));
+    t.vkey = t.k || plainOf(t.b || t.t);
+    t.special = segs(t.t).some((x) => x.sp);
+    return t;
+  }
+  function prepareSong(d) {
+    const s = Object.assign({}, d, { lines: [], vocab: [], grammar: [] });
+    s.sections = (d.sections || []).map((sec) => Object.assign({}, sec, { _lines: [] }));
+    const dict = d.dict || {}, byId = {};
+    let n = 0;
+    s.sections.forEach((sec, si) => {
+      (sec.lines || []).forEach((l) => {
+        n++;
+        const orig = l.same ? byId[l.same] : null;
+        let line;
+        if (orig) line = Object.assign({}, orig, { no: n, sec: si, rep: orig.no });
+        else {
+          line = Object.assign({}, l, { no: n, sec: si, key: s.id + ':' + (l.id || n) });
+          line.toks = (l.tk || []).map((t) => prepTok(Object.assign({}, dict[t.t], t)));
+          if (l.id) byId[l.id] = line;
+        }
+        s.lines.push(line); sec._lines.push(line);
+      });
+    });
+    s.uniq = s.lines.filter((l) => !l.rep);
+    const vmap = new Map();
+    s.uniq.forEach((line) => line.toks.forEach((t) => {
+      if (!t.isVocab) return;
+      let v = vmap.get(t.vkey);
+      if (!v) { v = { key: t.vkey, tok: t, refs: [] }; vmap.set(t.vkey, v); }
+      if (!v.refs.some((r) => r.line === line.no)) v.refs.push({ song: s.id, line: line.no });
+    }));
+    s.vocab = Array.from(vmap.values());
+    const gmap = new Map();
+    s.uniq.forEach((line) => (line.g || []).forEach((g) => {
+      const k = plainOf(g.k); let e = gmap.get(k);
+      if (!e) { e = Object.assign({}, g, { refs: [] }); gmap.set(k, e); }
+      if (e.refs.indexOf(line.no) < 0) e.refs.push(line.no);
+    }));
+    s.grammar = Array.from(gmap.values());
+    return s;
+  }
+  // 내려받은 단일 파일 판(build-standalone.js)은 곡·단어 데이터를 #hgn-data에 담고 있어 fetch 없이 연다(file://에서는 fetch가 막힌다)
+  let EMBED;
+  function embedded(key) {
+    if (EMBED === undefined) {
+      EMBED = null;
+      try { const n = document.getElementById('hgn-data'); if (n) EMBED = JSON.parse(n.textContent); } catch (e) { EMBED = null; }
+    }
+    return EMBED ? EMBED[key] : undefined;
+  }
+  const songs = {}; const loading = {};
+  function loadSong(id) {
+    if (songs[id]) return Promise.resolve(songs[id]);
+    const c = CATALOG.find((x) => x.id === id);
+    if (!c || c.status !== 'ready') return Promise.reject(new Error('not-ready'));
+    const local = embedded('songs');
+    if (local && local[id]) { const d = local[id]; d.id = d.id || id; songs[id] = prepareSong(d); return Promise.resolve(songs[id]); }
+    if (!loading[id]) {
+      loading[id] = fetch(c.file, { cache: 'no-cache' })
+        .then((r) => { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
+        .then((d) => { d.id = d.id || id; songs[id] = prepareSong(d); return songs[id]; })
+        .catch((e) => { delete loading[id]; throw e; });
+    }
+    return loading[id];
+  }
+  const songTitle = (id) => { const c = CATALOG.find((x) => x.id === id); return c ? plainOf(c.title) : id; };
+
+  /* ── 단어 사전 (words.json): 예문·관련 단어·활용 종류 ──────
+     { "<사전형>": { lv?(N5~N1, 없으면 목록 외), lvb?(목록에 없어 이 기본어의 수준을 썼을 때), lvn?(수준 설명),
+                    p?(품사 덮어쓰기), cls?(v5|v1|vs|vk|adj-i|adj-na), no?(뺄 활용형 키), forms?([[이름, 표기, 뜻]] 직접 지정),
+                    ex: [{ t, ko }], rel: [{ t, m, r(관계) }] } }
+     JLPT 수준은 비공식 Tanos 목록(open-anki-jlpt-decks) 대조 결과. 공식 목록은 2010년 이후 없음 */
+  let WORDS = null, wordsP = null;
+  const LEVELS = [['all', '전체'], ['N5', 'N5'], ['N4', 'N4'], ['N3', 'N3'], ['N2', 'N2'], ['N1', 'N1'], ['none', '목록 외']];
+  const lvOf = (key) => (WORDS && WORDS[key] && WORDS[key].lv) || 'none';
+  function lvBadge(key) {
+    const w = WORDS && WORDS[key]; if (!w) return '';
+    if (!w.lv) return '<span class="lv none" title="일반적인 JLPT 단어 목록에 없는 말">목록 외</span>';
+    return '<span class="lv' + (w.lvb ? ' base' : '') + '" title="' + esc(w.lvb ? '목록에 없어 기본어 ' + w.lvb + '의 수준으로 표시' : 'JLPT ' + w.lv) + '">' + w.lv + '</span>';
+  }
+  /* 수준 배지만으로는 알 수 없는 설명만 돌려줘요(기본어로 대신 매긴 수준, 동음이의어 주의 등). */
+  function lvText(key) {
+    const w = WORDS && WORDS[key]; if (!w) return '';
+    return [w.lv && w.lvb ? 'JLPT 단어 목록에는 없어서 기본어 ' + w.lvb + '의 수준(' + w.lv + ')으로 표시했어요.' : '', w.lvn || ''].filter(Boolean).join(' ');
+  }
+  function loadWords() {
+    const local = embedded('words');
+    if (!wordsP && local) { WORDS = local; wordsP = Promise.resolve(local); }
+    if (!wordsP) wordsP = fetch('words.json', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : {})).catch(() => ({})).then((d) => { WORDS = d; return d; });
+    return wordsP;
+  }
+  const GODAN = {
+    'う': ['わ', 'い', 'え', 'お', 'って', 'った'], 'く': ['か', 'き', 'け', 'こ', 'いて', 'いた'], 'ぐ': ['が', 'ぎ', 'げ', 'ご', 'いで', 'いだ'],
+    'す': ['さ', 'し', 'せ', 'そ', 'して', 'した'], 'つ': ['た', 'ち', 'て', 'と', 'って', 'った'], 'ぬ': ['な', 'に', 'ね', 'の', 'んで', 'んだ'],
+    'ぶ': ['ば', 'び', 'べ', 'ぼ', 'んで', 'んだ'], 'む': ['ま', 'み', 'め', 'も', 'んで', 'んだ'], 'る': ['ら', 'り', 'れ', 'ろ', 'って', 'った']
+  };
+  const FORM_V = [['masu', 'ます형', '정중하게'], ['te', 'て형', '~하고, ~해서'], ['ta', 'た형', '~했다'], ['nai', 'ない형', '~하지 않다'], ['pot', '가능형', '~할 수 있다'], ['ba', 'ば형', '~하면'], ['vol', '의지형', '~하자'], ['imp', '명령형', '~해라']];
+  const FORM_A = [['neg', '부정', '~하지 않다'], ['past', '과거', '~했다'], ['te', 'て형', '~하고, ~해서'], ['ba', 'ば형', '~하면'], ['adv', '부사형', '~하게'], ['noun', '명사형', '~함']];
+  const FORM_N = [['pol', '정중', '~입니다'], ['neg', '부정', '~하지 않다'], ['past', '과거', '~했다'], ['te', 'て형', '~하고'], ['attr', '명사 수식', '~한 + 명사'], ['adv', '부사형', '~하게']];
+  const CLS_NAME = { v5: '5단 동사', v1: '1단 동사', vs: 'する 동사', vk: '불규칙 동사', 'adj-i': 'い형용사', 'adj-na': 'な형용사' };
+  const CLS_NOTE = {
+    v5: '끝소리(う단)가 あ·い·え·お단으로 바뀌며 활용해요.', v1: '끝의 る를 떼고 뒤를 붙여요.', vs: 'する 부분만 활용해요.',
+    vk: '来る는 읽기가 き·く·こ로 바뀌는 불규칙 동사예요.', 'adj-i': '끝의 い가 く·かっ·けれ로 바뀌어요.', 'adj-na': '어간은 그대로 두고 뒤에 だ·な·に 등을 붙여요.'
+  };
+  function conjugate(base, w) {
+    if (w.forms) return w.forms.map((f) => ({ l: f[0], t: f[1], h: f[2] || '' }));
+    const plain = plainOf(base), no = w.no || [];
+    let F = null, L = FORM_V;
+    if (w.cls === 'v5') {
+      const g = GODAN[base.slice(-1)]; if (!g) return [];
+      const st = base.slice(0, -1), te = plain === '行く' ? ['って', 'った'] : [g[4], g[5]];
+      F = { masu: st + g[1] + 'ます', te: st + te[0], ta: st + te[1], nai: st + g[0] + 'ない', pot: st + g[2] + 'る', ba: st + g[2] + 'ば', vol: st + g[3] + 'う', imp: st + g[2] };
+    } else if (w.cls === 'v1') {
+      const st = base.slice(0, -1);
+      F = { masu: st + 'ます', te: st + 'て', ta: st + 'た', nai: st + 'ない', pot: st + 'られる', ba: st + 'れば', vol: st + 'よう', imp: st + 'ろ' };
+    } else if (w.cls === 'vs') {
+      const st = base.replace(/する$/, '');
+      F = { masu: st + 'します', te: st + 'して', ta: st + 'した', nai: st + 'しない', pot: st + 'できる', ba: st + 'すれば', vol: st + 'しよう', imp: st + 'しろ' };
+    } else if (w.cls === 'vk') {
+      const k = base.indexOf('{来|') === 0, r = (y, rest) => (k ? '{来|' + y + '}' : y) + rest;
+      F = { masu: r('き', 'ます'), te: r('き', 'て'), ta: r('き', 'た'), nai: r('こ', 'ない'), pot: r('こ', 'られる'), ba: r('く', 'れば'), vol: r('こ', 'よう'), imp: r('こ', 'い') };
+    } else if (w.cls === 'adj-i') {
+      const st = plain === 'いい' ? 'よ' : base.slice(0, -1); L = FORM_A;
+      F = { neg: st + 'くない', past: st + 'かった', te: st + 'くて', ba: st + 'ければ', adv: st + 'く', noun: st + 'さ' };
+    } else if (w.cls === 'adj-na') {
+      L = FORM_N;
+      F = { pol: base + 'です', neg: base + 'じゃない', past: base + 'だった', te: base + 'で', attr: base + 'な', adv: base + 'に' };
+    }
+    return F ? L.filter((x) => no.indexOf(x[0]) < 0).map((x) => ({ l: x[1], t: F[x[0]], h: x[2] })) : [];
+  }
+  const wBlock = (label, inner) => '<div class="wd-block"><h4 class="d-label">' + label + '</h4>' + inner + '</div>';
+  /* 예문·형태 변화·관련 단어. surf = 가사에 나온 형태들 (plain → 표기) */
+  function wordExtraHTML(key, base, surf) {
+    const w = (WORDS && WORDS[key]) || {}, forms = conjugate(base, w);
+    let h = '';
+    if (w.ex && w.ex.length) h += wBlock('예문', w.ex.map((x) => '<div class="wex"><div class="ex-row"><p class="wex-jp" lang="ja">' + renderJP(x.t) + '</p>' + speakBtn(speechOf(x.t)) + '</div><p class="ex-ko">' + rich(x.ko) + '</p></div>').join(''));
+    if (forms.length) {
+      const all = [{ l: '사전형', t: base, h: '기본' }].concat(forms), lab = new Map(all.map((f) => [plainOf(f.t), f.l]));
+      const hit = all.some((f) => surf.has(plainOf(f.t)));
+      const used = Array.from(surf.values()).filter((m) => !lab.has(plainOf(m)));
+      h += wBlock('형태 변화', (CLS_NAME[w.cls] ? '<p class="cls-note"><b>' + CLS_NAME[w.cls] + '</b> · ' + CLS_NOTE[w.cls] + '</p>' : '')
+        + '<div class="forms">' + all.map((f) => '<div class="form' + (surf.has(plainOf(f.t)) ? ' in-lyric' : '') + '"><small>' + f.l + (f.h ? ' · ' + f.h : '') + '</small><span class="jp" lang="ja">' + renderJP(f.t) + '</span></div>').join('') + '</div>'
+        + (hit ? '<p class="cls-note">색칠된 칸이 가사에 나온 형태예요.</p>' : '')
+        + (used.length ? '<p class="cls-note">가사에서 쓴 형태: ' + used.map((m) => '<span class="jp" lang="ja">' + renderJP(m) + '</span>').join(', ') + '</p>' : ''));
+    }
+    if (w.rel && w.rel.length) h += wBlock('관련 단어', '<div class="rels">' + w.rel.map((r) => '<span class="rel"><span class="rel-top"><span class="jp" lang="ja">' + renderJP(r.t) + '</span>' + (r.r ? '<span class="rel-r">' + esc(r.r) + '</span>' : '') + '</span><small>' + rich(r.m) + '</small></span>').join('') + '</div>');
+    return h;
+  }
+  function surfacesOf(e) {
+    const m = new Map();
+    e.refs.forEach((r) => { const s = songs[r.song], l = s && s.lines[r.line - 1]; if (l) l.toks.forEach((t) => { if (t.isVocab && t.vkey === e.key) m.set(t.plain, t.t); }); });
+    return m;
+  }
+  const lineMarked = (l, key) => l.toks.map((t) => (t.isVocab && t.vkey === key ? '<mark class="hl">' + renderJP(t.t) + '</mark>' : renderJP(t.t))).join('');
+  function wordDetailHTML(e, scope) {
+    const ctx = e.refs.slice(0, 3).map((r) => {
+      const s = songs[r.song], l = s && s.lines[r.line - 1]; if (!l) return '';
+      return '<div class="ctx"><p class="ctx-jp" lang="ja">' + lineMarked(l, e.key) + '</p>' + (l.ko ? '<p class="ctx-ko">' + rich(l.ko) + '</p>' : '')
+        + '<p class="ctx-meta">' + (scope === 'all' ? esc(songTitle(r.song)) + ' · ' : '') + r.line + '번째 줄 · <button class="ref" data-a="goto-line" data-song="' + esc(r.song) + '" data-line="' + r.line + '">가사에서 보기</button></p></div>';
+    }).join('') + (e.refs.length > 3 ? '<p class="cls-note">이 밖에 ' + (e.refs.length - 3) + '줄에 더 나와요.</p>' : '');
+    const lvNote = lvText(e.key);
+    return wBlock('가사 속 문장', (lvNote ? '<p class="cls-note">' + esc(lvNote) + '</p>' : '') + ctx) + wordExtraHTML(e.key, e.tok.b || e.tok.t, surfacesOf(e));
+  }
+
+  /* ── 설정 ─────────────────────────────────────────────── */
+  const DEFAULTS = { furi: true, kr: true, romaji: false, color: true, gaps: true, hideKo: false, size: 'm', rate: 0.9 };
+  const S = Object.assign({}, DEFAULTS, store.get('hgn.settings', {}));
+  S.gaps = true; /* 단어 경계 밑줄은 늘 켜 둬요(끄는 버튼 없음). 예전에 꺼 둔 설정이 남아 있어도 켜요. */
+  const saveS = () => store.set('hgn.settings', S);
+  function applyS() {
+    ROOT.classList.toggle('no-furi', !S.furi);
+    ROOT.classList.toggle('show-kr', !!S.kr);
+    ROOT.classList.toggle('show-romaji', !!S.romaji);
+    ROOT.classList.toggle('colorize', !!S.color);
+    ROOT.classList.toggle('gaps', !!S.gaps);
+    ROOT.classList.toggle('hide-ko', !!S.hideKo);
+    ROOT.setAttribute('data-size', S.size);
+    $$('[data-a="opt"]').forEach((b) => b.setAttribute('aria-pressed', String(!!S[b.dataset.opt])));
+    $$('input[data-opt]').forEach((i) => { i.checked = !!S[i.dataset.opt]; });
+    $$('[data-a="set"]').forEach((b) => b.setAttribute('aria-pressed', String(String(S[b.dataset.key]) === b.dataset.val)));
+  }
+  function setOpt(key, val) {
+    S[key] = val; saveS(); applyS();
+    if (key === 'hideKo') $$('.ko-wrap.revealed').forEach((x) => x.classList.remove('revealed'));
+  }
+
+  /* ── 발음 듣기 ─────────────────────────────────────────── */
+  const TTS = 'speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function';
+  if (!TTS) ROOT.classList.add('no-tts');
+  else { try { speechSynthesis.getVoices(); } catch (e) { /* 음성 목록은 나중에 채워짐 */ } }
+  function speak(text) {
+    if (!TTS || !text) return;
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ja-JP'; u.rate = S.rate;
+      const v = speechSynthesis.getVoices().find((x) => /^ja([-_]|$)/i.test(x.lang));
+      if (v) u.voice = v;
+      u.onerror = (ev) => { if (ev.error !== 'interrupted' && ev.error !== 'canceled') toast('음성을 재생하지 못했어요. 기기에 일본어 음성이 있는지 확인해 주세요.'); };
+      speechSynthesis.speak(u);
+    } catch (e) { toast('이 브라우저에서는 발음 듣기를 쓸 수 없어요.'); }
+  }
+
+  /* ── 학습 기록: claude.ai 계정(가능하면) + 브라우저 사본 ── */
+  const Progress = {
+    data: { w: {}, l: {} }, mode: 'local', ref: null, dirty: false, writing: false, timer: 0, retries: 0, viewOnly: false,
+    load() { const d = store.get('hgn.progress', null); if (d && typeof d === 'object') this.data = { w: Object.assign({}, d.w), l: Object.assign({}, d.l) }; },
+    async connect() {
+      try {
+        if (!window.claude || typeof window.claude.use !== 'function') return;
+        const pair = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+        const db = pair[0], user = pair[1];
+        if (!db || !user) return;
+        // 보기 권한만 있는 사람(공유받은 Viewer 등)은 자기 기록도 쓸 수 없다. 조직 밖 사람은 can()이 null이라 첫 저장 거절로 판단한다.
+        const uid = await user.id();
+        let canWrite = null;
+        try { canWrite = await user.can('data.write'); } catch (e) { canWrite = null; }
+        if (!uid || canWrite === false) { this.viewOnly = true; updateSyncLabel(); return; }
+        this.ref = db.doc('data/users/' + uid + '/progress');
+        this.mode = 'cloud'; updateSyncLabel();
+        this.ref.onSnapshot((snap) => {
+          if (this.dirty || this.writing || !snap.exists) return;
+          const d = snap.data() || {};
+          this.data = { w: Object.assign({}, d.w), l: Object.assign({}, d.l) };
+          store.set('hgn.progress', this.data); refreshProgressUI();
+        }, () => { this.goLocal(); });
+      } catch (e) { this.goLocal(); }
+    },
+    goLocal() { this.ref = null; this.mode = 'local'; updateSyncLabel(); },
+    has(type, key) { return !!this.data[type][key]; },
+    toggle(type, key) {
+      const m = this.data[type];
+      if (m[key]) delete m[key]; else m[key] = 1;
+      this.commit(); return !!m[key];
+    },
+    clear() { this.data = { w: {}, l: {} }; this.commit(); },
+    commit() { store.set('hgn.progress', this.data); refreshProgressUI(); if (this.ref) { this.dirty = true; clearTimeout(this.timer); this.timer = setTimeout(() => this.flush(), 800); } },
+    async flush() {
+      if (!this.ref) return;
+      if (this.writing) { clearTimeout(this.timer); this.timer = setTimeout(() => this.flush(), 400); return; }
+      this.writing = true; this.dirty = false;
+      try { await this.ref.set({ w: this.data.w, l: this.data.l, v: 1 }); this.retries = 0; }
+      catch (e) {
+        const code = e && e.code;
+        if ((code === 'unavailable' || code === 'resource_exhausted') && this.retries < 2) {
+          this.retries++; this.dirty = true; clearTimeout(this.timer);
+          this.timer = setTimeout(() => this.flush(), 1500 + Math.random() * 2500);
+        } else if (code === 'quota_exceeded') { toast('기록 저장 공간이 가득 찼어요. 이 브라우저에는 계속 저장돼요.'); this.goLocal(); }
+        else { if (code === 'invalid_argument') this.viewOnly = true; this.goLocal(); }
+      } finally { this.writing = false; }
+    }
+  };
+  function updateSyncLabel() {
+    const cloud = Progress.mode === 'cloud';
+    const l = $('#sync-label');
+    const built = embedded('built');
+    if (l) l.textContent = cloud
+      ? '이해한 줄과 외운 단어가 claude.ai 계정에 저장돼요. PC와 휴대폰에서 같은 기록이 이어져요.'
+      : built
+        ? '이 파일은 ' + built + '에 내려받은 판이에요. 이해한 줄과 외운 단어는 지금 쓰는 브라우저에만 저장돼요.'
+        : Progress.viewOnly
+        ? '이 페이지에서는 계정에 기록을 남길 수 없어서, 이해한 줄과 외운 단어가 이 브라우저에만 저장돼요.'
+        : '이해한 줄과 외운 단어가 이 브라우저에만 저장돼요. claude.ai에 로그인한 상태로 열면 기기 사이에 기록이 이어져요.';
+    const s = $('#side-sync');
+    if (s) { s.textContent = cloud ? '기기 간 기록 동기화 중' : '이 브라우저에만 저장'; s.setAttribute('data-on', cloud ? '1' : '0'); }
+  }
+
+  /* ── 내려받기: 곡·단어 데이터를 담은 단일 HTML 파일을 기기에 저장 (claude.ai에서 열었을 때만) ── */
+  const DL = { api: null, file: 'download/higedan-note.html', name: 'higedan-note.html' };
+  async function setupDownload() {
+    try {
+      if (embedded('built') || !window.claude || typeof window.claude.use !== 'function') return;
+      DL.api = await window.claude.use('downloads');
+    } catch (e) { DL.api = null; }
+    ROOT.classList.toggle('can-dl', !!DL.api);
+  }
+  async function saveOffline(btn) {
+    if (!DL.api || btn.disabled) return;
+    btn.disabled = true;
+    try {
+      const r = await fetch(DL.file, { cache: 'no-cache' });
+      if (!r.ok) throw new Error('http ' + r.status);
+      await DL.api.save({ filename: DL.name, data: await r.blob() });
+      toast('파일을 저장했어요. 더블클릭하면 브라우저에서 열려요.');
+    } catch (e) {
+      const code = e && e.code;
+      if (code === 'declined') return;
+      if (code === 'rate_limited') toast('저장 창이 이미 떠 있어요. 잠시 뒤 다시 눌러 주세요.');
+      else if (code && code !== 'bad_request' && code !== 'transform_error' && code !== 'too_large') { DL.api = null; ROOT.classList.remove('can-dl'); toast('이 화면에서는 내려받기를 쓸 수 없어요.'); }
+      else toast('파일을 준비하지 못했어요. 잠시 뒤 다시 시도해 주세요.');
+    } finally { btn.disabled = false; }
+  }
+  function progHTML(id) {
+    return '<div class="prog" data-prog="' + esc(id) + '"><div class="prog-bar"><i></i></div><div class="prog-txt"><span class="p-l">이해한 줄 –</span><span class="p-w">외운 단어 –</span></div></div>';
+  }
+  function updateProg(el) {
+    const s = songs[el.dataset.prog]; if (!s) return;
+    const ld = s.uniq.filter((l) => Progress.has('l', l.key)).length;
+    const wd = s.vocab.filter((v) => Progress.has('w', v.key)).length;
+    el.querySelector('i').style.width = (s.uniq.length ? (ld / s.uniq.length) * 100 : 0) + '%';
+    el.querySelector('.p-l').textContent = '이해한 줄 ' + ld + '/' + s.uniq.length;
+    el.querySelector('.p-w').textContent = '외운 단어 ' + wd + '/' + s.vocab.length;
+  }
+  function refreshProgressUI() {
+    $$('[data-wk]').forEach((b) => b.setAttribute('aria-pressed', String(Progress.has('w', b.dataset.wk))));
+    $$('[data-vrow]').forEach((r) => r.classList.toggle('learned', Progress.has('w', r.dataset.vrow)));
+    $$('[data-lk]').forEach((b) => { const on = Progress.has('l', b.dataset.lk); b.setAttribute('aria-pressed', String(on)); const li = b.closest('.line'); if (li) li.classList.toggle('done', on); });
+    $$('[data-prog]').forEach(updateProg);
+    $$('[data-vmount]').forEach((m) => { if (m._redraw) m._redraw(); });
+  }
+
+  /* ── 공통 조각 ─────────────────────────────────────────── */
+  const setView = (html) => { $('#view').innerHTML = html; };
+  function toast(msg) {
+    const t = $('#toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(state.toastT); state.toastT = setTimeout(() => { t.hidden = true; }, 2400);
+  }
+  const optBtn = (k, label) => '<button class="tg" data-a="opt" data-opt="' + k + '" aria-pressed="' + !!S[k] + '">' + label + '</button>';
+  const speakBtn = (say, label) => '<button class="ico" data-a="speak" data-say="' + esc(say) + '" aria-label="' + (label || '발음 듣기') + '" title="' + (label || '발음 듣기') + '">' + I.speaker + '</button>';
+  function whyAuto(t) {
+    const s = t.scripts, p = t.p || '';
+    if (t.special) return '가사 특유의 읽기예요. 한자로는 뜻을 보여 주고, 위에 단 루비로 실제로 부르는 소리를 따로 정했어요.';
+    if (p.indexOf('조사') === 0) return '조사는 단어 뒤에 붙어 문법 관계만 나타내는 기능어라서 항상 히라가나로 써요.';
+    if (p.indexOf('조동사') === 0) return '조동사(〜ます・〜たい・〜ない 등)는 문법 요소라서 히라가나로 써요.';
+    if (s.indexOf('k') >= 0 && s.indexOf('h') >= 0) return '뜻을 담은 앞부분(어간)은 한자로, 활용하면서 모양이 바뀌는 뒷부분(오쿠리가나)은 히라가나로 써요.';
+    if (s.length === 1 && s[0] === 'k') return '뜻을 가진 내용어는 보통 한자로 써요. 한자 덕분에 띄어쓰기 없이도 단어의 경계가 눈에 들어와요.';
+    if (s.length === 1 && s[0] === 'a') return '외래어나 외국어 소리를 옮긴 말, 또는 강조하고 싶은 말은 가타카나로 써요.';
+    if (s.length === 1 && s[0] === 'l') return '영어를 알파벳 그대로 썼어요. J-POP 가사에서는 영어 단어나 구절을 그대로 섞는 일이 흔해요.';
+    if (s.length === 1 && s[0] === 'h') return '부사·접속사·감탄사처럼 문법적인 성격이 강한 말은 한자가 있더라도 보통 히라가나로 써요.';
+    return '여러 문자가 섞인 표기예요. 글자 색으로 어느 부분이 어떤 문자인지 확인해 보세요.';
+  }
+  function legendHTML() {
+    const it = [['k', '漢', '한자', '뜻을 담는 글자'], ['h', 'あ', '히라가나', '문법을 잇는 글자'], ['a', 'ア', '가타카나', '바깥에서 온 말'], ['l', 'A', '영어', '가사 속 영어']];
+    return '<div class="legend">' + it.map((x) => '<div class="lg lg-' + x[0] + '"><span class="lg-ch" lang="ja" aria-hidden="true">' + x[1] + '</span><span><b>' + x[2] + '</b><small>' + x[3] + '</small></span></div>').join('') + '</div>';
+  }
+
+  /* ── 홈 ───────────────────────────────────────────────── */
+  function cardHTML(c) {
+    if (c.status !== 'ready') {
+      return '<div class="song-card soon" aria-disabled="true"><div class="sc-top"><span class="pill">가사 대기 중</span><span class="sc-meta">' + rich(c.meta) + '</span></div>'
+        + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub">' + rich(c.sub) + '</p><p class="sc-sub muted">가사를 받으면 한 줄씩 해석이 채워져요.</p></div>';
+    }
+    return '<a class="song-card" href="#song.' + c.id + '" data-a="nav" data-to="song.' + c.id + '"><div class="sc-top"><span class="pill ' + (c.demo ? 'demo' : 'ready') + '">' + (c.demo ? '예시' : '해석 완료') + '</span><span class="sc-meta">' + rich(c.meta) + '</span></div>'
+      + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub">' + rich(c.sub) + '</p>' + progHTML(c.id) + '</a>';
+  }
+  function resumeHTML() {
+    const last = store.get('hgn.last', null);
+    if (!last || !last.song || !CATALOG.some((c) => c.id === last.song && c.status === 'ready')) return '';
+    return '<button class="resume" data-a="goto-line" data-song="' + esc(last.song) + '" data-line="' + (+last.line || 1) + '">이어서 보기 · ' + rich(songTitle(last.song)) + ' ' + (+last.line || 1) + '번째 줄 →</button>';
+  }
+  function bandHTML() {
+    const members = [['{藤原聡|ふじはらさとし}', '보컬·피아노'], ['{小笹大輔|おざさだいすけ}', '기타'], ['{楢﨑誠|ならざきまこと}', '베이스'], ['{松浦匡希|まつうらまさき}', '드럼']];
+    const tl = [
+      ['2018', 'ノーダウト', '메이저 데뷔 싱글 · 드라마 「コンフィデンスマンJP」 주제가'],
+      ['2019', 'Pretender', '영화 「コンフィデンスマンJP ロマンス編」 주제가'],
+      ['2019', '{宿命|しゅくめい}', '고교야구 프로그램 「熱闘甲子園」 테마송'],
+      ['2020', 'I LOVE...', '드라마 「恋はつづくよどこまでも」 주제가'],
+      ['2021', 'Cry Baby', '애니메이션 「東京リベンジャーズ」 오프닝'],
+      ['2022', 'ミックスナッツ', '애니메이션 「SPY×FAMILY」 오프닝'],
+      ['2022', 'Subtitle', '드라마 「silent」 주제가']
+    ];
+    return '<div class="band"><div class="band-text"><h2 class="h2">히게단은 어떤 밴드?</h2>'
+      + '<p>정식 이름은 ' + rich('[[Official{髭男|ひげだん}dism]]') + '(오피셜 히게단디즘). 髭男는 \'수염 난 남자\'라는 뜻이고, 뒤의 dism은 댄디즘(dandyism)에서 따왔어요. \'수염이 어울리는 나이가 되어도 모두가 설레는 음악을 계속하고 싶다\'는 마음을 담은 이름이에요. 팬들은 줄여서 ' + rich('[[ヒゲダン]]') + '이라고 불러요.</p>'
+      + '<p>2012년 시마네현에서 결성된 4인조 피아노 팝 밴드예요. 대부분의 곡을 보컬 藤原聡가 작사·작곡해요.</p>'
+      + '<div class="members">' + members.map((m) => '<div class="member"><span class="jp" lang="ja">' + rich(m[0]) + '</span><small>' + m[1] + '</small></div>').join('') + '</div>'
+      + '<div class="aside-box"><span class="eyebrow">문화 노트</span>Pretender가 크게 히트한 2019년, 히게단은 연말 NHK ' + rich('「紅白歌合戦」') + '(홍백가합전)에 처음 출전했어요. 그해 가장 사랑받은 가수만 초대되는 무대라서, 출전 자체가 \'국민 가수\'로 인정받았다는 뜻으로 받아들여져요.</div>'
+      + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
+      + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></div></div>';
+  }
+  function viewHome() {
+    setView('<section class="hero">'
+      + '<h1 class="hero-title">가사로 읽는 일본어</h1>'
+      + '<p class="lede">노래 가사를 한 줄씩 뜯어보며 일본어의 문자와 문법, 그 안에 담긴 문화까지 함께 익혀요. 한 문장 안에서 글자 종류가 바뀌는 데에는 다 이유가 있어요. 그 이유부터 짚어 갑니다.</p>'
+      + legendHTML() + '<div class="hero-links">' + resumeHTML() + '<button class="resume" data-a="nav" data-to="kana">히라가나·가타카나부터 익히기 →</button><button class="resume" data-a="download" data-dl>HTML 파일로 내려받기 ↓</button></div></section>'
+      + '<section class="block"><div class="block-head"><h2 class="h2">곡 목록</h2><p class="muted">곡이 추가될 때마다 여기에 쌓여요.</p></div><div class="cards">' + CATALOG.map(cardHTML).join('') + '</div></section>'
+      + '<section class="block"><h2 class="h2">공부하는 순서</h2><ol class="steps">'
+      + '<li><b>색으로 문자 구분하기</b><p>가사 한 줄을 읽으며 한자·히라가나·가타카나가 어디서 바뀌는지 먼저 봐요. 바뀌는 지점이 대개 단어의 경계예요.</p></li>'
+      + '<li><b>단어를 눌러 이유 확인</b><p>단어를 누르면 읽기·뜻·사전형과 함께 \'왜 이 문자로 썼는지\'가 나와요.</p></li>'
+      + '<li><b>직역과 해석 비교</b><p>\'자세히 보기\'에서 직역과 자연스러운 해석을 비교하고 문법·문화 노트를 읽어요.</p></li>'
+      + '<li><b>체크하며 쌓기</b><p>이해한 줄과 외운 단어를 체크하면 곡마다 진행률이 쌓여요.</p></li>'
+      + '</ol></section>'
+      + '<section class="block">' + bandHTML() + '</section>');
+    CATALOG.filter((c) => c.status === 'ready').forEach((c) => loadSong(c.id).then(refreshProgressUI).catch(() => {}));
+  }
+
+  /* ── 문자 가이드 ───────────────────────────────────────── */
+  function exBox(markup, ko) {
+    return '<div class="ex"><div class="ex-row"><p class="ex-jp force-color" lang="ja">' + renderJP(markup) + '</p>' + speakBtn(speechOf(markup)) + '</div>' + (ko ? '<p class="ex-ko">' + rich(ko) + '</p>' : '') + '</div>';
+  }
+  const ul = (items) => '<ul class="rules">' + items.map((x) => '<li>' + rich(x) + '</li>').join('') + '</ul>';
+  const GUIDE = [
+    { id: 'g-mix', ko: '한 문장, 세 가지 문자', jp: '{漢字|かんじ}・ひらがな・カタカナ', body: () =>
+      '<p>일본어는 한자·히라가나·가타카나를 한 문장 안에 섞어 써요. 아무렇게나 섞는 게 아니라 문자마다 맡은 역할이 있어요.</p>'
+      + exBox('{今日|きょう}は{雨|あめ}だから、コーヒーを{飲|の}みます', '오늘은 비가 오니까 커피를 마셔요.')
+      + '<div class="roles"><div class="role k"><h3>한자 · 뜻의 덩어리</h3><p>명사, 동사·형용사의 앞부분</p><p>' + rich('[[{今日|きょう}・{雨|あめ}・{飲|の}]]') + '</p></div>'
+      + '<div class="role h"><h3>히라가나 · 문법의 접착제</h3><p>조사, 활용 어미, 조동사</p><p>' + rich('[[は・だから・を・みます]]') + '</p></div>'
+      + '<div class="role a"><h3>가타카나 · 바깥에서 온 말</h3><p>외래어, 외국 이름, 강조</p><p>' + rich('[[コーヒー]]') + '</p></div></div>'
+      + '<p>한국어로 비유하면 한자는 <b>단어의 몸통</b>, 히라가나는 \'은/는·을/를·-습니다\' 같은 <b>조사와 어미</b>예요. 일본어는 띄어쓰기를 하지 않는데, 문자 종류가 바뀌는 지점이 대개 단어의 경계라서 읽을 수 있어요.</p>' },
+    { id: 'g-hira', ko: '히라가나 · 문법을 잇는 글자', jp: 'ひらがな', body: () =>
+      ul(['**조사**: [[は・が・を・に・で・の]] 단어 뒤에 붙어 문장 속 역할을 정해요.',
+        '**활용 어미(오쿠리가나)**: [[{飲|の}む・{飲|の}まない・{飲|の}んで]] 한자 부분은 그대로, 뒤의 히라가나만 바뀌어요.',
+        '**조동사**: [[〜ます・〜たい・〜ない]] 정중함, 바람, 부정 같은 뜻을 더해요.',
+        '**원래 히라가나로 쓰는 말**: [[とても・もう・まだ・ありがとう]] 부사나 인사말은 한자가 있어도 보통 히라가나로 써요.',
+        '**가사에서 일부러**: 한자로 쓸 수 있는 말을 히라가나로 풀면 부드럽고 여린 느낌이 나요. [[{涙|なみだ}]]와 [[なみだ]]는 같은 말이지만 인상이 달라요.'])
+      + '<div class="aside-box"><span class="eyebrow">문화 노트</span>히라가나는 한자를 흘려 쓴 초서체에서 나왔어요(安 → あ, 以 → い). 헤이안 시대 궁정 여성들이 주로 썼다고 해서 \'온나데(女手)\'라고도 불렸고, 『겐지 이야기(源氏物語)』 같은 고전 문학이 히라가나로 쓰였어요.</div>' },
+    { id: 'g-kata', ko: '가타카나 · 바깥에서 온 말, 그리고 강조', jp: 'カタカナ', body: () =>
+      ul(['**외래어**: [[コーヒー・ドア・テレビ]]',
+        '**외국의 이름·지명**: [[ソウル・アメリカ]]',
+        '**흉내말**: [[ドキドキ・ワクワク]] 두근두근, 설렘. 히라가나로도 써요.',
+        '**강조·말투 살리기**: [[ダメ・ホント・マジ]] 원래 일본어지만 가타카나로 쓰면 구어체 느낌이 살아나요.',
+        '**장음 기호 ー**: 앞 소리를 한 박자 늘여요. [[コーヒー]] = ko-o-hi-i'])
+      + '<div class="aside-box"><span class="eyebrow">이름 속 가타카나</span>밴드 애칭 ' + rich('[[ヒゲダン]]') + '도 가타카나예요. 정식 이름 ' + rich('[[Official{髭男|ひげだん}dism]]') + '의 髭(수염)는 어려운 한자라서, 줄임말은 소리만 가타카나로 옮겨 써요.</div>'
+      + '<div class="aside-box"><span class="eyebrow">문화 노트</span>가타카나는 한자의 일부를 떼어 만든 글자예요(伊 → イ, 加 → カ). 승려와 학자들이 한문 불경을 읽을 때 옆에 작게 달던 보조 기호에서 출발했어요.</div>' },
+    { id: 'g-kanji', ko: '한자 · 뜻을 담는 글자', jp: '{漢字|かんじ}', body: () =>
+      ul(['**명사**: [[{雨|あめ}・{空|そら}・{心|こころ}]]',
+        '**동사·형용사의 어간**: [[{飲|の}む・{好|す}き・{美|うつく}しい]]',
+        '**두 가지 읽기**: 중국 발음에서 온 **음독(音読み)**과, 일본 고유어를 붙인 **훈독(訓読み)**이 있어요. [[{山|やま}]]은 훈독, [[{富士山|ふじさん}]]의 山은 음독이에요.',
+        '**한국어 화자의 지름길**: 음독은 한국 한자음과 닮은 경우가 많아요. [[{運命|うんめい}]] 운명, [[{世界|せかい}]] 세계, [[{約束|やくそく}]] 약속.',
+        '**반복 기호 々**: 같은 한자를 되풀이할 때 써요. [[{人々|ひとびと}・{時々|ときどき}]]'])
+      + '<div class="aside-box"><span class="eyebrow">알아 두기</span>일본 정부가 일상 표기의 기준으로 정한 상용한자(常用漢字)는 2,136자예요. 그 밖의 어려운 한자는 히라가나로 풀어 쓰거나 루비를 달아요.</div>' },
+    { id: 'g-ruby', ko: '후리가나와 가사 속 특수 읽기', jp: 'ルビ', body: () =>
+      '<p>후리가나(ルビ)는 한자 위에 작게 단 읽는 법이에요. 어린이 책이나 어려운 한자에 달고, 가사집에도 자주 보여요. 이 노트에서는 설정에서 켜고 끌 수 있어요.</p>'
+      + ul(['**숙자훈(熟字訓)**: 글자 하나하나가 아니라 단어 전체에 읽기가 붙은 경우예요. [[{今日|きょう}・{明日|あした}・{大人|おとな}]]',
+        '**가사의 특수 읽기**: 한자로는 \'뜻\'을, 루비로는 \'실제로 부르는 소리\'를 보여 줘요. 이 노트에서는 점선 밑줄과 다른 색 루비로 표시해요.'])
+      + '<div class="ex-grid">' + exBox('{運命|さだめ|*}', '운명 → さだめ(정해진 숙명)') + exBox('{本気|マジ|*}', '진심 → マジ(진짜)') + exBox('{地球|ほし|*}', '지구 → ほし(별)') + exBox('{未来|あした|*}', '미래 → あした(내일)') + '</div>'
+      + '<p>한 단어에 두 가지 뜻을 겹쳐 놓는 기법이라, 한국어 번역으로는 하나밖에 살리지 못하는 경우가 많아요. 곡 해석에서 그 차이를 따로 짚을게요.</p>' },
+    { id: 'g-lyric', ko: '가사만의 표기 습관', jp: '{歌詞|かし}の{書|か}き{方|かた}', body: () =>
+      ul(['**띄어쓰기는 호흡**: 일본어 문장엔 원래 띄어쓰기가 없어요. 가사에서는 넓은 공백(전각 공백)으로 프레이즈를 나눠요.',
+        '**영어 섞기**: 알파벳으로 쓰면 영어 발음 그대로, 가타카나로 쓰면 일본식 발음으로 부른다는 신호예요. [[Goodbye]]와 [[グッバイ]]의 차이죠.',
+        '**1인칭이 화자를 정해요**: [[{僕|ぼく}]] 부드러운 남성·소년, [[{俺|おれ}]] 거칠고 솔직한 남성, [[{私|わたし}]] 중립적·공적, [[あたし]] 여성의 구어체. 히게단 곡에는 僕가 자주 나와요.',
+        '**2인칭 君**: 일상 대화에서는 상대를 [[{君|きみ}]]나 [[あなた]]로 직접 부르기보다 이름을 부르는 게 자연스러워요. 그래서 가사 속 君는 \'특별한 단 한 사람\'을 향한 느낌이 강해요.']) },
+    { id: 'g-particle', ko: '조사 한눈에 보기', jp: '{助詞|じょし}', body: () => {
+      const rows = [['は', 'wa', '은/는 (주제)', '{私|わたし}は = 나는'], ['が', 'ga', '이/가 (주어·대상)', '{雨|あめ}が = 비가'], ['を', 'o', '을/를', 'コーヒーを = 커피를'],
+        ['に', 'ni', '에/에게 (시간·도착점·대상)', '{君|きみ}に = 너에게'], ['で', 'de', '에서/(으)로 (장소·수단)', 'ここで = 여기서'], ['へ', 'e', '(으)로 (방향)', '{未来|みらい}へ = 미래로'],
+        ['と', 'to', '와/과, ~라고', '{君|きみ}と = 너와'], ['の', 'no', '의', '{僕|ぼく}の = 나의'], ['も', 'mo', '도', '{僕|ぼく}も = 나도'],
+        ['から', 'kara', '부터, ~니까', '{今|いま}から = 지금부터'], ['まで', 'made', '까지', '{明日|あした}まで = 내일까지'], ['よ・ね', 'yo · ne', '문장 끝: ~야(알림) / ~지?(공감)', '{好|す}きだよ = 좋아해']];
+      return '<div class="table-wrap"><table><thead><tr><th>조사</th><th>발음</th><th>한국어</th><th>예</th></tr></thead><tbody>'
+        + rows.map((r) => '<tr><td class="p-jp" lang="ja">' + esc(r[0]) + '</td><td class="p-ro">' + r[1] + '</td><td>' + r[2] + '</td><td>' + rich(r[3]) + '</td></tr>').join('')
+        + '</tbody></table></div><p>は·へ·を는 조사로 쓰일 때 발음이 글자와 달라요(wa·e·o). 옛 표기법이 조사에만 남은 흔적이에요.</p>'; } },
+    { id: 'g-conj', ko: '동사·형용사 활용', jp: '{活用|かつよう}', body: () => {
+      const vs = [['{書|か}く', 'v5', '5단'], ['{見|み}る', 'v1', '1단'], ['する', 'vs', 'する'], ['{来|く}る', 'vk', '来る']].map((x) => ({ h: x[2], f: conjugate(x[0], { cls: x[1] }), b: x[0] }));
+      const as = [['{痛|いた}い', 'adj-i', 'い형용사'], ['いい', 'adj-i', 'いい (예외)'], ['{綺麗|きれい}', 'adj-na', 'な형용사']].map((x) => ({ h: x[2], f: conjugate(x[0], { cls: x[1] }), b: x[0] }));
+      const table = (cols, n) => '<div class="table-wrap"><table><thead><tr><th>형태</th>' + cols.map((c) => '<th>' + c.h + '</th>').join('') + '</tr></thead><tbody>'
+        + '<tr><td>사전형</td>' + cols.map((c) => '<td class="jp force-color" lang="ja">' + renderJP(c.b) + '</td>').join('') + '</tr>'
+        + cols[0].f.map((row, i) => '<tr><td>' + row.l + '<br><small class="muted">' + row.h + '</small></td>' + cols.map((c) => '<td class="jp force-color" lang="ja">' + (c.f[i] ? renderJP(c.f[i].t) : '') + '</td>').join('') + '</tr>').slice(0, n).join('')
+        + '</tbody></table></div>';
+      return '<p>일본어 동사는 뒤의 히라가나(오쿠리가나)를 바꿔 활용해요. 활용 방식에 따라 크게 세 무리로 나뉘어요.</p>'
+        + ul(['**5단 동사**: 끝소리(う단)가 あ·い·う·え·お 다섯 단으로 바뀌어요. [[{書|か}か・{書|か}き・{書|か}く・{書|か}け・{書|か}こ]]',
+          '**1단 동사**: 끝의 る를 떼고 뒤를 붙여요. [[{見|み}る → {見|み}ます・{見|み}ない]]',
+          '**불규칙 동사**: する(하다)와 来る(오다) 둘뿐이에요. 来る는 읽기까지 き·く·こ로 바뀌어요.',
+          '**구별 요령**: る로 끝나고 바로 앞이 い단·え단 소리면 대개 1단(見る, 食べる), 나머지는 5단이에요. 다만 知る·帰る·入る처럼 1단처럼 보이는 5단 동사도 있어요.',
+          '**て형·た형의 소리 변화(5단)**: う·つ·る → って, ぬ·ぶ·む → んで, く → いて, ぐ → いで, す → して. 行く만 예외로 行って.'])
+        + table(vs, 99)
+        + '<p>형용사는 두 종류예요. <b>い형용사</b>는 끝의 い가 바뀌고, <b>な형용사</b>는 어간에 だ·な·に를 붙여요. いい는 원래 よい라서 활용할 때 よ-로 돌아가요.</p>'
+        + '<div class="table-wrap"><table><thead><tr><th>형태</th>' + as.map((c) => '<th>' + c.h + '</th>').join('') + '</tr></thead><tbody>'
+        + '<tr><td>사전형</td>' + as.map((c) => '<td class="jp force-color" lang="ja">' + renderJP(c.b) + '</td>').join('') + '</tr>'
+        + [['부정', '~하지 않다', 'neg'], ['과거', '~했다', 'past'], ['て형', '~하고', 'te'], ['부사형', '~하게', 'adv']].map((r) => '<tr><td>' + r[0] + '<br><small class="muted">' + r[1] + '</small></td>'
+          + as.map((c) => { const f = c.f.find((x) => x.l === r[0]); return '<td class="jp force-color" lang="ja">' + (f ? renderJP(f.t) : '') + '</td>'; }).join('') + '</tr>').join('')
+        + '</tbody></table></div><p>단어장에서 동사·형용사를 펼치면 이 규칙대로 만든 활용표가 나와요. 가사에 나온 형태는 색칠돼 있어요.</p>'; } }
+  ];
+  function viewGuide() {
+    setView('<header class="page-head"><p class="eyebrow">가사를 읽기 전에</p><h1 class="page-title">문자 가이드</h1>'
+      + '<p class="lede">왜 여기는 히라가나고 저기는 가타카나인지, 가사에 나오는 표기 규칙을 모았어요. 곡 해석의 \'왜 이 문자?\' 설명은 모두 이 규칙과 이어져요. 글자 하나하나의 모양과 유래는 <button class="ref" data-a="nav" data-to="kana">히라가나·가타카나</button> 탭에서 볼 수 있어요.</p>'
+      + '<div class="toc">' + GUIDE.map((g) => '<button class="tg sm" data-a="jump" data-target="' + g.id + '">' + g.ko.split(' · ')[0] + '</button>').join('') + '</div></header>'
+      + GUIDE.map((g) => '<section class="gsec" id="' + g.id + '"><h2><span>' + esc(g.ko) + '</span><span class="jp force-color" lang="ja">' + renderJP(g.jp) + '</span></h2>' + g.body() + '</section>').join(''));
+  }
+
+  /* ── 음식으로 보는 일본어 ─────────────────────────────── */
+  /* 항목: [표기, 뜻, 메모?]. 회화는 [표기, 뜻, 누가 말하나]. */
+  const FOOD = {
+    menu: [
+      ['{寿司|すし}', '초밥', '寿司는 \'축하할 일(寿)을 맡는다(司)\'는 좋은 뜻의 한자를 소리에 맞춰 빌려 쓴 표기예요. 간판에는 すし, 鮨로도 써요.'],
+      ['ラーメン', '라멘', '중국에서 들어온 국수라 외래어처럼 가타카나로 써요.'],
+      ['{天|てん}ぷら', '튀김', '포르투갈어에서 왔다는 설이 유력해요. 뒷부분 麩羅가 어려운 한자라 ぷら만 히라가나로 풀어 쓰는 경우가 많아요.'],
+      ['うどん', '우동', '한자 饂飩가 너무 어려워서 보통 히라가나로 써요.'],
+      ['そば', '메밀국수', '한자로는 蕎麦인데, 메뉴판에는 そば와 蕎麦를 둘 다 써요.'],
+      ['{牛丼|ぎゅうどん}', '소고기덮밥', '丼는 그릇에 밥을 담고 위에 반찬을 얹은 덮밥이에요. 혼자 쓰면 どんぶり, 다른 말 뒤에 붙으면 どん으로 읽어요.'],
+      ['{親子丼|おやこどん}', '닭고기 달걀덮밥', '닭(어버이)과 달걀(자식)이 한 그릇에 들어가서 \'부모 자식(親子) 덮밥\'이에요.'],
+      ['{焼|や}き{鳥|とり}', '닭꼬치', '焼く(굽다) + 鳥(새). 한자 뜻을 그대로 이어 붙인 이름이에요.'],
+      ['お{好|この}み{焼|や}き', '오코노미야키', '\'좋아하는 것(お好み)을 넣어 굽는다\'는 뜻이에요.'],
+      ['たこ{焼|や}き', '타코야키', 'たこ(문어)는 한자 蛸가 어려워서 히라가나로 써요.'],
+      ['{唐揚|からあ}げ', '닭튀김(가라아게)', '唐는 옛 중국을 가리키는 한자예요. \'중국식 튀김\'이라는 이름이 굳어졌어요.'],
+      ['{刺身|さしみ}', '회', ''],
+      ['{味噌汁|みそしる}', '된장국', '味噌(된장) + 汁(국물).'],
+      ['{定食|ていしょく}', '정식(밥·국·반찬 세트)', '점심 메뉴판에서 가장 많이 보는 말이에요. 唐揚げ定食처럼 메인 요리 이름 뒤에 붙어요.'],
+      ['カレーライス', '카레라이스', '영어 curry and rice에서 온 외래어라 가타카나예요.'],
+      ['おにぎり', '주먹밥', '握る(にぎる, 쥐다)에서 온 말이라 보통 히라가나로 써요.']
+    ],
+    sign: [
+      ['{牛肉|ぎゅうにく}', '소고기', ''], ['{豚肉|ぶたにく}', '돼지고기', ''], ['{鶏肉|とりにく}', '닭고기', ''],
+      ['{魚|さかな}', '생선', ''], ['{卵|たまご}', '달걀', ''], ['{野菜|やさい}', '채소', ''],
+      ['{大盛|おおも}り', '곱빼기', '양을 많이 담는다는 뜻이에요.'], ['{並|なみ}', '보통(양)', '牛丼 가게에서 並·大盛り처럼 양을 고를 때 써요.'],
+      ['{税込|ぜいこみ}', '세금 포함 가격', '반대말은 税抜(ぜいぬき, 세금 별도)예요.'],
+      ['{食|た}べ{放題|ほうだい}', '무한 리필(먹기)', '放題 = 마음껏. 飲み放題는 음료 무제한이에요.'],
+      ['{品切|しなぎ}れ', '품절', ''], ['{本日|ほんじつ}', '오늘', '本日のおすすめ(오늘의 추천)처럼 써요. 今日보다 딱딱한 말이에요.'],
+      ['{営業中|えいぎょうちゅう}', '영업 중', ''], ['{準備中|じゅんびちゅう}', '준비 중(아직 영업 전)', '문에 걸려 있으면 아직 들어갈 수 없어요.']
+    ],
+    taste: [
+      ['{美味|おい}しい', '맛있다', '일상 글에서는 おいしい로 히라가나만 쓰는 경우가 많아요.'],
+      ['うまい', '맛있다(구어)', '친한 사이에서 쓰는 편한 말이에요.'],
+      ['{甘|あま}い', '달다', ''], ['{辛|から}い', '맵다', '같은 한자를 つらい로 읽으면 \'괴롭다\'예요.'],
+      ['しょっぱい', '짜다', ''], ['{酸|す}っぱい', '시다', ''], ['{苦|にが}い', '쓰다', ''],
+      ['{熱|あつ}い', '뜨겁다', ''], ['{冷|つめ}たい', '차갑다', '']
+    ],
+    texture: [
+      ['サクサク', '바삭바삭', '튀김옷이나 쿠키처럼 가볍게 부서지는 식감'],
+      ['カリカリ', '오도독, 바삭', '단단하게 바삭한 식감'],
+      ['もちもち', '쫀득쫀득', '떡처럼 탄력 있는 식감'],
+      ['ふわふわ', '폭신폭신', '팬케이크·오믈렛처럼 부드럽고 가벼운 식감'],
+      ['とろとろ', '사르르, 걸쭉', '반숙 달걀이나 푹 끓인 고기처럼 녹아내리는 식감']
+    ],
+    talk: [
+      ['いらっしゃいませ', '어서 오세요', '점원'],
+      ['{何名様|なんめいさま}ですか', '몇 분이세요?', '점원'],
+      ['{二人|ふたり}です', '두 명이에요', '나'],
+      ['おすすめは{何|なん}ですか', '추천 메뉴는 뭐예요?', '나'],
+      ['これをください', '이거 주세요', '나'],
+      ['お{水|みず}をください', '물 주세요', '나'],
+      ['お{会計|かいけい}お{願|ねが}いします', '계산해 주세요', '나'],
+      ['カードで{払|はら}えますか', '카드로 계산할 수 있어요?', '나'],
+      ['いただきます', '잘 먹겠습니다', '먹기 전'],
+      ['ごちそうさまでした', '잘 먹었습니다', '먹은 뒤']
+    ]
+  };
+  function foodCards(list) {
+    return '<div class="food-grid">' + list.map((x) => '<div class="food"><div class="food-top"><span class="food-jp force-color" lang="ja">' + renderJP(x[0]) + '</span>' + speakBtn(speechOf(x[0])) + '</div>'
+      + '<span class="food-hg">' + esc(kanaToHangul(readingOf(x[0]))) + '</span><span class="food-m">' + esc(x[1]) + '</span>' + (x[2] ? '<span class="food-n">' + rich(x[2]) + '</span>' : '') + '</div>').join('') + '</div>';
+  }
+  function viewFood() {
+    const sec = (id, ko, jp, body) => '<section class="gsec" id="' + id + '"><h2><span>' + ko + '</span><span class="jp force-color" lang="ja">' + renderJP(jp) + '</span></h2>' + body + '</section>';
+    setView('<header class="page-head"><p class="eyebrow">음식으로 보는 일본어</p><h1 class="page-title">음식</h1>'
+      + '<p class="lede">메뉴판과 가게 간판, 식당에서 오가는 말로 일본어를 익혀요. 음식 이름에도 한자·히라가나·가타카나를 고르는 이유가 있어요.</p>'
+      + '<div class="toc">' + [['f-menu', '음식 이름'], ['f-sign', '메뉴판 한자'], ['f-taste', '맛 표현'], ['f-talk', '식당 회화'], ['f-manner', '식사 매너']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
+      + sec('f-menu', '음식 이름', '{料理|りょうり}の{名前|なまえ}', '<p>메뉴판에 자주 나오는 음식이에요. 외국에서 들어온 음식은 가타카나, 한자가 어려운 음식은 히라가나로 쓰는 경우가 많아요.</p>' + foodCards(FOOD.menu))
+      + sec('f-sign', '메뉴판·간판 한자', 'メニューの{漢字|かんじ}', '<p>재료와 양, 가격, 영업 안내에 쓰는 한자예요. 읽지 못해도 모양만 알아보면 주문이 훨씬 쉬워져요.</p>' + foodCards(FOOD.sign))
+      + sec('f-taste', '맛과 식감', '{味|あじ}と{食感|しょっかん}', '<p>맛은 주로 형용사(~い)로 말해요.</p>' + foodCards(FOOD.taste)
+        + '<h3 class="k-sub">식감 의태어</h3><p class="k-p">식감은 같은 소리를 두 번 겹친 의태어로 많이 말해요. 광고나 메뉴판에서는 소리를 또렷하고 경쾌하게 보이려고 가타카나로 쓰기도 해요.</p>' + foodCards(FOOD.texture))
+      + sec('f-talk', '식당 회화', 'お{店|みせ}で', '<p>가게에 들어가서 나올 때까지 자주 듣고 말하는 표현이에요. 누르면 발음을 들을 수 있어요.</p>'
+        + '<div class="food-talk">' + FOOD.talk.map((x) => '<div class="ex"><div class="ex-row"><span class="food-who">' + esc(x[2]) + '</span><p class="ex-jp force-color" lang="ja">' + renderJP(x[0]) + '</p>' + speakBtn(speechOf(x[0])) + '</div>'
+          + '<p class="food-hg">' + esc(kanaToHangul(readingOf(x[0]))) + '</p><p class="ex-ko">' + esc(x[1]) + '</p></div>').join('') + '</div>')
+      + sec('f-manner', '식사 매너', '{食事|しょくじ}のマナー', ul([
+        '**いただきます · ごちそうさまでした**: 먹기 전과 먹은 뒤에 손을 모으고 말해요. 음식과 만든 사람에게 고마움을 전하는 인사예요.',
+        '**식권 발매기(食券機)**: 라멘·덮밥 가게는 입구의 기계에서 먼저 식권을 사서 점원에게 건네는 곳이 많아요.',
+        '**팁은 주지 않아요**: 계산서에 적힌 금액만 내면 돼요.',
+        '**면은 소리 내서 먹어도 괜찮아요**: 라멘·소바를 후루룩 먹는 건 실례가 아니에요.',
+        '**お通し(오토오시)**: 이자카야에서 주문하지 않아도 나오는 작은 안주예요. 자릿값처럼 계산에 들어가요.',
+        '**물과 물수건**: 자리에 앉으면 물(お冷)과 물수건(おしぼり)을 무료로 주는 가게가 많아요.']))
+    );
+  }
+
+  /* ── 히라가나·가타카나 ─────────────────────────────────── */
+  /* [히라가나, 가타카나, 히라가나의 유래 한자, 가타카나의 유래 한자, 옛 글자] */
+  const KANA_ROWS = [
+    [['あ', 'ア', '安', '阿'], ['い', 'イ', '以', '伊'], ['う', 'ウ', '宇', '宇'], ['え', 'エ', '衣', '江'], ['お', 'オ', '於', '於']],
+    [['か', 'カ', '加', '加'], ['き', 'キ', '幾', '幾'], ['く', 'ク', '久', '久'], ['け', 'ケ', '計', '介'], ['こ', 'コ', '己', '己']],
+    [['さ', 'サ', '左', '散'], ['し', 'シ', '之', '之'], ['す', 'ス', '寸', '須'], ['せ', 'セ', '世', '世'], ['そ', 'ソ', '曽', '曽']],
+    [['た', 'タ', '太', '多'], ['ち', 'チ', '知', '千'], ['つ', 'ツ', '川', '川'], ['て', 'テ', '天', '天'], ['と', 'ト', '止', '止']],
+    [['な', 'ナ', '奈', '奈'], ['に', 'ニ', '仁', '仁'], ['ぬ', 'ヌ', '奴', '奴'], ['ね', 'ネ', '祢', '祢'], ['の', 'ノ', '乃', '乃']],
+    [['は', 'ハ', '波', '八'], ['ひ', 'ヒ', '比', '比'], ['ふ', 'フ', '不', '不'], ['へ', 'ヘ', '部', '部'], ['ほ', 'ホ', '保', '保']],
+    [['ま', 'マ', '末', '末'], ['み', 'ミ', '美', '三'], ['む', 'ム', '武', '牟'], ['め', 'メ', '女', '女'], ['も', 'モ', '毛', '毛']],
+    [['や', 'ヤ', '也', '也'], null, ['ゆ', 'ユ', '由', '由'], null, ['よ', 'ヨ', '与', '与']],
+    [['ら', 'ラ', '良', '良'], ['り', 'リ', '利', '利'], ['る', 'ル', '留', '流'], ['れ', 'レ', '礼', '礼'], ['ろ', 'ロ', '呂', '呂']],
+    [['わ', 'ワ', '和', '和'], null, null, null, ['を', 'ヲ', '遠', '乎']],
+    [['ん', 'ン', '无', '']]
+  ];
+  const KANA_MAP = {};
+  KANA_ROWS.forEach((r) => r.forEach((c) => { if (c) KANA_MAP[c[0]] = { h: c[0], k: c[1], oh: c[2], ok: c[3] }; }));
+  const KATA_WHOLE = 'ハミチツシ';
+  const DAKU = [['が', 'ぎ', 'ぐ', 'げ', 'ご'], ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'], ['だ', 'ぢ', 'づ', 'で', 'ど'], ['ば', 'び', 'ぶ', 'べ', 'ぼ'], ['ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ']];
+  const DAKU_SRC = {};
+  DAKU.forEach((row, ri) => row.forEach((c) => { DAKU_SRC[c] = String.fromCharCode(c.charCodeAt(0) - (ri === 4 ? 2 : 1)); }));
+  const YOON = ['き', 'ぎ', 'し', 'じ', 'ち', 'に', 'ひ', 'び', 'ぴ', 'み', 'り'];
+  const KANA_NOTE = {
+    'う': '한국어 \'우\'보다 입술을 덜 내밀고 평평하게 발음해요.',
+    'し': '로마자로는 si가 아니라 shi예요. 한국어 \'시\'에 가까워요.',
+    'ち': '로마자로는 chi. 한국어 \'치\'에 가까워요.',
+    'つ': '한국어에 없는 소리예요. \'츠\'와 \'쓰\' 사이로, 혀끝을 윗잇몸에 댔다 떼며 내요.',
+    'ふ': '입술을 살짝 오므려 바람을 내보내는 소리로, \'후\'와 \'푸\' 사이예요.',
+    'は': '조사로 쓸 때는 wa로 읽어요(こんにちは, 私は).',
+    'へ': '조사로 쓸 때는 e로 읽어요(東京へ). 히라가나 へ와 가타카나 ヘ는 거의 똑같이 생겼어요.',
+    'ら': 'ら행 자음은 혀끝으로 가볍게 튕기는 소리라 한국어 \'ㄹ\'과 비슷해요.',
+    'を': '현대 일본어에서는 조사 \'~을/를\'에만 써요. 발음은 お(o)와 같아요.',
+    'ん': '혼자서는 음절을 만들지 못하고 앞 글자에 받침처럼 붙어요. 뒤에 오는 소리에 따라 ㄴ·ㅁ·ㅇ처럼 들려요(さんぽ 삼포, りんご 링고).',
+    'ぢ': 'じ와 소리가 같아요. はなぢ(코피, 鼻+血)처럼 ち가 탁해진 경우에만 써요.',
+    'づ': 'ず와 소리가 같아요. つづく(続く)처럼 つ가 탁해진 경우에만 써요.'
+  };
+  /* 글자별 기본 단어(JLPT N5·N4 위주). [히라가나 카드 단어, 가타카나 카드 단어], 단어는 [표기, 뜻]. 그 글자로 시작하는, 실제로 자주 쓰는 단어만 넣어요. */
+  const KANA_VOCAB = {
+    'あ': [[['{雨|あめ}', '비'], ['{朝|あさ}', '아침'], ['{赤|あか}い', '빨갛다'], ['{秋|あき}', '가을'], ['{会|あ}う', '만나다']], [['アイス', '아이스크림'], ['アメリカ', '미국'], ['アニメ', '애니메이션'], ['アルバイト', '아르바이트'], ['アパート', '아파트(공동주택)']]],
+    'い': [[['{家|いえ}', '집'], ['{犬|いぬ}', '개'], ['{今|いま}', '지금'], ['{行|い}く', '가다'], ['{椅子|いす}', '의자']], [['イギリス', '영국'], ['インターネット', '인터넷'], ['イヤホン', '이어폰'], ['イメージ', '이미지'], ['イベント', '이벤트']]],
+    'う': [[['{海|うみ}', '바다'], ['{歌|うた}', '노래'], ['{上|うえ}', '위'], ['うち', '집'], ['{生|う}まれる', '태어나다']], [['ウイルス', '바이러스'], ['ウイスキー', '위스키'], ['ウール', '울(양모)']]],
+    'え': [[['{駅|えき}', '역'], ['{絵|え}', '그림'], ['{映画|えいが}', '영화'], ['{英語|えいご}', '영어'], ['{鉛筆|えんぴつ}', '연필']], [['エアコン', '에어컨'], ['エレベーター', '엘리베이터'], ['エスカレーター', '에스컬레이터'], ['エネルギー', '에너지'], ['エプロン', '앞치마']]],
+    'お': [[['お{金|かね}', '돈'], ['{大|おお}きい', '크다'], ['{美味|おい}しい', '맛있다'], ['{起|お}きる', '일어나다'], ['お{母|かあ}さん', '어머니']], [['オレンジ', '오렌지'], ['オムライス', '오므라이스'], ['オリンピック', '올림픽'], ['オーブン', '오븐'], ['オートバイ', '오토바이']]],
+    'か': [[['{顔|かお}', '얼굴'], ['{傘|かさ}', '우산'], ['{買|か}う', '사다'], ['{書|か}く', '쓰다'], ['{会社|かいしゃ}', '회사']], [['カメラ', '카메라'], ['カレー', '카레'], ['カード', '카드'], ['カップ', '컵'], ['カレンダー', '달력']]],
+    'き': [[['{木|き}', '나무'], ['{北|きた}', '북쪽'], ['{聞|き}く', '듣다'], ['{昨日|きのう}', '어제'], ['{切符|きっぷ}', '표(승차권)']], [['キロ', '킬로'], ['キッチン', '부엌'], ['キーボード', '키보드'], ['キウイ', '키위'], ['キス', '키스']]],
+    'く': [[['{口|くち}', '입'], ['{車|くるま}', '자동차'], ['{靴|くつ}', '신발'], ['{薬|くすり}', '약'], ['{来|く}る', '오다']], [['クラス', '반(학급)'], ['クリスマス', '크리스마스'], ['クッキー', '쿠키'], ['クーラー', '냉방기'], ['クラブ', '클럽, 동아리']]],
+    'け': [[['{今朝|けさ}', '오늘 아침'], ['{消|け}す', '끄다, 지우다'], ['{結婚|けっこん}', '결혼'], ['{景色|けしき}', '경치'], ['{毛|け}', '털']], [['ケーキ', '케이크'], ['ケータイ', '휴대폰'], ['ケース', '케이스'], ['ケチャップ', '케첩']]],
+    'こ': [[['{子供|こども}', '아이'], ['{声|こえ}', '목소리'], ['ここ', '여기'], ['{公園|こうえん}', '공원'], ['{答|こた}える', '대답하다']], [['コーヒー', '커피'], ['コップ', '컵'], ['コンビニ', '편의점'], ['コート', '코트'], ['コンサート', '콘서트']]],
+    'さ': [[['{魚|さかな}', '생선, 물고기'], ['{寒|さむ}い', '춥다'], ['{財布|さいふ}', '지갑'], ['{砂糖|さとう}', '설탕'], ['{散歩|さんぽ}', '산책']], [['サッカー', '축구'], ['サラダ', '샐러드'], ['サイズ', '사이즈'], ['サービス', '서비스'], ['サンドイッチ', '샌드위치']]],
+    'し': [[['{塩|しお}', '소금'], ['{白|しろ}', '흰색'], ['{下|した}', '아래'], ['{仕事|しごと}', '일, 직업'], ['{静|しず}か', '조용함']], [['シール', '스티커'], ['シーツ', '침대 시트'], ['システム', '시스템'], ['シンプル', '단순함'], ['シングル', '싱글']]],
+    'す': [[['{好|す}き', '좋아함'], ['{少|すこ}し', '조금'], ['{住|す}む', '살다'], ['{座|すわ}る', '앉다'], ['{涼|すず}しい', '시원하다']], [['スプーン', '숟가락'], ['スポーツ', '스포츠'], ['スカート', '치마'], ['スーパー', '슈퍼마켓'], ['スマホ', '스마트폰']]],
+    'せ': [[['{先生|せんせい}', '선생님'], ['{千|せん}', '천(1000)'], ['{狭|せま}い', '좁다'], ['{背|せ}', '키'], ['{世界|せかい}', '세계']], [['セーター', '스웨터'], ['セット', '세트'], ['センター', '센터'], ['セール', '세일']]],
+    'そ': [[['{空|そら}', '하늘'], ['{外|そと}', '바깥'], ['{掃除|そうじ}', '청소'], ['そこ', '거기'], ['それ', '그것']], [['ソファー', '소파'], ['ソース', '소스'], ['ソックス', '양말']]],
+    'た': [[['{高|たか}い', '높다, 비싸다'], ['{楽|たの}しい', '즐겁다'], ['{立|た}つ', '서다'], ['{食|た}べ{物|もの}', '음식'], ['{大切|たいせつ}', '소중함']], [['タクシー', '택시'], ['タオル', '수건'], ['タイプ', '타입'], ['タイヤ', '타이어']]],
+    'ち': [[['{父|ちち}', '(나의) 아버지'], ['{地図|ちず}', '지도'], ['{近|ちか}い', '가깝다'], ['{小|ちい}さい', '작다'], ['{地下鉄|ちかてつ}', '지하철']], [['チーズ', '치즈'], ['チケット', '티켓'], ['チーム', '팀'], ['チキン', '치킨']]],
+    'つ': [[['{月|つき}', '달'], ['{机|つくえ}', '책상'], ['{使|つか}う', '쓰다, 사용하다'], ['{作|つく}る', '만들다'], ['{冷|つめ}たい', '차갑다']], [['ツアー', '투어, 여행 상품']]],
+    'て': [[['{手|て}', '손'], ['{手紙|てがみ}', '편지'], ['{天気|てんき}', '날씨'], ['{寺|てら}', '절'], ['{丁寧|ていねい}', '정중함']], [['テレビ', '텔레비전'], ['テーブル', '테이블'], ['テスト', '시험'], ['テニス', '테니스'], ['テキスト', '교재']]],
+    'と': [[['{友達|ともだち}', '친구'], ['{時計|とけい}', '시계'], ['{鳥|とり}', '새'], ['{遠|とお}い', '멀다'], ['{図書館|としょかん}', '도서관']], [['トイレ', '화장실'], ['トマト', '토마토'], ['トラック', '트럭'], ['トンネル', '터널'], ['トースト', '토스트']]],
+    'な': [[['{夏|なつ}', '여름'], ['{名前|なまえ}', '이름'], ['{中|なか}', '안, 속'], ['{長|なが}い', '길다'], ['{何|なに}', '무엇']], [['ナイフ', '칼, 나이프']]],
+    'に': [[['{肉|にく}', '고기'], ['{庭|にわ}', '마당'], ['{西|にし}', '서쪽'], ['{荷物|にもつ}', '짐'], ['{二|に}', '2']], [['ニット', '니트']]],
+    'ぬ': [[['{脱|ぬ}ぐ', '벗다'], ['ぬいぐるみ', '봉제 인형'], ['{布|ぬの}', '천'], ['{濡|ぬ}れる', '젖다']], []],
+    'ね': [[['{猫|ねこ}', '고양이'], ['{寝|ね}る', '자다'], ['{熱|ねつ}', '열'], ['{値段|ねだん}', '가격'], ['{眠|ねむ}い', '졸리다']], [['ネクタイ', '넥타이'], ['ネット', '인터넷'], ['ネックレス', '목걸이']]],
+    'の': [[['{飲|の}む', '마시다'], ['{乗|の}る', '타다'], ['{飲|の}み{物|もの}', '음료'], ['{喉|のど}', '목(구멍)'], ['{残|のこ}る', '남다']], [['ノート', '노트'], ['ノック', '노크']]],
+    'は': [[['{歯|は}', '이(치아)'], ['{箱|はこ}', '상자'], ['{橋|はし}', '다리(건너는 다리)'], ['{花|はな}', '꽃'], ['{春|はる}', '봄']], [['ハンバーガー', '햄버거'], ['ハンカチ', '손수건'], ['ハート', '하트'], ['ハム', '햄']]],
+    'ひ': [[['{人|ひと}', '사람'], ['{左|ひだり}', '왼쪽'], ['{東|ひがし}', '동쪽'], ['{昼|ひる}', '낮'], ['{飛行機|ひこうき}', '비행기']], [['ヒーター', '히터'], ['ヒント', '힌트'], ['ヒーロー', '영웅']]],
+    'ふ': [[['{冬|ふゆ}', '겨울'], ['{服|ふく}', '옷'], ['{古|ふる}い', '오래되다, 낡다'], ['{二人|ふたり}', '두 사람'], ['{降|ふ}る', '(비·눈이) 내리다']], [['フランス', '프랑스'], ['フルーツ', '과일'], ['フライパン', '프라이팬']]],
+    'へ': [[['{部屋|へや}', '방'], ['{下手|へた}', '서투름'], ['{返事|へんじ}', '대답'], ['{変|へん}', '이상함'], ['{蛇|へび}', '뱀']], [['ヘルメット', '헬멧'], ['ヘリコプター', '헬리콥터']]],
+    'ほ': [[['{本|ほん}', '책'], ['{星|ほし}', '별'], ['{欲|ほ}しい', '갖고 싶다'], ['{細|ほそ}い', '가늘다'], ['{本当|ほんとう}', '정말']], [['ホテル', '호텔'], ['ホーム', '(역) 승강장'], ['ホッチキス', '스테이플러']]],
+    'ま': [[['{前|まえ}', '앞'], ['{町|まち}', '동네, 마을'], ['{待|ま}つ', '기다리다'], ['{毎日|まいにち}', '매일'], ['{窓|まど}', '창문']], [['マスク', '마스크'], ['マンション', '맨션(아파트)'], ['マフラー', '목도리'], ['マッチ', '성냥']]],
+    'み': [[['{水|みず}', '물'], ['{右|みぎ}', '오른쪽'], ['{耳|みみ}', '귀'], ['{店|みせ}', '가게'], ['{見|み}る', '보다']], [['ミルク', '우유'], ['ミス', '실수'], ['ミシン', '재봉틀']]],
+    'む': [[['{村|むら}', '마을'], ['{虫|むし}', '벌레'], ['{昔|むかし}', '옛날'], ['{難|むずか}しい', '어렵다'], ['{向|む}こう', '건너편']], [['ムード', '분위기']]],
+    'め': [[['{目|め}', '눈(신체)'], ['{眼鏡|めがね}', '안경'], ['{名刺|めいし}', '명함'], ['{珍|めずら}しい', '드물다']], [['メール', '메일'], ['メニュー', '메뉴'], ['メモ', '메모'], ['メートル', '미터']]],
+    'も': [[['{物|もの}', '물건'], ['{森|もり}', '숲'], ['{門|もん}', '대문'], ['{持|も}つ', '들다, 가지다'], ['もっと', '더']], [['モデル', '모델'], ['モノレール', '모노레일']]],
+    'や': [[['{山|やま}', '산'], ['{野菜|やさい}', '채소'], ['{安|やす}い', '싸다'], ['{休|やす}み', '휴일, 쉬는 시간'], ['{優|やさ}しい', '상냥하다']], []],
+    'ゆ': [[['{雪|ゆき}', '눈(내리는 눈)'], ['{夢|ゆめ}', '꿈'], ['{指|ゆび}', '손가락'], ['{有名|ゆうめい}', '유명함'], ['{夕方|ゆうがた}', '저녁 무렵']], [['ユニフォーム', '유니폼'], ['ユーモア', '유머']]],
+    'よ': [[['{夜|よる}', '밤'], ['{読|よ}む', '읽다'], ['{呼|よ}ぶ', '부르다'], ['{横|よこ}', '옆'], ['{弱|よわ}い', '약하다']], [['ヨーロッパ', '유럽'], ['ヨーグルト', '요거트'], ['ヨット', '요트']]],
+    'ら': [[['{来年|らいねん}', '내년'], ['{来月|らいげつ}', '다음 달'], ['{来週|らいしゅう}', '다음 주'], ['{楽|らく}', '편함']], [['ラジオ', '라디오'], ['ラーメン', '라면'], ['ライオン', '사자'], ['ランチ', '점심']]],
+    'り': [[['りんご', '사과'], ['{理由|りゆう}', '이유'], ['{立派|りっぱ}', '훌륭함'], ['{利用|りよう}', '이용']], [['リモコン', '리모컨'], ['リボン', '리본'], ['リスト', '목록']]],
+    'る': [[['{留守|るす}', '집을 비움, 부재중']], [['ルール', '규칙']]],
+    'れ': [[['{冷蔵庫|れいぞうこ}', '냉장고'], ['{練習|れんしゅう}', '연습'], ['{歴史|れきし}', '역사'], ['{連絡|れんらく}', '연락']], [['レストラン', '레스토랑'], ['レモン', '레몬'], ['レジ', '계산대'], ['レポート', '리포트']]],
+    'ろ': [[['{六|ろく}', '6'], ['{廊下|ろうか}', '복도'], ['{老人|ろうじん}', '노인']], [['ロボット', '로봇'], ['ロビー', '로비'], ['ロック', '록(음악)']]],
+    'わ': [[['{私|わたし}', '나, 저'], ['{若|わか}い', '젊다'], ['{分|わ}かる', '알다, 이해하다'], ['{忘|わす}れる', '잊다'], ['{悪|わる}い', '나쁘다']], [['ワイン', '와인'], ['ワイシャツ', '와이셔츠']]],
+    'を': [[], []],
+    'ん': [[], []],
+    'が': [[['{学校|がっこう}', '학교'], ['{学生|がくせい}', '학생'], ['{外国|がいこく}', '외국'], ['{頑張|がんば}る', '힘내다, 노력하다']], [['ガラス', '유리'], ['ガス', '가스'], ['ガソリン', '휘발유'], ['ガム', '껌']]],
+    'ぎ': [[['{銀行|ぎんこう}', '은행'], ['{技術|ぎじゅつ}', '기술']], [['ギター', '기타']]],
+    'ぐ': [[['{具合|ぐあい}', '상태, 컨디션'], ['ぐっすり', '푹(자다)']], [['グラム', '그램'], ['グループ', '그룹'], ['グラス', '유리잔']]],
+    'げ': [[['{元気|げんき}', '건강함, 기운'], ['{月曜日|げつようび}', '월요일'], ['{玄関|げんかん}', '현관'], ['{原因|げんいん}', '원인']], [['ゲーム', '게임']]],
+    'ご': [[['{五|ご}', '5'], ['{午後|ごご}', '오후'], ['{午前|ごぜん}', '오전'], ['ご{飯|はん}', '밥'], ['ごみ', '쓰레기']], [['ゴルフ', '골프'], ['ゴム', '고무']]],
+    'ざ': [[['{雑誌|ざっし}', '잡지'], ['{残念|ざんねん}', '아쉬움, 유감'], ['{座席|ざせき}', '좌석']], []],
+    'じ': [[['{時間|じかん}', '시간'], ['{辞書|じしょ}', '사전'], ['{自転車|じてんしゃ}', '자전거'], ['{自分|じぶん}', '자기 자신'], ['{字|じ}', '글자']], [['ジーンズ', '청바지']]],
+    'ず': [[['ずっと', '쭉, 훨씬'], ['{随分|ずいぶん}', '꽤, 상당히'], ['{頭痛|ずつう}', '두통']], [['ズボン', '바지']]],
+    'ぜ': [[['{全部|ぜんぶ}', '전부'], ['{全然|ぜんぜん}', '전혀'], ['{是非|ぜひ}', '꼭']], [['ゼロ', '0, 영']]],
+    'ぞ': [[['{象|ぞう}', '코끼리'], ['{雑巾|ぞうきん}', '걸레']], []],
+    'だ': [[['{誰|だれ}', '누구'], ['{大学|だいがく}', '대학'], ['{台所|だいどころ}', '부엌'], ['{出|だ}す', '내다, 꺼내다'], ['{大丈夫|だいじょうぶ}', '괜찮음']], [['ダンス', '춤'], ['ダイエット', '다이어트']]],
+    'ぢ': [[], []],
+    'づ': [[], []],
+    'で': [[['{電話|でんわ}', '전화'], ['{電車|でんしゃ}', '전철'], ['{出口|でぐち}', '출구'], ['{出|で}る', '나가다, 나오다'], ['{出|で}かける', '외출하다']], [['デパート', '백화점'], ['デザート', '디저트'], ['デザイン', '디자인']]],
+    'ど': [[['{動物|どうぶつ}', '동물'], ['どこ', '어디'], ['{土曜日|どようび}', '토요일'], ['どうぞ', '어서, 부디'], ['どれ', '어느 것']], [['ドア', '문'], ['ドラマ', '드라마'], ['ドライブ', '드라이브']]],
+    'ば': [[['{晩|ばん}', '저녁, 밤'], ['{番号|ばんごう}', '번호'], ['{場所|ばしょ}', '장소'], ['{場合|ばあい}', '경우']], [['バス', '버스'], ['バナナ', '바나나'], ['バッグ', '가방'], ['バター', '버터']]],
+    'び': [[['{美術館|びじゅつかん}', '미술관'], ['びっくり', '깜짝 놀람'], ['{瓶|びん}', '병']], [['ビル', '빌딩'], ['ビール', '맥주'], ['ビデオ', '비디오']]],
+    'ぶ': [[['ぶどう', '포도'], ['{豚肉|ぶたにく}', '돼지고기'], ['{文化|ぶんか}', '문화'], ['{文法|ぶんぽう}', '문법'], ['{部長|ぶちょう}', '부장']], [['ブログ', '블로그'], ['ブーツ', '부츠'], ['ブラシ', '솔, 브러시']]],
+    'べ': [[['{勉強|べんきょう}', '공부'], ['{便利|べんり}', '편리함'], ['{弁当|べんとう}', '도시락'], ['{別|べつ}', '다름, 별개']], [['ベッド', '침대'], ['ベンチ', '벤치'], ['ベル', '벨']]],
+    'ぼ': [[['{帽子|ぼうし}', '모자'], ['{僕|ぼく}', '나(남자)']], [['ボールペン', '볼펜'], ['ボタン', '단추, 버튼'], ['ボール', '공']]],
+    'ぱ': [[], [['パン', '빵'], ['パーティー', '파티'], ['パソコン', '컴퓨터'], ['パスポート', '여권'], ['パパ', '아빠']]],
+    'ぴ': [[['ぴったり', '딱 맞음']], [['ピアノ', '피아노'], ['ピンク', '분홍색'], ['ピザ', '피자'], ['ピーマン', '피망']]],
+    'ぷ': [[], [['プール', '수영장'], ['プレゼント', '선물'], ['プリン', '푸딩'], ['プロ', '프로']]],
+    'ぺ': [[['ぺらぺら', '(외국어를) 술술']], [['ペン', '펜'], ['ページ', '페이지, 쪽'], ['ペット', '반려동물'], ['ペンギン', '펭귄']]],
+    'ぽ': [[['ぽかぽか', '따끈따끈']], [['ポケット', '주머니'], ['ポスト', '우체통'], ['ポテト', '감자튀김']]],
+    'きゃ': [[['{客|きゃく}', '손님']], [['キャベツ', '양배추'], ['キャンプ', '캠프'], ['キャンディー', '사탕'], ['キャラクター', '캐릭터']]],
+    'きゅ': [[['{九|きゅう}', '9'], ['きゅうり', '오이'], ['{急|きゅう}', '갑작스러움'], ['{急行|きゅうこう}', '급행'], ['{休日|きゅうじつ}', '휴일']], []],
+    'きょ': [[['{今日|きょう}', '오늘'], ['{去年|きょねん}', '작년'], ['{教室|きょうしつ}', '교실'], ['{兄弟|きょうだい}', '형제'], ['{興味|きょうみ}', '흥미']], []],
+    'ぎゃ': [[['{逆|ぎゃく}', '반대, 거꾸로']], [['ギャグ', '개그'], ['ギャップ', '차이, 갭']]],
+    'ぎゅ': [[['{牛肉|ぎゅうにく}', '소고기'], ['{牛乳|ぎゅうにゅう}', '우유'], ['{牛丼|ぎゅうどん}', '소고기덮밥'], ['ぎゅっと', '꽉']], []],
+    'ぎょ': [[['{餃子|ぎょうざ}', '만두'], ['{行列|ぎょうれつ}', '줄, 행렬']], []],
+    'しゃ': [[['{写真|しゃしん}', '사진'], ['{社長|しゃちょう}', '사장'], ['{社会|しゃかい}', '사회']], [['シャツ', '셔츠'], ['シャワー', '샤워'], ['シャンプー', '샴푸']]],
+    'しゅ': [[['{宿題|しゅくだい}', '숙제'], ['{趣味|しゅみ}', '취미'], ['{週末|しゅうまつ}', '주말'], ['{出発|しゅっぱつ}', '출발'], ['{習慣|しゅうかん}', '습관']], [['シュート', '슛']]],
+    'しょ': [[['{醤油|しょうゆ}', '간장'], ['{食堂|しょくどう}', '식당'], ['{食事|しょくじ}', '식사'], ['{小学校|しょうがっこう}', '초등학교'], ['{紹介|しょうかい}', '소개']], [['ショー', '쇼'], ['ショッピング', '쇼핑']]],
+    'じゃ': [[['じゃあ', '그럼'], ['{邪魔|じゃま}', '방해']], [['ジャム', '잼'], ['ジャンプ', '점프'], ['ジャケット', '재킷']]],
+    'じゅ': [[['{十|じゅう}', '10'], ['{授業|じゅぎょう}', '수업'], ['{準備|じゅんび}', '준비'], ['{住所|じゅうしょ}', '주소'], ['{順番|じゅんばん}', '순서, 차례']], [['ジュース', '주스']]],
+    'じょ': [[['{上手|じょうず}', '잘함, 능숙함'], ['{丈夫|じょうぶ}', '튼튼함'], ['{女性|じょせい}', '여성'], ['{冗談|じょうだん}', '농담']], [['ジョギング', '조깅']]],
+    'ちゃ': [[['{茶色|ちゃいろ}', '갈색'], ['{茶碗|ちゃわん}', '밥공기']], [['チャンス', '기회']]],
+    'ちゅ': [[['{注意|ちゅうい}', '주의'], ['{中学校|ちゅうがっこう}', '중학교'], ['{中国|ちゅうごく}', '중국'], ['{駐車場|ちゅうしゃじょう}', '주차장'], ['{注射|ちゅうしゃ}', '주사']], [['チューリップ', '튤립']]],
+    'ちょ': [[['ちょっと', '조금, 잠깐'], ['{丁度|ちょうど}', '딱, 마침'], ['{貯金|ちょきん}', '저금'], ['{朝食|ちょうしょく}', '아침 식사']], [['チョコレート', '초콜릿']]],
+    'にゃ': [[], []],
+    'にゅ': [[['{入学|にゅうがく}', '입학'], ['{入院|にゅういん}', '입원'], ['{入力|にゅうりょく}', '입력']], [['ニュース', '뉴스']]],
+    'にょ': [[], []],
+    'ひゃ': [[['{百|ひゃく}', '100'], ['{百円|ひゃくえん}', '100엔'], ['{百貨店|ひゃっかてん}', '백화점'], ['ひゃっくり', '딸꾹질']], []],
+    'ひゅ': [[], []],
+    'ひょ': [[['{表|ひょう}', '표'], ['{表情|ひょうじょう}', '표정'], ['{標識|ひょうしき}', '표지판'], ['{評判|ひょうばん}', '평판'], ['ひょっとして', '혹시']], []],
+    'びゃ': [[], []],
+    'びゅ': [[], [['ビュッフェ', '뷔페']]],
+    'びょ': [[['{病院|びょういん}', '병원'], ['{病気|びょうき}', '병'], ['{秒|びょう}', '초(시간)'], ['{平等|びょうどう}', '평등']], []],
+    'ぴゃ': [[], []],
+    'ぴゅ': [[], []],
+    'ぴょ': [[['ぴょんぴょん', '깡충깡충']], []],
+    'みゃ': [[['{脈|みゃく}', '맥박']], []],
+    'みゅ': [[], [['ミュージカル', '뮤지컬']]],
+    'みょ': [[['{名字|みょうじ}', '성(姓)'], ['{妙|みょう}', '묘함, 이상함']], []],
+    'りゃ': [[['{略|りゃく}', '줄임, 생략']], []],
+    'りゅ': [[['{留学|りゅうがく}', '유학'], ['{留学生|りゅうがくせい}', '유학생'], ['{流行|りゅうこう}', '유행'], ['{竜|りゅう}', '용']], [['リュック', '배낭']]],
+    'りょ': [[['{料理|りょうり}', '요리'], ['{旅行|りょこう}', '여행'], ['{両親|りょうしん}', '부모님'], ['{旅館|りょかん}', '료칸(일본식 여관)'], ['{両方|りょうほう}', '양쪽']], []]
+  };
+  /* 가타카나 카드에서 KANA_NOTE 대신 보여 줄 메모(null이면 메모 없음) */
+  const KATA_NOTE = {
+    'は': null,
+    'へ': '히라가나 へ와 가타카나 ヘ는 거의 똑같이 생겼어요.',
+    'を': '가타카나 ヲ는 지금은 거의 쓰지 않아요. 조사 を는 늘 히라가나로 써요.',
+    'ぢ': 'ヂ는 외래어에서도 거의 쓰지 않아요. 같은 소리는 보통 ジ로 적어요.',
+    'づ': 'ヅ는 외래어에서도 거의 쓰지 않아요. 같은 소리는 보통 ズ로 적어요.'
+  };
+  const toKata = (s) => String(s).replace(/[ぁ-ゖ]/g, (c) => String.fromCharCode(c.charCodeAt(0) + 0x60));
+  const kanaRo = (h) => (h === 'を' ? 'o (wo)' : kanaToRomaji(h));
+  const kanaHg = (h) => ({ 'ん': 'ㄴ·ㅁ·ㅇ 받침' })[h] || kanaToHangul(h);
+  function kcell(h) {
+    if (!h) return '<span class="kcell empty" aria-hidden="true"></span>';
+    const sel = state.ksel === h;
+    return '<button class="kcell' + (sel ? ' sel' : '') + '" data-a="kana" data-k="' + h + '" aria-pressed="' + sel + '">'
+      + '<span class="kc-chars" lang="ja"><span class="kh">' + h + '</span><span class="kk">' + toKata(h) + '</span></span><small>' + esc(kanaRo(h)) + '</small></button>';
+  }
+  function kgrid(rows, heads, label) {
+    return '<div class="kgrid" style="--cols:' + heads.length + '" role="group" aria-label="' + label + '"><span></span>'
+      + heads.map((v) => '<span class="kg-head">' + v + '</span>').join('')
+      + rows.map((r) => '<span class="kg-row" lang="ja">' + r.label + '</span>' + r.cells.map(kcell).join('')).join('') + '</div>';
+  }
+  function kanaDetailHTML(h) {
+    const kata = state.kmode === 'k', ch = (x) => (kata ? toKata(x) : x), c = ch(h);
+    const info = KANA_MAP[h], ds = DAKU_SRC[h], src = info ? (kata ? info.ok : info.oh) : null;
+    const how = !kata ? '흘려 쓴 모양' : !src ? '유래는 여러 설' : KATA_WHOLE.indexOf(c) >= 0 ? '모양을 줄임' : '일부를 떼어 냄';
+    let html = '<div class="kd-one ' + (kata ? 'a' : 'h') + '"><span class="kd-label">' + (kata ? '가타카나' : '히라가나') + '</span><span class="kd-big" lang="ja">' + c + '</span>'
+      + (info ? '<span class="kd-src">' + (src ? '← <span class="jp" lang="ja">' + src + '</span> · ' : '') + how + '</span>' : '') + '</div>'
+      + '<div class="kd-read"><span class="kd-ro">' + esc(kanaRo(h)) + '</span><span>' + esc(kanaHg(h)) + '</span>' + speakBtn(h) + '</div>';
+    const notes = [];
+    if (ds) notes.push((DAKU[4].indexOf(h) >= 0 ? '반탁점(゜)' : '탁점(゛)') + '을 붙여 만든 글자예요. [[' + ch(ds) + ']] → [[' + c + ']] (' + esc(kanaRo(ds)) + ' → ' + esc(kanaRo(h)) + ')');
+    if (h.length > 1) notes.push(ch('い') + '단 글자에 작은 ' + ch('ゃ·ゅ·ょ') + '를 붙여 한 음절로 읽어요. [[' + ch(h[0]) + ']] + [[' + ch(h[1]) + ']] = [[' + c + ']]. 작은 글자를 크게 쓰면(' + ch(h[0] + 'や') + ') 두 음절이 돼요.');
+    const note = kata && h in KATA_NOTE ? KATA_NOTE[h] : KANA_NOTE[h];
+    if (note) notes.push(note);
+    html += notes.map((n) => '<p class="cls-note">' + rich(n) + '</p>').join('');
+    const vs = KANA_VOCAB[h] || [[], []], ws = vs[kata ? 1 : 0], other = vs[kata ? 0 : 1];
+    html += '<div class="wd-block"><h4 class="d-label">기본 단어</h4>' + (ws.length
+      ? '<div class="rels">' + ws.map((w) => '<span class="rel"><span class="jp" lang="ja">' + renderJP(w[0]) + '</span><small>' + esc(w[1]) + '</small></span>').join('') + '</div>'
+      : '<p class="cls-note">' + (!other.length ? '이 글자로 시작하는 기본 단어는 거의 없어요.'
+        : kata ? '이 소리로 시작하는 기본 단어는 주로 히라가나나 한자로 써요. 위에서 히라가나를 골라 보세요.'
+        : '이 소리로 시작하는 기본 단어는 주로 외래어라 가타카나로 써요. 위에서 가타카나를 골라 보세요.') + '</p>') + '</div>';
+    return html;
+  }
+  function selectKana(el) {
+    state.ksel = el.dataset.k;
+    $$('.kcell.sel').forEach((x) => { x.classList.remove('sel'); x.setAttribute('aria-pressed', 'false'); });
+    $$('.kcell[data-k="' + state.ksel + '"]').forEach((x) => { x.classList.add('sel'); x.setAttribute('aria-pressed', 'true'); });
+    const card = $('#kdetail'); if (!card) return;
+    card.innerHTML = kanaDetailHTML(state.ksel); card.hidden = false;
+    if (matchMedia('(min-width: 1000px)').matches) { const side = $('#kside'); if (card.parentNode !== side) side.appendChild(card); }
+    else {
+      /* 휴대폰·태블릿: 누른 글자가 있는 줄 바로 아래에 설명을 끼워 넣어요. */
+      let end = el.nextElementSibling;
+      while (end && (end === card || !end.classList.contains('kg-row'))) end = end.nextElementSibling;
+      el.parentNode.insertBefore(card, end);
+      card.scrollIntoView({ block: 'nearest', behavior: smooth() });
+    }
+  }
+  /* 퀴즈 */
+  function qPool() {
+    return Object.keys(KANA_MAP).concat(...DAKU);
+  }
+  const qLabel = (h) => kanaRo(h).replace(' (wo)', '') + ' · ' + kanaHg(h).replace(' 받침', '');
+  function qNew() {
+    const q = state.quiz, pool = qPool();
+    let h;
+    do { h = pool[Math.floor(Math.random() * pool.length)]; } while (q.cur && h === q.cur.h && pool.length > 1);
+    const kata = q.mode === 'k' || (q.mode === 'mix' && Math.random() < 0.5), ans = qLabel(h), labels = [ans];
+    pool.slice().sort(() => Math.random() - 0.5).forEach((x) => { const l = qLabel(x); if (labels.length < 4 && labels.indexOf(l) < 0) labels.push(l); });
+    labels.sort(() => Math.random() - 0.5);
+    q.cur = { h: h, ch: kata ? toKata(h) : h, kata: kata, ans: ans, labels: labels, picked: null };
+  }
+  function quizHTML() {
+    const q = state.quiz; if (!q.cur) qNew();
+    const c = q.cur, done = c.picked != null, ok = done && c.labels[c.picked] === c.ans, info = KANA_MAP[c.h];
+    const chips = (key, list) => list.map((x) => '<button class="tg sm" data-a="q-opt" data-key="' + key + '" data-v="' + x[0] + '" aria-pressed="' + (q[key] === x[0]) + '">' + x[1] + '</button>').join('');
+    const origin = info && (c.kata ? info.ok : info.oh) ? ' ' + c.ch + '는 <span class="jp" lang="ja">' + (c.kata ? info.ok : info.oh) + '</span>에서 온 글자예요.' : '';
+    return '<div class="q-top"><div class="seg">' + chips('mode', [['h', '히라가나'], ['k', '가타카나'], ['mix', '섞어서']]) + '</div></div>'
+      + '<div class="q-card"><div class="q-char" lang="ja">' + c.ch + '</div><div class="q-choices">'
+      + c.labels.map((l, i) => '<button class="q-btn' + (done ? (l === c.ans ? ' right' : i === c.picked ? ' wrong' : '') : '') + '" data-a="q-ans" data-i="' + i + '"' + (done ? ' disabled' : '') + '>' + esc(l) + '</button>').join('')
+      + '</div><p class="q-fb" aria-live="polite">' + (!done ? '이 글자는 어떻게 읽을까요?' : (ok ? '정답이에요!' : '아쉬워요. 정답은 ' + esc(c.ans) + '예요.') + origin) + '</p>'
+      + (done ? '<button class="tg" data-a="q-next">다음 문제 →</button>' : '') + '</div>'
+      + '<p class="q-score">맞힘 ' + q.right + ' / ' + q.total + ' · 연속 ' + q.streak + ' · 최고 연속 ' + q.best + '</p>';
+  }
+  const renderQuiz = () => { const el = $('#quiz'); if (el) el.innerHTML = quizHTML(); };
+  function viewKana() {
+    state.ksel = null; /* 가나 탭을 열 때는 아무 글자도 고르지 않은 상태로 시작해요. */
+    const jp = (s) => '<span class="jp ex-inline force-color" lang="ja">' + renderJP(s) + '</span>';
+    const kanaChart = kgrid(KANA_ROWS.map((r) => ({ label: r[0][0] + (r[0][0] === 'ん' ? '' : '행'), cells: [0, 1, 2, 3, 4].map((i) => (r[i] ? r[i][0] : null)) })), ['a', 'i', 'u', 'e', 'o'], '오십음도');
+    const kmodeSeg = '<div class="seg" role="group" aria-label="표시할 문자">' + [['h', '히라가나'], ['k', '가타카나']].map((x) => '<button class="tg sm" data-a="kmode" data-v="' + x[0] + '" aria-pressed="' + (state.kmode === x[0]) + '">' + x[1] + '</button>').join('') + '</div>';
+    const dakuChart = kgrid(DAKU.map((r) => ({ label: r[0] + '행', cells: r })), ['a', 'i', 'u', 'e', 'o'], '탁음·반탁음');
+    const yoonChart = kgrid(YOON.map((b) => ({ label: b, cells: ['ゃ', 'ゅ', 'ょ'].map((y) => b + y) })), ['ya', 'yu', 'yo'], '요음');
+    const EXT = [['ファ', 'ファン', '팬'], ['フィ', 'フィルム', '필름'], ['フェ', 'カフェ', '카페'], ['フォ', 'フォーク', '포크'], ['ティ', 'パーティー', '파티'], ['ディ', 'ディズニー', '디즈니'], ['トゥ', 'タトゥー', '타투'],
+      ['ウィ', 'ウィンドウ', '윈도'], ['ウェ', 'ウェブ', '웹'], ['ウォ', 'ウォーター', '워터'], ['シェ', 'シェフ', '셰프'], ['ジェ', 'ジェット', '제트'], ['チェ', 'チェック', '체크'], ['ヴァ', 'ヴァイオリン', '바이올린']];
+    const CONF = [['シ・ツ', '점 두 개가 シ는 왼쪽에 세로로, ツ는 위에 가로로 놓여요. 마지막 획도 シ는 아래에서 위로 올려 긋고, ツ는 위에서 아래로 내려 그어요.'],
+      ['ソ・ン', 'ソ는 두 획 모두 위에서 아래로 내려 긋고, ン은 마지막 획을 아래에서 위로 올려 그어요. 점의 위치도 ソ는 위, ン은 왼쪽이에요.'],
+      ['ぬ・め', '끝에 작은 고리가 있으면 ぬ, 없으면 め예요.'], ['わ・れ・ね', '끝이 둥글게 닫히면 わ, 바깥으로 꼬리가 빠지면 れ, 작은 고리로 끝나면 ね예요.'],
+      ['る・ろ', '끝에 고리가 있으면 る, 없으면 ろ예요.'], ['さ・ち', '거울에 비친 것처럼 좌우가 반대예요.'], ['は・ほ', 'ほ는 오른쪽 위에 가로획이 하나 더 있어요.'],
+      ['ク・ケ・タ', 'タ는 ク 안에 짧은 획이 하나 더 있고, ケ는 오른쪽 획이 위로 튀어나와 길게 내려와요.'], ['コ・ユ', 'ユ는 아래 가로획이 왼쪽으로 길게 튀어나와요.'], ['フ・ワ・ウ', 'ワ는 왼쪽에 짧은 세로획이 있고, ウ는 그 위에 점이 하나 더 있어요.']];
+    const TWIN = [['カ', '力', '힘 력'], ['エ', '工', '장인 공'], ['ロ', '口', '입 구'], ['ニ', '二', '두 이'], ['ハ', '八', '여덟 팔'], ['タ', '夕', '저녁 석'], ['ト', '卜', '점 복']];
+    setView('<div id="kana-page" class="kmode-' + state.kmode + '"><header class="page-head"><p class="eyebrow">문자 공부</p><h1 class="page-title">히라가나 · 가타카나</h1>'
+      + '<p class="lede">일본어의 소리글자 두 가지예요. 둘 다 한자에서 태어났지만, 히라가나는 한자를 흘려 써서, 가타카나는 한자의 일부를 떼어 내서 만들어졌어요. 글자마다 어떤 한자에서 왔는지, 언제 어떤 문자를 쓰는지 정리했어요.</p>'
+      + '<div class="toc">' + [['k-origin', '탄생'], ['k-chart', '글자표'], ['k-use', '쓰임·구별'], ['k-quiz', '퀴즈']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
+
+      + '<section class="gsec" id="k-origin"><h2><span>두 문자의 탄생</span><span class="jp force-color" lang="ja">' + renderJP('{仮名|かな}') + '</span></h2>'
+      + '<p>가나(仮名)는 \'임시 글자\'라는 뜻이에요. 정식 글자인 한자(真名, まな)에 빗대어 붙은 이름이에요.</p>'
+      + '<div class="roles"><div class="role h"><h3>히라가나 · 흘려 쓰기</h3><p>한자 전체를 붓으로 빠르게 흘려 쓰다가 간략해졌어요.</p><p>' + jp('安 → あ　以 → い　加 → か') + '</p></div>'
+      + '<div class="role a"><h3>가타카나 · 일부 떼기</h3><p>한자의 한 부분만 떼어 내서 기호처럼 썼어요.</p><p>' + jp('伊 → イ　江 → エ　加 → カ') + '</p></div></div>'
+      + '<p>加는 히라가나 か와 가타카나 カ의 공통 조상이에요. 같은 한자도 흘려 쓰면 か, 일부(力)만 떼면 カ가 돼요. 그래서 か/カ, き/キ, へ/ヘ, も/モ처럼 같은 한자에서 나온 쌍은 모양이 닮았어요.</p>'
+      + '<ol class="timeline">'
+      + [['8세기', '만요가나(万葉仮名)', '한자의 뜻은 버리고 소리만 빌려 일본어를 적었어요. 『万葉集』에 많이 쓰여 이런 이름이 붙었어요. 예: 夜麻 = やま(산). 신라의 향찰(郷札)도 한자를 빌려 우리말을 적은 같은 발상이에요.'],
+        ['9세기 무렵', '히라가나', '만요가나를 흘려 쓴 초서체가 더 간략해져 생겼어요. 궁정 여성들이 편지·와카·이야기에 즐겨 써서 \'女手(おんなで)\'라고도 불렸고, 『源氏物語』가 히라가나로 쓰였어요.'],
+        ['9세기 무렵', '가타카나', '승려들이 한문 불경을 읽으며 행간에 읽는 법을 작게 적으려고 한자의 일부만 떼어 썼어요. 학문의 글자라 남성의 글자라는 이미지가 있었어요. 한문에 토를 달던 한국의 구결(口訣)과 비슷한 발상이에요.'],
+        ['935년 무렵', '『土佐日記』', '남성 귀족 紀貫之가 여성인 척 히라가나로 쓴 일기예요. 첫 문장이 \'남자도 쓴다는 일기를 여자인 나도 써 보려 한다\'예요. 히라가나가 여성의 글자로 여겨졌다는 걸 보여 주는 유명한 예예요.'],
+        ['1900년', '한 소리 한 글자', '원래 한 소리를 여러 히라가나로 썼어요(서로 다른 한자에서 온 글자들). 소학교 교육을 위해 하나로 정리했고, 이때 빠진 글자를 변체가나(変体仮名)라고 해요. 지금도 소바 가게 간판에서 볼 수 있어요.'],
+        ['1946년', '현대 가나 표기법', '소리대로 적는 방향으로 바뀌어 ゐ·ゑ를 일상에서 쓰지 않게 됐고, を는 조사에만 남았어요. 옛 표기 けふ(今日)가 きょう로 바뀐 것도 이때예요.']]
+        .map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></section>'
+
+      + '<section class="gsec wide" id="k-chart"><h2><span>오십음도</span><span class="jp force-color" lang="ja">' + renderJP('{五十音図|ごじゅうおんず}') + '</span></h2>'
+      + '<p>기본 글자를 모음(a·i·u·e·o)과 자음 줄로 늘어놓은 표예요. 글자를 누르면 그 글자가 나온 한자와 발음, 가사에 나온 단어가 보여요.</p>'
+      + kmodeSeg
+      + '<div class="kana-wrap"><div class="kana-main">' + kanaChart + '<div class="kdetail" id="kdetail" hidden></div>'
+      + '<div class="aside-box"><span class="eyebrow">알아 두기</span>'
+      + '<p><b>50음인데 왜 46자일까?</b> 모음 5칸 × 자음 줄 10개라서 칸은 50개예요. 그런데 や행의 い·え 자리와 わ행의 い·う·え 자리, 이렇게 다섯 칸은 소리가 あ행과 겹쳐서 따로 쓰는 글자가 없어요. 50 − 5 = 45자에, 표 밖에 따로 붙는 ん을 더하면 46자가 돼요.</p>'
+      + '<p><b>왜 あ·い·う·え·お 순서일까?</b> あ·い·う를 기본 모음으로 먼저 놓고, え(あ+い가 섞인 소리)와 お(あ+う가 섞인 소리)를 뒤에 놓았다고 해요.</p>'
+      + '<p><b>왜 あ·か·さ·た·な… 순서일까?</b> 소리가 나는 자리를 입 안쪽에서 바깥쪽으로 따라간 순서라고 알려져 있어요. か(목 안쪽) → さ·た·な(혀) → は·ま(입술) 순이에요. 옛날에는 は를 \'파\'처럼 입술을 붙였다 떼며 발음해서 입술 소리였어요. 끝의 や·ら·わ는 모음에 가까운 부드러운 소리라 따로 모아 맨 뒤에 놓았어요.</p></div>'
+      + '<h3 class="k-sub" id="k-daku">탁음·반탁음</h3><p class="k-p">か·さ·た·は행 글자 오른쪽 위에 점 두 개(゛, 탁점)를 찍으면 탁한 소리(g·z·d·b)가 되고, は행에 동그라미(゜, 반탁점)를 붙이면 p 소리가 돼요.</p>' + kmodeSeg + dakuChart
+      + '<h3 class="k-sub">요음</h3><p class="k-p">い단 글자 뒤에 작은 ゃ·ゅ·ょ를 붙여 한 음절로 읽어요. き + ゃ = きゃ(캬).</p>' + kmodeSeg + yoonChart
+      + '</div><aside class="kana-side" id="kside"></aside></div></section>'
+
+      + '<section class="gsec" id="k-small"><h2><span>작은 글자와 긴 소리</span><span class="jp force-color" lang="ja">' + renderJP('{促音|そくおん}・{長音|ちょうおん}') + '</span></h2>'
+      + ul(['**촉음 っ·ッ**: 작은 つ예요. 다음 자음 앞에서 한 박자 멈춰요. 한글로 적으면 ㅅ 받침처럼 보여요.',
+        '**장음**: 히라가나는 모음을 하나 더 써서(おかあさん, おとうさん, せんせい), 가타카나는 ー를 써서(コーヒー, ケーキ) 길게 읽어요. えい·おう는 실제로는 \'에-\'·\'오-\'처럼 길게 들려요.',
+        '**작은 ゃ·ゅ·ょ**: 앞 글자와 합쳐 한 음절을 만들어요(요음).',
+        '**작은 ァ·ィ·ゥ·ェ·ォ**: 주로 가타카나 외래어에서 일본어에 없던 소리를 만들 때 써요(ファ, ティ).'])
+      + '<p>길이 하나로 뜻이 완전히 바뀌니 귀로 구별하는 연습이 필요해요.</p>'
+      + '<div class="ex-grid">' + exBox('きて', '와 (来て)') + exBox('きって', '우표 (切手)') + exBox('おばさん', '아주머니') + exBox('おばあさん', '할머니') + exBox('ビル', '빌딩') + exBox('ビール', '맥주') + '</div></section>'
+
+      + '<section class="gsec" id="k-ext"><h2><span>외래어용 가타카나</span><span class="jp force-color" lang="ja">' + renderJP('{外来語|がいらいご}') + '</span></h2>'
+      + '<p>원래 일본어에 없던 외국어 소리를 옮기려고, 가타카나에 작은 글자를 붙인 조합을 만들어 썼어요. 히라가나로는 거의 쓰지 않는 가타카나만의 표기예요.</p>'
+      + '<div class="ext-grid">' + EXT.map((x) => '<div class="ext"><span class="ext-k" lang="ja">' + x[0] + '</span><span class="ext-ro">' + esc(kanaToRomaji(x[0])) + ' · ' + esc(kanaToHangul(x[0])) + '</span><span class="ext-w"><span class="jp force-color" lang="ja">' + paint(x[1]) + '</span> ' + x[2] + '</span></div>').join('') + '</div>'
+      + '<p>ヴ는 v 소리를 위해 만든 글자예요. 다만 요즘은 バイオリン처럼 バ행으로 쓰는 경우가 더 많아요.</p></section>'
+
+      + '<section class="gsec" id="k-use"><h2><span>언제 어떤 문자를 쓸까</span></h2>'
+      + '<div class="roles"><div class="role h"><h3>히라가나</h3><ul class="rules">'
+      + ['조사·조동사·활용 어미 같은 문법 요소', '한자가 어렵거나 잘 쓰지 않는 고유어 (ありがとう, とても)', '어린이 책과 초등 교과서 (한자를 배우기 전)', '한자 위에 다는 후리가나', '부드럽고 친근한 느낌을 내고 싶을 때 (가사, 광고, 가게 이름)'].map((x) => '<li>' + rich(x) + '</li>').join('')
+      + '</ul></div><div class="role a"><h3>가타카나</h3><ul class="rules">'
+      + ['외래어 (コーヒー, テレビ)', '외국의 인명·지명 (アメリカ, ソウル)', '의성어·의태어 (ドキドキ, ワンワン)', '동식물의 학술적인 이름 (ヒト, イヌ, サクラ). Pretender의 運命のヒト도 이 느낌을 빌렸어요.', '강조하거나 말투를 살릴 때 (ダメ, ホント)', '만화에서 로봇·외국인의 어색한 말투 (コンニチハ)'].map((x) => '<li>' + rich(x) + '</li>').join('')
+      + '</ul></div></div>'
+      + '<p>같은 말도 어떤 문자로 쓰느냐에 따라 느낌이 달라져요.</p>'
+      + '<div class="table-wrap"><table><thead><tr><th>한자</th><th>히라가나</th><th>가타카나</th></tr></thead><tbody>'
+      + [['{猫|ねこ}', '일반적인 표기', 'ねこ', '부드럽고 귀여운 느낌 (그림책)', 'ネコ', '생물 이름, 캐주얼한 강조'],
+        ['{綺麗|きれい}', '격식·문학적', 'きれい', '신문·교과서의 표준', 'キレイ', '광고·화장품 문구 같은 느낌'],
+        ['{駄目|だめ}', '딱딱하고 무거움', 'だめ', '부드럽게 타이름', 'ダメ', '단호하게, 가장 흔한 표기']]
+        .map((r) => '<tr><td><span class="jp force-color" lang="ja">' + renderJP(r[0]) + '</span><br><small class="muted">' + r[1] + '</small></td><td><span class="jp force-color" lang="ja">' + r[2] + '</span><br><small class="muted">' + r[3] + '</small></td><td><span class="jp force-color" lang="ja">' + r[4] + '</span><br><small class="muted">' + r[5] + '</small></td></tr>').join('')
+      + '</tbody></table></div>'
+      + '<div class="aside-box"><span class="eyebrow">문화 노트</span>제2차 세계대전 전까지 법률과 공문서는 한자 + 가타카나로 썼어요(大日本帝国憲法도 그래요). 전후에 한자 + 히라가나로 바뀌면서 지금처럼 히라가나가 문장의 기본이 됐어요.</div>'
+      + '<p>가사 속 표기 규칙은 <button class="ref" data-a="nav" data-to="guide">문자 가이드</button>에서 더 자세히 볼 수 있어요.</p></section>'
+
+      + '<section class="gsec" id="k-conf"><h2><span>헷갈리는 글자</span></h2>'
+      + '<div class="conf-grid">' + CONF.map((x) => '<div class="conf"><span class="conf-k force-color" lang="ja">' + paint(x[0]) + '</span><p>' + rich(x[1]) + '</p></div>').join('') + '</div>'
+      + '<p>한자와 똑같이 생긴 가타카나도 있어요. 문맥으로 구별해요.</p>'
+      + '<div class="conf-grid twins">' + TWIN.map((x) => '<div class="conf"><span class="conf-k" lang="ja"><span class="s-a">' + x[0] + '</span> <span class="muted">/</span> <span class="s-k">' + x[1] + '</span></span><p>가타카나 ' + kanaToRomaji(x[0]) + ' / 한자 \'' + x[2] + '\'</p></div>').join('') + '</div></section>'
+
+      + '<section class="gsec" id="k-quiz"><h2><span>읽기 퀴즈</span></h2><p>글자를 보고 읽는 법을 골라 보세요. 답을 고르면 발음을 들려주고, 그 글자가 나온 한자도 알려 줘요.</p><div class="quiz" id="quiz">' + quizHTML() + '</div></section></div>');
+    if (matchMedia('(min-width: 1000px)').matches) $('#kside').appendChild($('#kdetail'));
+  }
+
+  /* ── 단어장 ───────────────────────────────────────────── */
+  function catOf(t) { const s = scriptsOf(plainOf(t.b || t.t)); return s.indexOf('k') >= 0 ? 'k' : s.indexOf('a') >= 0 ? 'a' : s.indexOf('l') >= 0 ? 'l' : 'h'; }
+  function hay(e) {
+    const t = e.tok, base = t.b || t.t, r = readingOf(base);
+    return [plainOf(base), t.plain, toHira(r), kanaToRomaji(r), t.m, t.bm].join(' ').toLowerCase();
+  }
+  function vrowHTML(e, scope) {
+    const t = e.tok, base = t.b || t.t, reading = readingOf(base), on = Progress.has('w', e.key), open = state.vopen.has(e.key);
+    const pos = (WORDS && WORDS[e.key] && WORDS[e.key].p) || t.p;
+    return '<li class="vrow' + (on ? ' learned' : '') + (open ? ' open' : '') + '" data-vrow="' + esc(e.key) + '"><div class="v-top">'
+      + '<button class="v-main" data-a="vx" aria-expanded="' + open + '"><span class="v-jp" lang="ja">' + renderJP(base) + '</span>'
+      + '<span class="v-body"><span class="v-line1">' + lvBadge(e.key) + (reading !== plainOf(base) ? '<span class="jp" lang="ja">' + esc(reading) + '</span>' : '')
+      + '<span>' + esc(kanaToHangul(reading)) + '</span><span class="mono">' + esc(kanaToRomaji(reading)) + '</span>' + (pos ? '<span>' + esc(pos) + '</span>' : '') + '</span>'
+      + '<span class="v-mean">' + rich(t.bm || t.m) + '</span></span><span class="v-chev">' + I.chev + '</span></button>'
+      + '<div class="v-act">' + speakBtn(speechOf(base)) + '<button class="check" data-a="toggle-word" data-wk="' + esc(e.key) + '" aria-pressed="' + on + '" aria-label="외웠어요" title="외웠어요">' + I.check + '</button></div></div>'
+      + '<div class="v-detail"' + (open ? '' : ' hidden') + '>' + (open ? wordDetailHTML(e, scope) : '') + '</div></li>';
+  }
+  function setVOpen(li, open) {
+    const box = li.closest('[data-vmount]'), e = box && box._emap && box._emap.get(li.dataset.vrow); if (!e) return;
+    if (open) state.vopen.add(e.key); else state.vopen.delete(e.key);
+    const d = li.querySelector('.v-detail');
+    if (open && !d.innerHTML) d.innerHTML = wordDetailHTML(e, box._scope);
+    d.hidden = !open; li.classList.toggle('open', open);
+    li.querySelector('.v-main').setAttribute('aria-expanded', String(open));
+  }
+  function mountVocab(box, entries, scope) {
+    entries = entries.filter((e) => catOf(e.tok) !== 'l'); /* 영어 단어는 단어장에 넣지 않아요. */
+    const f = state.vf;
+    const cats = [['all', '전체'], ['k', '한자 포함'], ['h', '히라가나'], ['a', '가타카나']];
+    const lvCount = {}; entries.forEach((e) => { const l = lvOf(e.key); lvCount[l] = (lvCount[l] || 0) + 1; });
+    box.setAttribute('data-vmount', '');
+    box.innerHTML = '<div class="vtools"><input class="search" type="search" id="vq-' + scope + '" placeholder="한자·읽기·로마자·뜻으로 찾기" autocomplete="off" value="' + esc(f.q) + '" aria-label="단어 찾기">'
+      + '<div class="vtools-row"><div class="seg" role="group" aria-label="JLPT 수준"><span class="seg-label">JLPT</span>' + LEVELS.map((c) => '<button class="tg sm" data-vl="' + c[0] + '" aria-pressed="' + (f.lv === c[0]) + '">' + c[1] + '<span class="cnt">' + (c[0] === 'all' ? entries.length : lvCount[c[0]] || 0) + '</span></button>').join('') + '</div></div>'
+      + '<div class="vtools-row"><div class="seg" role="group" aria-label="문자 종류"><span class="seg-label">문자</span>' + cats.map((c) => '<button class="tg sm" data-vf="' + c[0] + '" aria-pressed="' + (f.cat === c[0]) + '">' + c[1] + '</button>').join('') + '</div>'
+      + '<span class="vtools-r"><label class="mini-sw" for="vh-' + scope + '"><input class="switch" type="checkbox" id="vh-' + scope + '"' + (f.hide ? ' checked' : '') + '>외운 단어 숨기기</label>'
+      + '<button class="tg sm" data-vall>모두 펼치기</button></span></div>'
+      + '<p class="hint">JLPT는 2010년 이후 공식 단어 목록을 내지 않아서, 학습자들이 널리 쓰는 비공식 목록(Tanos)과 대조한 수준이에요. 점선 배지는 목록에 없는 파생어라 기본어의 수준을 쓴 것이고, \'목록 외\'는 외래어나 가사 특유의 말처럼 목록에 없는 말이에요.</p></div>'
+      + '<p class="vcount" aria-live="polite"></p><ul class="vlist"></ul>';
+    box._emap = new Map(entries.map((e) => [e.key, e])); box._scope = scope;
+    const list = box.querySelector('.vlist'), count = box.querySelector('.vcount');
+    let rows = [];
+    const draw = () => {
+      /* 한글을 입력하는 도중의 낱자(이제부ㅌ의 ㅌ)는 빼고 찾아요. 그래야 글자를 다 치기 전에 결과가 사라지지 않아요. */
+      const q = toHira(f.q.trim().toLowerCase()).replace(/[\u3131-\u318e]+$/, '').trim();
+      rows = entries.filter((e) => (f.lv === 'all' || lvOf(e.key) === f.lv) && (f.cat === 'all' || catOf(e.tok) === f.cat) && (!q || hay(e).indexOf(q) >= 0) && (!f.hide || !Progress.has('w', e.key)));
+      const allOpen = rows.length > 0 && rows.every((e) => state.vopen.has(e.key));
+      const vall = box.querySelector('[data-vall]');
+      vall.textContent = allOpen ? '모두 접기' : '모두 펼치기'; vall.disabled = !rows.length;
+      list.innerHTML = rows.length ? rows.map((e) => vrowHTML(e, scope)).join('')
+        : '<li class="empty">' + (entries.length ? '조건에 맞는 단어가 없어요. 필터나 검색어를 바꿔 보세요.' : '아직 모인 단어가 없어요.') + '</li>';
+      const learned = entries.filter((e) => Progress.has('w', e.key)).length;
+      count.textContent = '단어 ' + entries.length + '개 · 외움 ' + learned + '개' + (rows.length !== entries.length ? ' · 표시 ' + rows.length + '개' : '');
+    };
+    box._redraw = draw;
+    box.querySelector('.search').addEventListener('input', (e) => { f.q = e.target.value; draw(); });
+    box.querySelector('.mini-sw input').addEventListener('change', (e) => { f.hide = e.target.checked; draw(); });
+    box.addEventListener('click', (e) => {
+      if (e.target.closest('[data-vall]')) {
+        const allOpen = rows.length > 0 && rows.every((x) => state.vopen.has(x.key));
+        rows.forEach((x) => { if (allOpen) state.vopen.delete(x.key); else state.vopen.add(x.key); });
+        draw(); return;
+      }
+      const lb = e.target.closest('[data-vl]');
+      if (lb) { f.lv = lb.dataset.vl; box.querySelectorAll('[data-vl]').forEach((x) => x.setAttribute('aria-pressed', String(x === lb))); draw(); return; }
+      const b = e.target.closest('[data-vf]'); if (!b) return;
+      f.cat = b.dataset.vf; box.querySelectorAll('[data-vf]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); draw();
+    });
+    draw();
+  }
+  async function viewVocab() {
+    setView('<header class="page-head"><p class="eyebrow">모든 곡</p><h1 class="page-title">단어장</h1>'
+      + '<p class="lede">해석한 곡에서 나온 단어를 사전형으로 모았어요. 단어를 누르면 가사 속 문장, 예문, 형태 변화, 관련 단어가 펼쳐져요. 외운 단어를 체크하면 곡마다 진행률에 반영돼요.</p></header><div id="vmount"><p class="empty">단어를 모으는 중…</p></div>');
+    const loaded = await Promise.all(CATALOG.filter((c) => c.status === 'ready').map((c) => loadSong(c.id).catch(() => null)).concat([loadWords()]));
+    loaded.pop();
+    if (state.route !== 'vocab') return;
+    const map = new Map();
+    loaded.filter(Boolean).forEach((s) => s.vocab.forEach((v) => {
+      let e = map.get(v.key);
+      if (!e) { e = { key: v.key, tok: v.tok, refs: [] }; map.set(v.key, e); }
+      v.refs.forEach((r) => e.refs.push(r));
+    }));
+    mountVocab($('#vmount'), Array.from(map.values()), 'all');
+  }
+
+  /* ── 곡 페이지 ─────────────────────────────────────────── */
+  const TABS = [['lyrics', '가사 해석'], ['words', '단어'], ['grammar', '문법'], ['notes', '배경·문화']];
+  function songHeadHTML(s) {
+    return '<header class="song-head"><button class="back" data-a="nav" data-to="home">' + I.back + '<span>곡 목록</span></button>'
+      + '<p class="eyebrow">' + rich(s.eyebrow || [s.artist, s.year].filter(Boolean).join(' · ')) + '</p>'
+      + '<h1 class="song-title">' + rich(s.title) + '</h1>' + (s.sub ? '<p class="song-sub">' + rich(s.sub) + '</p>' : '') + progHTML(s.id) + '</header>';
+  }
+  function lineHTML(l) {
+    const done = Progress.has('l', l.key);
+    return '<li class="line' + (done ? ' done' : '') + '" id="line-' + l.no + '" data-line="' + l.no + '">'
+      + '<div class="line-head"><span class="ln">' + String(l.no).padStart(2, '0') + '</span>' + (l.rep ? '<span class="rep-tag">반복 · ' + String(l.rep).padStart(2, '0') + '</span>' : '') + '<span class="grow"></span>'
+      + '<button class="ico" data-a="speak-line" aria-label="이 줄 듣기" title="이 줄 듣기">' + I.speaker + '</button>'
+      + '<button class="check" data-a="toggle-line" data-lk="' + esc(l.key) + '" aria-pressed="' + done + '" aria-label="이해했어요" title="이해했어요">' + I.check + '</button></div>'
+      + '<p class="lyric" lang="ja">' + l.toks.map((t, i) => '<span class="tok' + (t.kind === 'punct' ? ' punct' : '') + '" data-i="' + i + '">' + renderJP(t.t) + '</span>').join('') + '</p>'
+      + '<p class="kr-line">' + esc(lineHangul(l)) + '</p>'
+      + '<p class="romaji">' + esc(lineRomaji(l)) + '</p>'
+      + (l.ko ? '<div class="ko-wrap" data-a="reveal"><p class="ko">' + rich(l.ko) + '</p><span class="ko-hint">눌러서 해석 보기</span></div>' : '')
+      + '<button class="more" data-a="expand" aria-expanded="false">' + I.chev + '<span>자세히 보기</span></button>'
+      + '<div class="detail" hidden></div></li>';
+  }
+  const dBlock = (label, inner, hint, cls) => '<div class="d-block' + (cls ? ' ' + cls : '') + '"><h3 class="d-label">' + label + (hint ? '<small>' + hint + '</small>' : '') + '</h3>' + inner + '</div>';
+  function detailHTML(l) {
+    const chips = l.toks.map((t, i) => (t.kind === 'punct' ? '' : '<button class="chip' + (t.isFunc ? ' func' : '') + '" data-a="tok" data-i="' + i + '" aria-pressed="false"><span class="chip-jp" lang="ja">' + renderJP(t.t) + '</span><span class="chip-m">' + esc(t.m || t.p || '') + '</span></button>')).join('');
+    return (l.rep ? '<p class="rep-note">' + l.rep + '번째 줄과 같은 가사예요. 해석도 같아요. <button class="ref" data-a="goto-line" data-song="' + esc(state.song.id) + '" data-line="' + l.rep + '">그 줄로 가기</button></p>' : '')
+      + (l.lit ? dBlock('직역', '<p class="lit">' + rich(l.lit) + '</p>') : '')
+      + dBlock('단어 분해', '<div class="chips">' + chips + '</div><div class="tokpanel" hidden></div>', '점선 칩은 조사·조동사 같은 문법 요소예요')
+      + (l.g && l.g.length ? dBlock('문법 포인트', '<ul class="gram">' + l.g.map((g) => '<li><span class="g-k" lang="ja">' + renderJP(g.k) + '</span><span class="g-d">' + rich(g.d) + '</span></li>').join('') + '</ul>') : '')
+      + (l.s ? dBlock('표기 포인트', '<p>' + rich(l.s) + '</p>') : '')
+      + (l.c ? dBlock('문화·뉘앙스', '<p>' + rich(l.c) + '</p>', '', 'd-culture') : '');
+  }
+  function tokPanelHTML(t) {
+    const why = t.w || whyAuto(t), on = t.isVocab && Progress.has('w', t.vkey);
+    const extra = t.isVocab ? wordExtraHTML(t.vkey, t.b || t.t, new Map([[t.plain, t.t]])) : '';
+    return '<div class="tp-head"><span class="tp-jp" lang="ja">' + renderJP(t.t) + '</span>' + speakBtn(sayOf(t)) + '<button class="ico" data-a="tok-close" aria-label="닫기">' + I.close + '</button></div>'
+      + '<dl class="kv"><dt>읽기</dt><dd><span class="jp" lang="ja">' + esc(t.reading) + '</span> · ' + esc(kanaToHangul(kanaOf(t))) + ' <span class="mono muted">' + esc(tokRomaji(t)) + '</span></dd>'
+      + (t.m ? '<dt>뜻</dt><dd>' + rich(t.m) + '</dd>' : '')
+      + (t.b && t.b !== t.t ? '<dt>사전형</dt><dd><span class="jp" lang="ja">' + renderJP(t.b) + '</span>' + (t.bm ? ' — ' + rich(t.bm) : '') + '</dd>' : '')
+      + '</dl>'
+      + '<div class="why"><h4>' + (t.w ? '왜 이 문자로 썼을까?' : '왜 이 문자? · 기본 규칙') + '</h4><p>' + rich(why) + '</p></div>'
+      + (t.n ? '<div class="tnote"><h4>더 알아보기</h4><p>' + rich(t.n) + '</p></div>' : '')
+      + (extra ? '<details class="tp-more"><summary>예문 · 형태 변화 · 관련 단어</summary><div class="tp-more-body">' + extra + '</div></details>' : '')
+      + (t.isVocab ? '<button class="learn" data-a="toggle-word" data-wk="' + esc(t.vkey) + '" aria-pressed="' + on + '">' + I.check + '<span>외웠어요</span></button>' : '');
+  }
+  /* 구간을 '1절·2절·마지막'으로 묶어요. sec.part가 있으면 그대로 쓰고, 없으면 label로 짐작해요.
+     도입·후렴은 앞 묶음에 붙고, Cメロ·Dメロ·ラストサビ·アウトロ는 '마지막'으로 모아요. */
+  function songParts(secs) {
+    const parts = [];
+    secs.forEach((sec, i) => {
+      const label = sec.label || '', m = label.match(/^(\d+)절/), prev = parts[parts.length - 1];
+      const name = sec.part || (m ? m[1] + '절' : /^(Cメロ|Dメロ|ラストサビ|アウトロ)/.test(label) ? '마지막' : prev ? prev.name : '1절');
+      if (prev && prev.name === name) { prev.secs.push(i); prev.n += sec._lines.length; }
+      else parts.push({ name: name, first: i, secs: [i], n: sec._lines.length });
+    });
+    return parts;
+  }
+  function lyricsHTML(s) {
+    const secs = s.sections, parts = songParts(secs), startOf = new Map(parts.map((p) => [p.first, p]));
+    return '<div class="toolbar" role="toolbar" aria-label="표시 옵션">' + optBtn('furi', '후리가나') + optBtn('kr', '한글 발음') + optBtn('hideKo', '해석 가리기')
+      + '<span class="tg-sep" aria-hidden="true"></span><button class="tg" data-a="expand-all">모두 펼치기</button></div>'
+      + '<div class="song-layout"><div class="lines-col">'
+      + '<div class="legend-inline" aria-hidden="true"><span class="li-k">한자</span><span class="li-h">히라가나</span><span class="li-a">가타카나</span><span class="li-l">영어</span><span class="li-sp">특수 읽기</span></div>'
+      + (parts.length > 1 ? '<div class="sec-jump">' + parts.map((p) => '<button class="tg sm" data-a="jump" data-target="sec-' + p.first + '">' + esc(p.name) + '</button>').join('') + '</div>' : '')
+      + secs.map((sec, si) => '<section class="sec' + (startOf.has(si) ? '' : ' cont') + '" id="sec-' + si + '">' + (startOf.has(si) ? '<h2 class="sec-h">' + esc(startOf.get(si).name) + '</h2>' : '') + (sec.note ? '<p class="sec-note">' + rich(sec.note) + '</p>' : '')
+        + '<ol class="line-list">' + sec._lines.map(lineHTML).join('') + '</ol></section>').join('')
+      + '</div><aside class="rail" aria-label="구간 목록"><div class="rail-box"><p class="eyebrow">진행률</p>' + progHTML(s.id) + '</div>'
+      + '<div class="rail-box"><p class="eyebrow">구간</p>' + parts.map((p) => '<button class="rail-link" data-a="jump" data-target="sec-' + p.first + '"><span>' + esc(p.name) + '</span><span class="mono">' + p.n + '줄</span></button>').join('') + '</div></aside></div>';
+  }
+  function grammarHTML(s) {
+    if (!s.grammar.length) return '<p class="empty" style="margin-top:16px">아직 정리된 문법이 없어요.</p>';
+    return '<p class="muted tab-lede">이 곡에 나온 문법 표현을 모았어요. 줄 번호를 누르면 해당 가사로 이동해요.</p><ul class="gram big">'
+      + s.grammar.map((g) => '<li><span class="g-k" lang="ja">' + renderJP(g.k) + '</span><span class="g-d">' + rich(g.d) + '</span><span class="v-refs">'
+        + g.refs.map((n) => '<button class="ref" data-a="goto-line" data-song="' + esc(s.id) + '" data-line="' + n + '">' + n + '번째 줄</button>').join('') + '</span></li>').join('') + '</ul>';
+  }
+  function notesHTML(s) {
+    const facts = [['아티스트', s.artist], ['발매', s.release], ['타이업', s.tieIn], ['작사', s.lyricist], ['작곡', s.composer]].filter((x) => x[1]);
+    return '<div class="notes-layout">' + (s.intro ? '<div class="intro">' + paras(s.intro) + '</div>' : '')
+      + (facts.length ? '<dl class="facts">' + facts.map((x) => '<dt>' + x[0] + '</dt><dd>' + rich(x[1]) + '</dd>').join('') + '</dl>' : '')
+      + (s.notes || []).map((n) => '<article class="note-card">' + (n.tag ? '<p class="eyebrow">' + esc(n.tag) + '</p>' : '') + '<h3>' + rich(n.title) + '</h3>' + paras(n.body) + '</article>').join('')
+      + (s.listen ? '<a class="ext" href="' + esc(s.listen) + '" target="_blank" rel="noopener">YouTube에서 듣기 ↗</a>' : '') + '</div>';
+  }
+  async function viewSong(id, tab, sameSong) {
+    const c = CATALOG.find((x) => x.id === id);
+    if (!c) { setView('<p class="empty">찾는 곡이 없어요. <button class="ref" data-a="nav" data-to="home">곡 목록으로</button></p>'); return; }
+    if (c.status !== 'ready') {
+      setView('<header class="song-head"><button class="back" data-a="nav" data-to="home">' + I.back + '<span>곡 목록</span></button><p class="eyebrow">' + rich(c.meta) + '</p><h1 class="song-title">' + rich(c.title) + '</h1><p class="song-sub">' + rich(c.sub) + '</p></header>'
+        + '<p class="empty">아직 해석이 준비되지 않았어요. 가사를 받으면 한 줄씩 채워 넣을게요.</p>');
+      return;
+    }
+    if (!songs[id]) setView('<p class="empty">곡을 불러오는 중…</p>');
+    let s;
+    try { s = (await Promise.all([loadSong(id), loadWords()]))[0]; }
+    catch (e) { if (state.route.indexOf('song.' + id) === 0) setView('<p class="empty">곡 파일(' + esc(c.file) + ')을 불러오지 못했어요. 페이지를 새로고침해 보세요.</p>'); return; }
+    if (state.route.split('.')[1] !== id) return;
+    state.song = s;
+    const counts = { lyrics: s.uniq.length, words: s.vocab.length, grammar: s.grammar.length, notes: (s.notes || []).length };
+    setView(songHeadHTML(s) + '<nav class="tabs" role="tablist" aria-label="곡 보기">'
+      + TABS.map((t) => '<a class="tab" role="tab" href="#song.' + id + '.' + t[0] + '" data-a="nav" data-to="song.' + id + (t[0] === 'lyrics' ? '' : '.' + t[0]) + '" aria-selected="' + (tab === t[0]) + '">' + t[1] + '<span class="cnt">' + counts[t[0]] + '</span></a>').join('')
+      + '</nav><div id="panel"></div>');
+    const panel = $('#panel');
+    if (tab === 'words') mountVocab(panel, s.vocab, 'song');
+    else if (tab === 'grammar') panel.innerHTML = grammarHTML(s);
+    else if (tab === 'notes') panel.innerHTML = notesHTML(s);
+    else panel.innerHTML = lyricsHTML(s);
+    refreshProgressUI();
+    if (sameSong) {
+      const tabs = $('.tabs'), top = tabs.getBoundingClientRect().top + window.scrollY - ($('.topbar').offsetHeight || 0) - 8;
+      if (window.scrollY > top) window.scrollTo(0, top);
+    }
+    if (state.pendingLine && tab === 'lyrics') {
+      const li = $('#line-' + state.pendingLine); state.pendingLine = null;
+      if (li) { setOpen(li, true); li.scrollIntoView({ block: 'center', behavior: smooth() }); li.classList.add('flash'); setTimeout(() => li.classList.remove('flash'), 1700); }
+    }
+  }
+
+  /* ── 줄 카드 동작 ──────────────────────────────────────── */
+  const lineOf = (li) => state.song && state.song.lines[+li.dataset.line - 1];
+  function remember(li) { if (state.song) store.set('hgn.last', { song: state.song.id, line: +li.dataset.line }); }
+  function setOpen(li, open) {
+    const d = li.querySelector('.detail');
+    if (open && !d.dataset.ready) { d.innerHTML = detailHTML(lineOf(li)); d.dataset.ready = '1'; }
+    d.hidden = !open; li.classList.toggle('open', open);
+    const b = li.querySelector('.more'); b.setAttribute('aria-expanded', String(open)); b.querySelector('span').textContent = open ? '접기' : '자세히 보기';
+    if (open) remember(li); else clearSel(li);
+  }
+  function clearSel(li) {
+    $$('.tok.sel', li).forEach((x) => x.classList.remove('sel'));
+    $$('.chip', li).forEach((x) => { x.classList.remove('sel'); x.setAttribute('aria-pressed', 'false'); });
+    const p = li.querySelector('.tokpanel'); if (p) p.hidden = true;
+    delete li.dataset.sel;
+  }
+  function selectTok(li, i) {
+    const l = lineOf(li); if (!l || !l.toks[i] || l.toks[i].kind === 'punct') return;
+    const wasSel = li.dataset.sel === String(i);
+    if (!li.classList.contains('open')) setOpen(li, true);
+    clearSel(li);
+    if (wasSel) return;
+    li.dataset.sel = String(i);
+    const tk = li.querySelector('.lyric .tok[data-i="' + i + '"]'); if (tk) tk.classList.add('sel');
+    const ch = li.querySelector('.chip[data-i="' + i + '"]'); if (ch) { ch.classList.add('sel'); ch.setAttribute('aria-pressed', 'true'); }
+    const panel = li.querySelector('.tokpanel'); panel.innerHTML = tokPanelHTML(l.toks[i]); panel.hidden = false;
+    const r = panel.getBoundingClientRect();
+    if (r.bottom > window.innerHeight - 70 || r.top < 0) panel.scrollIntoView({ block: 'nearest', behavior: smooth() });
+  }
+  function gotoLine(songId, no) {
+    state.pendingLine = no;
+    if (state.route === 'song.' + songId || state.route === 'song.' + songId + '.lyrics') {
+      const li = $('#line-' + no); state.pendingLine = null;
+      if (li) { setOpen(li, true); li.scrollIntoView({ block: 'center', behavior: smooth() }); li.classList.add('flash'); setTimeout(() => li.classList.remove('flash'), 1700); }
+    } else navigate('song.' + songId);
+  }
+
+  /* ── 설정 시트 ─────────────────────────────────────────── */
+  function openSheet() {
+    state.lastFocus = document.activeElement;
+    $('#scrim').hidden = false; $('#sheet').hidden = false;
+    applyS(); updateSyncLabel();
+    const f = $('#sheet input'); if (f) f.focus();
+  }
+  function closeSheet() {
+    if ($('#sheet').hidden) return;
+    $('#scrim').hidden = true; $('#sheet').hidden = true;
+    if (state.lastFocus && state.lastFocus.focus) state.lastFocus.focus();
+  }
+
+  /* ── 라우팅 ───────────────────────────────────────────── */
+  function markNav(a, b) {
+    /* 노래·음식 모드: 홈·곡 화면이면 노래, 음식 화면이면 음식. 가나·가이드·단어장은 마지막 모드를 그대로 둬요. */
+    if (a === 'food') state.mode = 'food'; else if (a === 'home' || a === 'song' || !a) state.mode = 'song';
+    $$('[data-a="mode"]').forEach((t) => t.setAttribute('aria-pressed', String(t.dataset.v === state.mode)));
+    const sw = $('#side-songs-wrap'); if (sw) sw.hidden = state.mode === 'food';
+    const key = a === 'song' ? 'song.' + b : (a || 'home');
+    $$('[data-nav]').forEach((el) => {
+      const n = el.dataset.nav, on = n === key || (n === 'home' && (a === 'food' || (a === 'song' && !!el.closest('.tabbar'))));
+      if (on) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
+    });
+  }
+  function route() {
+    const r = state.route || 'home', parts = r.split('.'), a = parts[0], b = parts[1];
+    const prev = state.rendered || '';
+    const sameSong = a === 'song' && prev.split('.')[0] === 'song' && prev.split('.')[1] === b;
+    state.rendered = r; state.allOpen = false;
+    if (a === 'guide') viewGuide();
+    else if (a === 'kana') viewKana();
+    else if (a === 'vocab') viewVocab();
+    else if (a === 'food') viewFood();
+    else if (a === 'song' && b) viewSong(b, TABS.some((t) => t[0] === parts[2]) ? parts[2] : 'lyrics', sameSong);
+    else viewHome();
+    markNav(a, b);
+    if (!sameSong && !state.pendingLine) window.scrollTo(0, 0);
+  }
+  /* 뒤로·앞으로 버튼: 앱 안 브라우저처럼 이동 버튼이 없는 곳을 위해 페이지 안에 둔다.
+     브라우저 기록을 쓸 수 있으면 그대로 따르고(history.state.hgn = 몇 번째 화면인지), 막힌 환경이면 페이지가 H.list에 직접 기록한다.
+     첫 화면(i=0)에서는 뒤로를 막아, 버튼이 이 페이지 밖(claude.ai 화면 등)으로 나가지 않게 한다. */
+  const H = { native: false, i: 0, max: 0, list: [], pos: [] };
+  function initHistory() {
+    try {
+      const st = history.state;
+      if (st && typeof st.hgn === 'number') H.i = st.hgn; else history.replaceState({ hgn: 0 }, '');
+      H.native = !!history.state && history.state.hgn === H.i;
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    } catch (e) { H.native = false; H.i = 0; }
+    let max = H.i;
+    try { const m = +sessionStorage.getItem('hgn.navMax'); if (H.native && m > max) max = m; } catch (e) { /* 저장 불가 환경 */ }
+    H.max = max; H.list[H.i] = state.route;
+    window.addEventListener('scroll', () => { H.pos[H.i] = window.scrollY; }, { passive: true });
+    updateHistBtns();
+  }
+  function saveNavMax() { try { sessionStorage.setItem('hgn.navMax', String(H.max)); } catch (e) { /* 저장 불가 환경 */ } }
+  function updateHistBtns() {
+    $$('[data-a="hist"]').forEach((b) => { b.disabled = +b.dataset.d < 0 ? H.i <= 0 : H.i >= H.max; });
+  }
+  // 곡 데이터가 그려진 뒤에 돌아가야 해서 한 박자 늦추고, 페이지가 덜 그려져 덜 내려갔으면 한 번 더 시도한다.
+  function restoreScroll(y) {
+    if (!(y > 0)) return;
+    const r = state.route;
+    setTimeout(() => {
+      if (state.route !== r) return;
+      window.scrollTo(0, y);
+      if (Math.abs(window.scrollY - y) > 2) setTimeout(() => { if (state.route === r) window.scrollTo(0, y); }, 250);
+    }, 0);
+  }
+  function arrive(r, y) { state.route = r; route(); restoreScroll(y); updateHistBtns(); }
+  function histGo(d) {
+    const j = H.i + d;
+    if (j < 0 || j > H.max) return;
+    H.pos[H.i] = window.scrollY;
+    if (H.native) { try { history.go(d); return; } catch (e) { H.native = false; } }
+    const r = H.list[j]; if (!r) return;
+    H.i = j;
+    try { history.replaceState(null, '', '#' + r); } catch (e) { /* 주소 갱신이 막힌 환경 */ }
+    arrive(r, H.pos[j] || 0);
+  }
+  function navigate(to) {
+    const next = (to || 'home') === 'home' && state.mode === 'food' ? 'food' : to || 'home', moved = next !== state.route;
+    state.route = next;
+    if (moved) {
+      H.pos[H.i] = window.scrollY;
+      H.list.length = H.i + 1; H.pos.length = H.i + 1;
+      if (H.native) { try { history.pushState({ hgn: H.i + 1 }, '', '#' + next); } catch (e) { H.native = false; } }
+      H.i++; H.max = H.i; H.list[H.i] = next; saveNavMax();
+    } else if (H.native) {
+      try { if (location.hash.slice(1) !== next) history.replaceState({ hgn: H.i }, '', '#' + next); } catch (e) { /* 주소 갱신이 막힌 환경 */ }
+    }
+    route(); updateHistBtns();
+  }
+  const fromHash = () => { try { return location.hash.slice(1) || 'home'; } catch (e) { return 'home'; } };
+  window.addEventListener('popstate', (e) => {
+    const st = e.state, r = fromHash();
+    let y = 0;
+    if (st && typeof st.hgn === 'number') { H.i = st.hgn; y = H.pos[H.i] || 0; if (H.i > H.max) H.max = H.i; }
+    else { // 링크로 주소(#)만 바뀌어 새로 생긴 기록
+      H.list.length = H.i + 1; H.pos.length = H.i + 1; H.i++; H.max = H.i;
+      try { history.replaceState({ hgn: H.i }, ''); } catch (e2) { /* 주소 갱신이 막힌 환경 */ }
+    }
+    H.list[H.i] = r; saveNavMax();
+    arrive(r, y);
+  });
+  window.addEventListener('hashchange', () => { const h = fromHash(); if (h !== state.route) { state.route = h; route(); } });
+
+  /* ── 이벤트 ───────────────────────────────────────────── */
+  document.addEventListener('click', (e) => {
+    const tokEl = e.target.closest('.lyric .tok');
+    if (tokEl) { if (!tokEl.classList.contains('punct')) selectTok(tokEl.closest('.line'), +tokEl.dataset.i); return; }
+    const el = e.target.closest('[data-a]'); if (!el) return;
+    const a = el.dataset.a, li = el.closest('.line');
+    switch (a) {
+      case 'nav': e.preventDefault(); closeSheet(); navigate(el.dataset.to); break;
+      case 'mode': state.mode = el.dataset.v; closeSheet(); navigate(state.mode === 'food' ? 'food' : 'home'); break;
+      case 'opt': setOpt(el.dataset.opt, !S[el.dataset.opt]); break;
+      case 'set': setOpt(el.dataset.key, el.dataset.key === 'rate' ? +el.dataset.val : el.dataset.val); break;
+      case 'expand': setOpen(li, !li.classList.contains('open')); break;
+      case 'expand-all':
+        state.allOpen = !state.allOpen; $$('.line').forEach((x) => setOpen(x, state.allOpen));
+        el.textContent = state.allOpen ? '모두 접기' : '모두 펼치기'; break;
+      case 'tok': selectTok(li, +el.dataset.i); break;
+      case 'tok-close': clearSel(li); break;
+      case 'reveal': if (ROOT.classList.contains('hide-ko')) el.classList.toggle('revealed'); break;
+      case 'speak': speak(el.dataset.say); break;
+      case 'speak-line': { const l = lineOf(li); if (l) speak(l.toks.map(sayOf).join('')); break; }
+      case 'toggle-line': { const on = Progress.toggle('l', el.dataset.lk); remember(li); toast(on ? '이해한 줄로 표시했어요' : '이해한 줄 표시를 풀었어요'); break; }
+      case 'toggle-word': { const on = Progress.toggle('w', el.dataset.wk); toast(on ? '외운 단어에 넣었어요' : '외운 단어에서 뺐어요'); break; }
+      case 'goto-line': gotoLine(el.dataset.song, +el.dataset.line); break;
+      case 'vx': { const v = el.closest('.vrow'); setVOpen(v, !v.classList.contains('open')); break; }
+      case 'kana': selectKana(el); break;
+      case 'kmode': {
+        state.kmode = el.dataset.v; const pg = $('#kana-page'); if (pg) pg.className = 'kmode-' + state.kmode;
+        $$('[data-a="kmode"]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === state.kmode)));
+        { const card = $('#kdetail'); if (card && state.ksel) card.innerHTML = kanaDetailHTML(state.ksel); } break;
+      }
+      case 'q-ans': {
+        const q = state.quiz, c = q.cur; if (!c || c.picked != null) break;
+        c.picked = +el.dataset.i; q.total++;
+        if (c.labels[c.picked] === c.ans) { q.right++; q.streak++; if (q.streak > q.best) { q.best = q.streak; store.set('hgn.kanaBest', q.best); } } else q.streak = 0;
+        renderQuiz(); speak(c.h);
+        const nb = $('#quiz [data-a="q-next"]'); if (nb) nb.focus({ preventScroll: true });
+        break;
+      }
+      case 'q-next': qNew(); renderQuiz(); { const b0 = $('#quiz .q-btn'); if (b0) b0.focus({ preventScroll: true }); } break;
+      case 'q-opt': state.quiz[el.dataset.key] = el.dataset.v; qNew(); renderQuiz(); break;
+      case 'jump': { const t = document.getElementById(el.dataset.target); if (t) t.scrollIntoView({ block: 'start', behavior: smooth() }); break; }
+      case 'hist': histGo(+el.dataset.d); break;
+      case 'download': saveOffline(el); break;
+      case 'open-settings': openSheet(); break;
+      case 'close-settings': closeSheet(); break;
+      case 'reset':
+        if (el.classList.contains('armed')) {
+          clearTimeout(state.resetT); Progress.clear(); el.classList.remove('armed'); el.textContent = '학습 기록 지우기'; toast('학습 기록을 모두 지웠어요');
+        } else {
+          el.classList.add('armed'); el.textContent = '한 번 더 누르면 모두 지워져요';
+          clearTimeout(state.resetT); state.resetT = setTimeout(() => { el.classList.remove('armed'); el.textContent = '학습 기록 지우기'; }, 4000);
+        }
+        break;
+    }
+  });
+  $('#sheet').addEventListener('change', (e) => { const i = e.target.closest('input[data-opt]'); if (i) setOpt(i.dataset.opt, i.checked); });
+  $('#scrim').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+
+  /* ── 시작 ─────────────────────────────────────────────── */
+  $('#side-songs').innerHTML = CATALOG.map((c) => (c.status === 'ready'
+    ? '<button class="nav-item song-item" data-a="nav" data-to="song.' + c.id + '" data-nav="song.' + c.id + '"><span class="si-t">' + rich(c.title) + '</span>' + (c.demo ? '<span class="si-tag">예시</span>' : '') + '</button>'
+    : '<div class="nav-item song-item soon" aria-disabled="true"><span class="si-t">' + rich(c.title) + '</span><span class="si-tag">준비 중</span></div>')).join('');
+  applyS();
+  loadWords();
+  Progress.load();
+  updateSyncLabel();
+  setupDownload();
+  state.route = fromHash();
+  /* 언어 선택 페이지(../)로 가는 링크는 GitHub Pages처럼 japanese/ 폴더 안에서 열렸을 때만 보여요. 아티팩트나 내려받은 파일에는 위 폴더가 없어요. */
+  if (/\/japanese\/(index\.html)?$/.test(location.pathname)) $$('[data-lang-back]').forEach((el) => { el.hidden = false; });
+  initHistory();
+  route();
+  Progress.connect();
+})();
+</script>
