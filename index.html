@@ -2,16 +2,16 @@
 <html lang="ko">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>외국어 공부</title>
+<title>공부 노트</title>
 <script>
-  /* 예전 주소(…/showcase/#song.pretender 등)로 들어오면 일본어 페이지의 같은 화면으로 보내요. */
+  /* 예전 주소(…/showcase#song.pretender 등)로 들어오면 일본어 페이지의 같은 화면으로 보내요. */
   if (/^#(home|song\.|kana|guide|vocab|food|travel)/.test(location.hash)) location.replace('japanese/index.html' + location.hash);
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
-/* 언어 선택 페이지. 색 토큰은 japanese/index.html과 같은 값을 써요. */
+/* 공부 노트 첫 페이지(주제 고르기). 색 토큰은 japanese/index.html과 같은 값을 써요. */
 :root{
   --paper:#F3F4F7; --sheet:#FFFFFF; --sheet-2:#F7F8FA;
   --ink:#1A2030; --ink-2:#465066; --ink-3:#737D92; --rule:#E2E5EB; --rule-2:#CBD1DB;
@@ -54,8 +54,8 @@ a.lang:focus-visible{ outline:none; box-shadow:0 0 0 2px var(--ink) }
 </style>
 
 <main>
-  <h1>어떤 언어를 공부할까요?</h1>
-  <p class="lede">언어를 고르면 그 언어의 공부 노트로 이동해요.</p>
+  <h1>무엇을 공부해 볼까요?</h1>
+  <p class="lede">요즘 관심 있고 공부하고 싶은 것들을 하나씩 모아 두는 노트예요.</p>
   <ul class="langs">
     <li>
       <a class="lang" href="japanese/index.html">
@@ -66,10 +66,17 @@ a.lang:focus-visible{ outline:none; box-shadow:0 0 0 2px var(--ink) }
     </li>
     <li>
       <div class="lang soon" aria-disabled="true">
-        <span class="lang-name">스페인어</span>
+        <span class="lang-name">카메라</span>
         <span class="lang-desc">준비하고 있어요.</span>
         <span class="soon-tag">준비 중</span>
       </div>
+    </li>
+    <li>
+      <a class="lang" href="novel/index.html">
+        <span class="lang-name">소설</span>
+        <span class="lang-desc">자극이 되고 롤모델로 삼고 싶은 작가들의 노트. 히가시노 게이고부터 시작해요.</span>
+        <span class="lang-go">공부하러 가기 →</span>
+      </a>
     </li>
   </ul>
 </main>

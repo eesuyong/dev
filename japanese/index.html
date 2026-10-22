@@ -524,7 +524,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       <button class="ico" data-a="hist" data-d="-1" aria-label="뒤로" title="뒤로" disabled><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <button class="ico" data-a="hist" data-d="1" aria-label="앞으로" title="앞으로" disabled><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
-    <a class="lang-back" href="../index.html" data-lang-back hidden>← 언어 선택</a>
+    <a class="lang-back" href="../index.html" data-lang-back hidden>← 공부 목록</a>
     <button class="side-brand" data-a="nav" data-to="home">
       <span class="brand-ko">일본어</span>
     </button>
@@ -554,7 +554,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       <button class="brand" data-a="nav" data-to="home"><span class="brand-ko">일본어</span></button>
       <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button><button class="tg sm" data-a="mode" data-v="travel" aria-pressed="false">여행</button></div>
       <span class="grow"></span>
-      <a class="ico" href="../index.html" data-lang-back hidden aria-label="언어 선택" title="언어 선택"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5s1.2-6.1 3.6-8.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
+      <a class="ico" href="../index.html" data-lang-back hidden aria-label="공부 목록" title="공부 목록"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
       <button class="ico" data-a="open-settings" aria-label="보기 설정"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
     </header>
     <main id="view" class="view"></main>
@@ -634,13 +634,17 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   const ARTISTS = [
     { id: 'higedan', ko: '히게단', name: 'Official{髭男|ひげだん}dism', about: () => bandHTML() },
     { id: 'aimyon', ko: '아이묭', name: 'あいみょん', about: () => aimyonHTML() },
-    { id: 'backnumber', ko: '백넘버', name: 'back number', about: () => backnumberHTML() }
+    { id: 'backnumber', ko: '백넘버', name: 'back number', about: () => backnumberHTML() },
+    { id: 'lisa', ko: '리사', name: 'LiSA', about: () => lisaHTML() },
+    { id: 'aimer', ko: '에메', name: 'Aimer', about: () => aimerHTML() }
   ].sort((a, b) => a.ko.localeCompare(b.ko, 'ko'));
   const CATALOG = [
     /* 여행 회화도 곡과 같은 형식(travel.json)이라 같은 엔진으로 그려요. artist가 없어 곡 목록에는 안 나오고, 단어장에도 넣지 않아요. */
     { id: 'travel', file: 'travel.json', status: 'ready', kind: 'travel', title: '여행', sub: '', meta: '' },
     { id: 'hanako', file: 'songs/hanako.json', status: 'ready', artist: 'backnumber',
       title: '{高嶺|たかね}の{花子|はなこ}さん', sub: '싱글', meta: '2013 · 작사·작곡 清水依与吏' },
+    { id: 'heroine', file: 'songs/heroine.json', status: 'ready', artist: 'backnumber',
+      title: 'ヒロイン', sub: '「JR SKISKI」 CM송 · 앨범 『シャンデリア』 수록', meta: '2015 · 작사·작곡 清水依与吏' },
     { id: 'xmassong', file: 'songs/xmassong.json', status: 'ready', artist: 'backnumber',
       title: 'クリスマスソング', sub: '드라마 「5→9〜私に恋したお坊さん〜」 주제가', meta: '2015 · 작사·작곡 清水依与吏' },
     { id: 'suiheisen', file: 'songs/suiheisen.json', status: 'ready', artist: 'backnumber',
@@ -655,10 +659,14 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       title: 'マリーゴールド', sub: '5번째 싱글 · 앨범 『瞬間的シックスセンス』 수록', meta: '2018 · 작사·작곡 あいみょん' },
     { id: 'pretender', file: 'songs/pretender.json', status: 'ready', artist: 'higedan',
       title: 'Pretender', sub: '영화 「コンフィデンスマンJP ロマンス編」 주제가', meta: '2019 · 작사·작곡 藤原聡' },
+    { id: 'gurenge', file: 'songs/gurenge.json', status: 'ready', artist: 'lisa',
+      title: '{紅蓮華|ぐれんげ}', sub: 'TV 애니메이션 「鬼滅の刃」 오프닝 테마 · 15번째 싱글', meta: '2019 · 작사 LiSA · 작곡 草野華余子' },
     { id: 'shukumei', file: 'songs/shukumei.json', status: 'ready', artist: 'higedan',
       title: '{宿命|しゅくめい}', sub: '고교야구 프로그램 「熱闘甲子園」 2019 테마송', meta: '2019 · 작사·작곡 藤原聡' },
     { id: 'laughter', file: 'songs/laughter.json', status: 'ready', artist: 'higedan',
       title: 'Laughter', sub: '영화 「コンフィデンスマンJP プリンセス編」 주제가', meta: '2020 · 작사·작곡 藤原聡' },
+    { id: 'zankyosanka', file: 'songs/zankyosanka.json', status: 'ready', artist: 'aimer',
+      title: '{残響散歌|ざんきょうさんか}', sub: 'TV 애니메이션 「鬼滅の刃」 遊郭編 오프닝 테마 · 20번째 싱글', meta: '2022 · 작사 aimerrhythm · 작곡 飛内将大' },
     { id: 'rashisa', file: 'songs/rashisa.json', status: 'ready', artist: 'higedan',
       title: 'らしさ', sub: '극장 애니메이션 「ひゃくえむ。」 주제가', meta: '2025 · 작사·작곡 藤原聡' }
   ];
@@ -1270,6 +1278,33 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<p>밴드 이름은 시미즈가 사귀던 사람을 다른 밴드맨에게 빼앗긴 경험에서 왔다고 해요. 그 사람에게 자신은 이제 back number(지난 호, 철 지난 것)라는 뜻이에요. 그래서인지 짝사랑과 이별을 솔직하게 그린 곡이 많아요.</p>'
       + '<div class="members">' + members.map((m) => '<div class="member"><span class="jp" lang="ja">' + rich(m[0]) + '</span><small>' + m[1] + '</small></div>').join('') + '</div>'
       + '<div class="aside-box"><span class="eyebrow">이름 속 알파벳</span>밴드 이름은 가타카나 バックナンバー가 아니라 영어 소문자 그대로 back number라고 써요. 일본어 문장 안에서도 알파벳을 그대로 쓰는 이름이 많아요(Official髭男dism도 그렇죠).</div>'
+      + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
+      + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></div></div>';
+  }
+  function aimerHTML() {
+    const tl = [
+      ['2011', '{六等星|ろくとうせい}の{夜|よる}', '메이저 데뷔 싱글 · TV 애니메이션 「NO.6」 엔딩'],
+      ['2022', '{残響散歌|ざんきょうさんか}', 'TV 애니메이션 「鬼滅の刃」 遊郭編 오프닝 · 그해 紅白歌合戦 첫 출전곡']
+    ];
+    return '<div class="band"><div class="band-text"><h2 class="h2">Aimer는 어떤 가수?</h2>'
+      + '<p>Aimer(에메)는 2011년 9월 싱글 「六等星の夜」로 메이저 데뷔한 가수예요. 어릴 때부터 피아노와 기타로 곡을 만들었고, 15살 때 목소리가 전혀 나오지 않게 된 일을 겪은 뒤 지금의 허스키한 목소리를 얻었다고 해요.</p>'
+      + '<p>애니메이션과 드라마 주제가를 많이 불렀고, 가사를 쓸 때는 aimerrhythm이라는 이름을 써요. 2022년 「鬼滅の刃」 遊郭編의 오프닝 残響散歌가 Billboard JAPAN 연간 종합 차트 1위에 올랐고, 그해 NHK 紅白歌合戦에 처음 나갔어요.</p>'
+      + '<div class="aside-box"><span class="eyebrow">이름 읽기</span>Aimer는 프랑스어 aimer(사랑하다)에서 온 이름으로 알려져 있어요. 알파벳 그대로 쓰고, 일본어로는 エメ라고 읽어요.</div>'
+      + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
+      + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></div></div>';
+  }
+  function lisaHTML() {
+    const tl = [
+      ['2011', 'Letters to U', '미니 앨범 · 솔로 데뷔'],
+      ['2019', '{紅蓮華|ぐれんげ}', 'TV 애니메이션 「鬼滅の刃」 오프닝 · 그해 紅白歌合戦 첫 출전곡'],
+      ['2020', '{炎|ほむら}', '극장판 「鬼滅の刃」 無限列車編 주제가 · 日本レコード大賞 대상']
+    ];
+    return '<div class="band"><div class="band-text"><h2 class="h2">LiSA는 어떤 가수?</h2>'
+      + '<p>LiSA(리사)는 기후현 출신의 가수예요. TV 애니메이션 「Angel Beats!」의 극중 밴드 Girls Dead Monster의 보컬로 노래한 뒤, 2011년 봄 미니 앨범 「Letters to U」로 솔로 데뷔했어요.</p>'
+      + '<p>애니메이션 주제가를 많이 불러 アニソン(애니송, 애니메이션 노래)을 대표하는 가수로 꼽혀요. 2019년 「鬼滅の刃」의 오프닝 紅蓮華가 크게 히트해 그해 NHK 紅白歌合戦에 처음 나갔고, 이듬해 극장판 주제가 炎으로 日本レコード大賞 대상을 받았어요.</p>'
+      + '<div class="aside-box"><span class="eyebrow">이름 속 소문자</span>LiSA는 가운데 i만 소문자로 써요. 가타카나 リサ로 쓰지 않고 알파벳 표기 그대로가 이름이에요. back number, Official髭男dism처럼 일본 가수 이름에는 알파벳을 그대로 쓰는 경우가 많아요.</div>'
       + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
       + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
       + '</ol></div></div>';
@@ -2403,7 +2438,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   updateSyncLabel();
   setupDownload();
   state.route = fromHash();
-  /* 언어 선택 페이지(../index.html)로 가는 링크는 GitHub Pages처럼 japanese/ 폴더 안에서 열렸을 때만 보여요. 아티팩트나 내려받은 파일에는 위 폴더가 없어요. */
+  /* 공부 목록 첫 페이지(../index.html)로 가는 링크는 GitHub Pages처럼 japanese/ 폴더 안에서 열렸을 때만 보여요. 아티팩트나 내려받은 파일에는 위 폴더가 없어요. */
   if (/\/japanese\/(index\.html)?$/.test(location.pathname)) $$('[data-lang-back]').forEach((el) => { el.hidden = false; });
   initHistory();
   route();
