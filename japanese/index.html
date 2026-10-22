@@ -5,7 +5,7 @@
 <title>일본어</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Klee+One:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
 <style>
 /* Layout: 공책 — 데스크톱은 왼쪽 목차(곡·가이드) + 본문, 휴대폰은 상단 바 + 하단 탭. 가사 한 줄 = 노트 카드 한 장.
    색은 UI가 아니라 '문자 종류'에 쓴다: 한자 紅 · 히라가나 藍 · 가타카나 若竹 · 영어 紫. UI 강조는 山吹 하나. */
@@ -16,9 +16,9 @@
   --kanji:#B0303A; --hira:#24498F; --kata:#17704B; --latin:#6E3F9C;
   --kanji-tint:#FBECEE; --hira-tint:#EAF0FA; --kata-tint:#E6F3EC; --latin-tint:#F2EBF8;
   --scrim:rgba(14,18,28,.42); --shadow:0 12px 40px rgba(20,28,45,.16);
-  --font-jp:"Klee One","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+  --font-jp:"IBM Plex Sans JP","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif; /* 한국어(IBM Plex Sans KR)와 같은 가족이라 한 줄에 섞여도 굵기·높이가 맞아요 */
   --font-ui:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
-  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --font-mono:var(--font-ui); /* 숫자·로마자도 본문과 같은 글꼴(고정폭 글꼴은 쓰지 않아요). 자릿수는 tabular-nums로 맞춰요 */
   --lyric:1.55rem; --topbar-h:56px; --gutter:16px; --radius:10px;
 }
 @media (prefers-color-scheme: dark){
@@ -54,7 +54,7 @@ h1,h2,h3,h4{ margin:0; text-wrap:balance }
 p,ul,ol,dl{ margin:0 }
 :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:6px }
 .jp{ font-family:var(--font-jp) }
-.mono{ font-family:var(--font-mono) }
+.mono{ font-family:var(--font-mono); font-variant-numeric:tabular-nums }
 .muted{ color:var(--ink-3) }
 .grow{ flex:1 }
 .eyebrow{ font:600 .74rem/1.3 var(--font-ui); letter-spacing:.06em; color:var(--ink-3) }
@@ -68,7 +68,9 @@ ruby{ ruby-position:over }
 rt{ font-family:var(--font-jp); font-size:.5em; font-weight:400; color:var(--ink-3); letter-spacing:0 }
 ruby.sp .rb{ text-decoration:underline dashed var(--accent) 1.5px; text-underline-offset:.3em }
 ruby.sp rt{ color:var(--accent) }
-.no-furi .lyric rt,.no-furi .chip rt{ display:none }
+/* 가사 본문은 후리가나·한글 발음을 꺼도 자리를 비워 둬서, 켜고 끌 때 글자 위치가 움직이지 않아요. */
+.no-furi .lyric rt{ visibility:hidden }
+.no-furi .chip rt{ display:none }
 
 /* 뼈대 */
 .shell{ display:grid; grid-template-columns:minmax(0,1fr); min-height:100vh }
@@ -78,7 +80,7 @@ ruby.sp rt{ color:var(--accent) }
 .brand{ display:flex; align-items:baseline; gap:8px }
 .brand-ko{ font-weight:700; letter-spacing:-.01em }
 .view{ width:100%; max-width:1120px; margin-inline:auto; padding-inline:var(--gutter); padding-block:20px calc(100px + env(safe-area-inset-bottom,0px)); min-width:0 }
-.nav-glyph{ display:inline-grid; place-items:center; width:18px; height:18px; font-family:var(--font-jp); font-weight:600; font-size:1rem; line-height:1 }
+.nav-glyph{ display:inline-grid; place-items:center; width:18px; height:18px; font-family:var(--font-jp); font-weight:400; font-size:1rem; line-height:1 }
 .nav-glyph.big{ width:22px; height:22px; font-size:1.2rem }
 .tabbar{ position:fixed; left:0; right:0; bottom:0; z-index:30; display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); background:var(--sheet); border-top:1px solid var(--rule); padding-bottom:env(safe-area-inset-bottom,0px) }
 .tabbar button{ display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 0 7px; font-size:.7rem; color:var(--ink-3); text-align:center }
@@ -129,7 +131,10 @@ html:not(.can-dl) [data-dl]{ display:none }
 .tg[aria-pressed="true"]{ background:var(--ink); color:var(--paper); border-color:var(--ink) }
 .tg.sm{ padding:4px 10px; font-size:.8rem }
 .tg-sep{ flex:none; width:1px; height:20px; background:var(--rule-2); margin-inline:2px }
-.aside-box{ display:grid; gap:4px; padding:14px 16px; border-radius:var(--radius); background:var(--sheet-2); border:1px dashed var(--rule-2); font-size:.93rem; color:var(--ink-2) }
+.aside-box{ display:block; padding:14px 16px; border-radius:var(--radius); background:var(--sheet-2); border:1px dashed var(--rule-2); font-size:.93rem; color:var(--ink-2) }
+/* 상자 안의 글과 일본어 조각이 한 문단으로 이어지도록 block으로 둬요(grid면 조각마다 줄이 갈라져요). */
+.aside-box > .eyebrow{ display:block; margin-bottom:4px }
+.aside-box > p + p{ margin-top:6px }
 .ref{ font-size:.76rem; color:var(--ink-2); text-decoration:underline; text-underline-offset:2px; text-decoration-color:var(--rule-2) }
 .ref:hover{ color:var(--ink); text-decoration-color:currentColor }
 
@@ -139,11 +144,17 @@ html:not(.can-dl) [data-dl]{ display:none }
 .legend{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px }
 @media (min-width:640px){ .legend{ grid-template-columns:repeat(4,minmax(0,1fr)) } }
 .lg{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:var(--radius); background:var(--sheet); border:1px solid var(--rule); min-width:0 }
-.lg-ch{ flex:none; font-family:var(--font-jp); font-weight:600; font-size:1.9rem; line-height:1; width:1.15em; text-align:center }
+.lg-ch{ flex:none; font-family:var(--font-jp); font-weight:400; font-size:1.9rem; line-height:1; width:1.15em; text-align:center }
 .lg-k .lg-ch{ color:var(--kanji) } .lg-h .lg-ch{ color:var(--hira) } .lg-a .lg-ch{ color:var(--kata) } .lg-l .lg-ch{ color:var(--latin) }
 .lg b{ display:block; font-size:.95rem }
 .lg small{ display:block; color:var(--ink-3); font-size:.78rem; line-height:1.4 }
 .resume{ justify-self:start; display:inline-flex; align-items:center; gap:8px; padding:9px 14px; border-radius:999px; background:var(--accent-soft); color:var(--ink); font-size:.9rem; font-weight:500 }
+.song-list{ display:grid; gap:22px }
+.artist-group{ display:grid; gap:10px }
+.artist-h{ display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; font-size:1.02rem; font-weight:700 }
+.artist-h .jp{ font-size:.85rem; font-weight:400; color:var(--ink-3) }
+.artist-about{ padding:20px; border:1px solid var(--rule); border-radius:12px; background:var(--sheet) }
+.side-artist{ padding:8px 10px 2px; font-size:.72rem; font-weight:600; color:var(--ink-3) }
 .cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:14px }
 .song-card{ display:grid; align-content:start; gap:10px; padding:18px; border-radius:12px; background:var(--sheet); border:1px solid var(--rule); text-decoration:none; transition:border-color .15s,transform .15s }
 a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
@@ -153,7 +164,7 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .pill.ready{ background:var(--kata-tint); color:var(--kata); border-color:transparent }
 .pill.demo{ background:var(--accent-soft); color:var(--accent); border-color:transparent }
 .sc-meta{ font-size:.76rem; color:var(--ink-3); text-align:right }
-.sc-title{ font-size:1.45rem; font-weight:700; letter-spacing:-.01em; line-height:1.25 }
+.sc-title{ font-size:1.45rem; font-weight:700; letter-spacing:-.01em; line-height:1.25; display:flex; align-items:flex-end; min-height:1.8em } /* 후리가나가 있는 제목과 없는 제목의 높이를 맞춰요 */
 .sc-sub{ color:var(--ink-2); font-size:.9rem }
 .prog{ display:grid; gap:6px }
 .prog-bar{ height:6px; border-radius:99px; background:var(--rule); overflow:hidden }
@@ -229,8 +240,7 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .check{ flex:none; width:30px; height:30px; display:inline-grid; place-items:center; border-radius:50%; border:1.5px solid var(--rule-2); color:transparent; margin-left:4px }
 .check:hover{ border-color:var(--accent); color:var(--accent) }
 .check[aria-pressed="true"]{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink) }
-.lyric{ font-family:var(--font-jp); font-weight:600; font-size:var(--lyric); line-height:2.1; padding:0 16px; line-break:strict; overflow-wrap:anywhere }
-.no-furi .lyric{ line-height:1.75; padding-block:4px }
+.lyric{ font-family:var(--font-jp); font-weight:400; font-size:var(--lyric); line-height:2.1; padding:0 16px; line-break:strict; overflow-wrap:anywhere }
 .tok{ cursor:pointer; border-radius:4px; transition:background-color .12s }
 .tok:hover{ background:var(--sheet-2) }
 .tok.punct{ cursor:default }
@@ -238,19 +248,22 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .tok.sel{ background:var(--accent-soft) }
 .gaps .lyric .tok:not(.punct){ margin-inline:.08em }
 .gaps .lyric .tok:not(.punct) > .tok-jp{ box-shadow:inset 0 -2px 0 var(--rule-2) }
-.tok-kr{ display:none }
-.show-kr .kr-map{ line-height:1.2; row-gap:0 }
-.show-kr .kr-map .tok-jp{ line-height:2.1 }
-.no-furi.show-kr .kr-map .tok-jp{ line-height:1.6 }
-.show-kr .kr-map .tok{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:bottom; padding-bottom:2px }
-.show-kr .kr-map .tok-kr{ display:block; font-family:var(--font-ui); font-weight:500; font-size:.72rem; line-height:1.2; color:var(--ink-2); white-space:nowrap; letter-spacing:0 }
-.kr-line{ display:none; padding:0 16px; font-size:.88rem; line-height:1.5; color:var(--ink-2) }
-.show-kr .kr-line{ display:block }
+.kr-map{ line-height:1.2 }
+.kr-map .tok-jp{ line-height:2.1 }
+.kr-map .tok{ display:inline-flex; flex-direction:column; align-items:center; vertical-align:bottom; padding-bottom:2px }
+.kr-map .tok-kr{ display:block; visibility:hidden; margin-top:5px; font-family:var(--font-ui); font-weight:400; font-size:.72rem; line-height:1.2; color:var(--ink-2); white-space:nowrap; letter-spacing:0 }
+.show-kr .kr-map .tok-kr{ visibility:visible }
+.kr-line{ padding:0 16px; font-size:.88rem; line-height:1.5; color:var(--ink-2); visibility:hidden }
+.show-kr .kr-line{ visibility:visible }
 .romaji{ display:none; padding:0 16px; font:400 .82rem/1.5 var(--font-mono); color:var(--ink-3) }
 .show-romaji .romaji{ display:block }
+.dlg{ list-style:none; display:grid; gap:6px; padding:8px 8px 10px; border:1px dashed var(--rule-2); border-radius:calc(var(--radius) + 4px); background:var(--sheet-2) }
+.dlg-label{ padding:0 6px; font-size:.72rem; font-weight:600; color:var(--ink-3) }
+.dlg .line-list{ gap:6px }
+.who-tag{ margin-left:8px; padding:1px 8px; border-radius:5px; font-size:.72rem; font-weight:600; color:var(--ink-2); background:var(--sheet-2); border:1px solid var(--rule) }
 .rep-tag{ margin-left:8px; padding:1px 8px; border:1px solid var(--rule); border-radius:999px; font-size:.7rem; color:var(--ink-3); font-variant-numeric:tabular-nums }
 .rep-note{ font-size:.88rem; color:var(--ink-2); padding:10px 12px; border-radius:8px; background:var(--sheet-2) }
-.ko-wrap{ position:relative; padding:6px 16px 0 }
+.ko-wrap{ position:relative; padding:14px 16px 0 }
 .ko-hint{ display:none }
 .hide-ko .ko-wrap:not(.revealed){ cursor:pointer }
 .hide-ko .ko-wrap:not(.revealed) .ko{ filter:blur(6px); opacity:.5; -webkit-user-select:none; user-select:none }
@@ -270,13 +283,13 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .chip:hover{ border-color:var(--ink-3) }
 .chip.func{ background:var(--sheet-2); border-style:dashed }
 .chip.sel{ border-color:var(--ink); box-shadow:0 0 0 1px var(--ink) }
-.chip-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.15rem; line-height:1.95 }
+.chip-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.15rem; line-height:1.95 }
 .chip-m{ font-size:.72rem; color:var(--ink-3); max-width:8.5em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
 .tokpanel{ display:grid; gap:12px; margin-top:10px; padding:12px 14px 14px; background:var(--sheet-2); border:1px solid var(--rule); border-radius:10px }
 .tp-head{ display:flex; align-items:center; gap:4px }
 .tp-step{ display:inline-flex; gap:0; padding-inline:2px; border-inline:1px solid var(--rule) }
 .tp-step .ico:disabled{ opacity:.3; cursor:default }
-.tp-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.8rem; line-height:1.85; margin-right:auto; min-width:0 }
+.tp-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.8rem; line-height:1.85; margin-right:auto; min-width:0 }
 .kv{ display:grid; grid-template-columns:4.2rem minmax(0,1fr); gap:6px 12px; font-size:.93rem }
 .kv dt{ color:var(--ink-3); font-size:.8rem; padding-top:.18em }
 .kv dd{ margin:0; min-width:0 }
@@ -290,7 +303,7 @@ a.song-card:hover{ border-color:var(--rule-2); transform:translateY(-1px) }
 .gram{ list-style:none; padding:0; display:grid; gap:12px }
 .gram li{ display:grid; gap:2px }
 .gram li + li{ padding-top:12px; border-top:1px dotted var(--rule-2) }
-.g-k{ font-family:var(--font-jp); font-weight:600; font-size:1.08rem; line-height:1.9 }
+.g-k{ font-family:var(--font-jp); font-weight:400; font-size:1.08rem; line-height:1.9 }
 .g-d{ font-size:.93rem; color:var(--ink-2) }
 .tab-lede{ font-size:.92rem; padding-block:14px }
 .gram.big{ background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius); padding:16px; max-width:780px }
@@ -326,7 +339,7 @@ a.ext{ justify-self:start; font-weight:600; font-size:.92rem }
 .v-main{ display:grid; grid-template-columns:minmax(4.2rem,auto) minmax(0,1fr) auto; gap:14px; align-items:center; width:100%; padding:12px 2px; border-radius:8px }
 .v-main:hover .v-chev{ color:var(--ink) }
 .vrow.learned .v-jp,.vrow.learned .v-mean{ opacity:.5 }
-.v-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.4rem; line-height:1.9 }
+.v-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.4rem; line-height:1.9 }
 .v-body{ display:grid; gap:2px; min-width:0 }
 .v-line1{ display:flex; flex-wrap:wrap; align-items:center; gap:2px 8px; font-size:.8rem; color:var(--ink-3) }
 .v-mean{ font-size:.96rem }
@@ -344,12 +357,12 @@ a.ext{ justify-self:start; font-weight:600; font-size:.92rem }
 .wd-block{ display:grid; gap:8px; min-width:0 }
 .wd-block .d-label{ margin-bottom:0 }
 .ctx{ display:grid; gap:2px; padding:10px 12px; border-radius:8px; background:var(--sheet-2) }
-.ctx-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.12rem; line-height:1.95; overflow-wrap:anywhere }
+.ctx-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.12rem; line-height:1.95; overflow-wrap:anywhere }
 .ctx-jp mark.hl{ background:var(--accent-soft); color:inherit; border-radius:3px; padding:0 .08em }
 .ctx-ko{ font-size:.88rem; color:var(--ink-2) }
 .ctx-meta{ font-size:.75rem; color:var(--ink-3) }
 .wex{ display:grid; gap:0 }
-.wex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:600; font-size:1.12rem; line-height:1.95 }
+.wex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:400; font-size:1.12rem; line-height:1.95 }
 .cls-note{ font-size:.8rem; color:var(--ink-3) }
 .cls-note b{ color:var(--ink-2) }
 .forms{ display:grid; grid-template-columns:repeat(auto-fill,minmax(8.6rem,1fr)); gap:6px }
@@ -377,7 +390,7 @@ a.ext{ justify-self:start; font-weight:600; font-size:.92rem }
 .gsec b{ color:var(--ink) }
 .ex{ display:grid; gap:2px; padding:12px 16px 14px; background:var(--sheet); border:1px solid var(--rule); border-radius:var(--radius) }
 .ex-row{ display:flex; align-items:center; gap:8px }
-.ex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:600; font-size:1.5rem; line-height:2.05 }
+.ex-jp{ flex:1; min-width:0; font-family:var(--font-jp); font-weight:400; font-size:1.5rem; line-height:2.05 }
 .ex-ko{ font-size:.9rem; color:var(--ink-2) }
 .ex-grid{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr)) }
 .ex-grid .ex-jp{ font-size:1.35rem }
@@ -395,7 +408,7 @@ table{ border-collapse:collapse; width:100%; min-width:520px; font-size:.92rem }
 th,td{ text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule); vertical-align:middle }
 th{ font-size:.74rem; font-weight:600; letter-spacing:.04em; color:var(--ink-3); background:var(--sheet-2) }
 tr:last-child td{ border-bottom:0 }
-td.p-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.2rem; color:var(--hira); white-space:nowrap }
+td.p-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.2rem; color:var(--hira); white-space:nowrap }
 td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 
 /* 히라가나·가타카나 */
@@ -410,6 +423,13 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 }
 .k-sub{ font-size:1.05rem; font-weight:700; margin-top:12px; scroll-margin-top:calc(var(--topbar-h) + 12px) }
 .k-p{ color:var(--ink-2); font-size:.94rem }
+.terms{ display:grid; gap:8px; grid-template-columns:repeat(auto-fill,minmax(min(100%,20rem),1fr)) }
+.term{ display:grid; gap:2px; padding:10px 14px 12px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
+.term-top{ display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px }
+.term-top .jp{ font-size:1.05rem; line-height:1.9 }
+.term-ko{ font-size:.78rem; color:var(--ink-3) }
+.term p{ font-size:.9rem; color:var(--ink-2) }
+.k-jp{ margin-left:6px; font-size:.82rem; font-weight:400; color:var(--ink-3) }
 .kgrid{ display:grid; grid-template-columns:2.6rem repeat(var(--cols,5),minmax(0,1fr)); gap:4px; max-width:560px }
 .kg-head{ text-align:center; font:500 .72rem var(--font-mono); color:var(--ink-3); padding-bottom:2px }
 .kg-row{ align-self:center; font-family:var(--font-jp); font-size:.82rem; font-weight:600; color:var(--ink-3); text-align:center }
@@ -417,7 +437,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 .kcell:hover{ border-color:var(--ink-3) }
 .kcell.sel{ border-color:var(--ink); box-shadow:0 0 0 1px var(--ink) }
 .kcell.empty{ border:0; background:none }
-.kc-chars{ display:flex; align-items:baseline; justify-content:center; gap:3px; font-family:var(--font-jp); font-weight:600; line-height:1.25 }
+.kc-chars{ display:flex; align-items:baseline; justify-content:center; gap:3px; font-family:var(--font-jp); font-weight:400; line-height:1.25 }
 .kh{ font-size:1.45rem; color:var(--hira) }
 .kk{ font-size:1rem; color:var(--kata) }
 .kmode-h .kk,.kmode-k .kh{ display:none }
@@ -429,7 +449,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 .kd-one.h{ background:var(--hira-tint) }
 .kd-one.a{ background:var(--kata-tint) }
 .kd-label{ font-size:.72rem; font-weight:600; color:var(--ink-3) }
-.kd-big{ font-family:var(--font-jp); font-weight:600; font-size:3rem; line-height:1.25 }
+.kd-big{ font-family:var(--font-jp); font-weight:400; font-size:3rem; line-height:1.25 }
 .kd-one.h .kd-big{ color:var(--hira) }
 .kd-one.a .kd-big{ color:var(--kata) }
 .kd-src{ font-size:.78rem; color:var(--ink-2); text-align:center }
@@ -438,19 +458,19 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 .kd-ro{ font:500 1rem var(--font-mono) }
 .ext-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,10.5rem),1fr)); grid-auto-rows:1fr; gap:8px }
 .ext{ display:grid; gap:1px; padding:10px 12px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
-.ext-k{ font-family:var(--font-jp); font-weight:600; font-size:1.5rem; line-height:1.3; color:var(--kata) }
+.ext-k{ font-family:var(--font-jp); font-weight:400; font-size:1.5rem; line-height:1.3; color:var(--kata) }
 .ext-ro{ font:400 .74rem var(--font-mono); color:var(--ink-3) }
 .ext-w{ font-size:.85rem; color:var(--ink-2) }
 .ext-w .jp{ font-weight:600 }
 .conf-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,15rem),1fr)); gap:8px }
 .conf-grid.twins{ grid-template-columns:repeat(auto-fill,minmax(min(100%,9rem),1fr)) }
 .conf{ display:grid; gap:4px; padding:12px 14px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
-.conf-k{ font-family:var(--font-jp); font-weight:600; font-size:1.7rem; line-height:1.3; letter-spacing:.05em }
+.conf-k{ font-family:var(--font-jp); font-weight:400; font-size:1.7rem; line-height:1.3; letter-spacing:.05em }
 .conf p{ font-size:.86rem; color:var(--ink-2) }
 .quiz{ display:grid; gap:12px; max-width:560px }
 .q-top{ display:flex; flex-wrap:wrap; gap:8px 16px }
 .q-card{ display:grid; justify-items:center; gap:14px; padding:20px 16px; border:1px solid var(--rule-2); border-radius:14px; background:var(--sheet) }
-.q-char{ font-family:var(--font-jp); font-weight:600; font-size:4.5rem; line-height:1.15 }
+.q-char{ font-family:var(--font-jp); font-weight:400; font-size:4.5rem; line-height:1.15 }
 .q-choices{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; width:100% }
 .q-btn{ padding:12px 8px; border:1px solid var(--rule-2); border-radius:10px; background:var(--sheet-2); font:500 1rem var(--font-ui); text-align:center }
 .q-btn:hover:not(:disabled){ border-color:var(--ink-3) }
@@ -487,7 +507,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 .food-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,13.5rem),1fr)); gap:8px }
 .food{ display:grid; align-content:start; gap:3px; padding:10px 12px 12px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--sheet) }
 .food-top{ display:flex; align-items:center; justify-content:space-between; gap:6px }
-.food-jp{ font-family:var(--font-jp); font-weight:600; font-size:1.35rem; line-height:1.9 }
+.food-jp{ font-family:var(--font-jp); font-weight:400; font-size:1.35rem; line-height:1.9 }
 .food-hg{ font-size:.8rem; color:var(--ink-3) }
 .food-m{ font-size:.95rem; font-weight:600 }
 .food-n{ font-size:.82rem; color:var(--ink-2) }
@@ -508,7 +528,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     <button class="side-brand" data-a="nav" data-to="home">
       <span class="brand-ko">일본어</span>
     </button>
-    <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button></div>
+    <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button><button class="tg sm" data-a="mode" data-v="travel" aria-pressed="false">여행</button></div>
     <nav class="side-nav" aria-label="주요 메뉴">
       <button class="nav-item" data-a="nav" data-to="home" data-nav="home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>홈</span></button>
       <button class="nav-item" data-a="nav" data-to="kana" data-nav="kana"><span class="nav-glyph" lang="ja" aria-hidden="true">あ</span><span>히라가나·가타카나</span></button>
@@ -532,7 +552,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         <button class="ico" data-a="hist" data-d="1" aria-label="앞으로" title="앞으로" disabled><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <button class="brand" data-a="nav" data-to="home"><span class="brand-ko">일본어</span></button>
-      <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button></div>
+      <div class="seg mode-tg" role="group" aria-label="학습 모드"><button class="tg sm" data-a="mode" data-v="song" aria-pressed="true">노래</button><button class="tg sm" data-a="mode" data-v="food" aria-pressed="false">음식</button><button class="tg sm" data-a="mode" data-v="travel" aria-pressed="false">여행</button></div>
       <span class="grow"></span>
       <a class="ico" href="../index.html" data-lang-back hidden aria-label="언어 선택" title="언어 선택"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5s1.2-6.1 3.6-8.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></a>
       <button class="ico" data-a="open-settings" aria-label="보기 설정"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
@@ -609,16 +629,30 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
          tk: [{ t(표기), p?(품사), m?(뜻), b?(사전형), bm?(사전형 뜻), w?(왜 이 문자), n?(메모),
                 ro?(로마자 덮어쓰기), v?(단어장 포함 여부), k?(단어 키), lv?(JLPT) }] }] }] }
      표기 마크업: {漢字|かんじ} 루비 · {本気|マジ|*} 특수 읽기 · [[…]] 색 구분 예문 · **굵게** */
+  /* 가수. 홈의 곡 목록을 가수별로 묶고, 가수를 고르면 about()이 소개로 나와요. CATALOG의 artist는 여기 id를 써요.
+     ko는 버튼·제목에 쓰는 한국어 이름(가나다순으로 정렬), name은 원래 이름(루비 마크업 가능). */
+  const ARTISTS = [
+    { id: 'higedan', ko: '히게단', name: 'Official{髭男|ひげだん}dism', about: () => bandHTML() },
+    { id: 'aimyon', ko: '아이묭', name: 'あいみょん', about: () => aimyonHTML() }
+  ].sort((a, b) => a.ko.localeCompare(b.ko, 'ko'));
   const CATALOG = [
-    { id: 'film', file: 'songs/film.json', status: 'ready',
+    /* 여행 회화도 곡과 같은 형식(travel.json)이라 같은 엔진으로 그려요. artist가 없어 곡 목록에는 안 나오고, 단어장에도 넣지 않아요. */
+    { id: 'travel', file: 'travel.json', status: 'ready', kind: 'travel', title: '여행', sub: '', meta: '' },
+    { id: 'aiwo', file: 'songs/aiwo.json', status: 'ready', artist: 'aimyon',
+      title: '{愛|あい}を{伝|つた}えたいだとか', sub: '싱글', meta: '2017 · 작사·작곡 あいみょん' },
+    { id: 'kimirock', file: 'songs/kimirock.json', status: 'ready', artist: 'aimyon',
+      title: '{君|きみ}はロックを{聴|き}かない', sub: '3번째 싱글 · 앨범 『青春のエキサイトメント』 수록', meta: '2017 · 작사·작곡 あいみょん' },
+    { id: 'film', file: 'songs/film.json', status: 'ready', artist: 'higedan',
       title: '115{万|まん}キロのフィルム', sub: '앨범 『エスカパレード』 수록 · 영화 「思い、思われ、ふり、ふられ」(2020) 주제가', meta: '2018 · 작사·작곡 藤原聡' },
-    { id: 'pretender', file: 'songs/pretender.json', status: 'ready',
+    { id: 'marigold', file: 'songs/marigold.json', status: 'ready', artist: 'aimyon',
+      title: 'マリーゴールド', sub: '5번째 싱글 · 앨범 『瞬間的シックスセンス』 수록', meta: '2018 · 작사·작곡 あいみょん' },
+    { id: 'pretender', file: 'songs/pretender.json', status: 'ready', artist: 'higedan',
       title: 'Pretender', sub: '영화 「コンフィデンスマンJP ロマンス編」 주제가', meta: '2019 · 작사·작곡 藤原聡' },
-    { id: 'shukumei', file: 'songs/shukumei.json', status: 'ready',
+    { id: 'shukumei', file: 'songs/shukumei.json', status: 'ready', artist: 'higedan',
       title: '{宿命|しゅくめい}', sub: '고교야구 프로그램 「熱闘甲子園」 2019 테마송', meta: '2019 · 작사·작곡 藤原聡' },
-    { id: 'laughter', file: 'songs/laughter.json', status: 'ready',
+    { id: 'laughter', file: 'songs/laughter.json', status: 'ready', artist: 'higedan',
       title: 'Laughter', sub: '영화 「コンフィデンスマンJP プリンセス編」 주제가', meta: '2020 · 작사·작곡 藤原聡' },
-    { id: 'rashisa', file: 'songs/rashisa.json', status: 'ready',
+    { id: 'rashisa', file: 'songs/rashisa.json', status: 'ready', artist: 'higedan',
       title: 'らしさ', sub: '극장 애니메이션 「ひゃくえむ。」 주제가', meta: '2025 · 작사·작곡 藤原聡' }
   ];
 
@@ -634,7 +668,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   };
   const state = { route: 'home', rendered: null, song: null, pendingLine: null, allOpen: false,
     vf: { cat: 'all', lv: 'all', q: '', hide: false }, vopen: new Set(), lastFocus: null, toastT: 0, resetT: 0,
-    mode: 'song', ksel: null, kmode: 'h', quiz: { mode: 'h', cur: null, right: 0, total: 0, streak: 0, best: +store.get('hgn.kanaBest', 0) || 0 } };
+    mode: 'song', artist: store.get('hgn.artist', 'all'), ksel: null, kmode: 'h', quiz: { mode: 'h', cur: null, right: 0, total: 0, streak: 0, best: +store.get('hgn.kanaBest', 0) || 0 } };
 
   const I = {
     speaker: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
@@ -851,6 +885,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         else {
           line = Object.assign({}, l, { no: n, sec: si, key: s.id + ':' + (l.id || n) });
           line.toks = (l.tk || []).map((t) => prepTok(Object.assign({}, dict[t.t], t)));
+          if (d.kind === 'travel') line.toks.forEach((t) => { t.isVocab = false; });
           if (l.id) byId[l.id] = line;
         }
         s.lines.push(line); sec._lines.push(line);
@@ -1173,10 +1208,10 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function cardHTML(c) {
     if (c.status !== 'ready') {
       return '<div class="song-card soon" aria-disabled="true"><div class="sc-top"><span class="pill">가사 대기 중</span><span class="sc-meta">' + rich(c.meta) + '</span></div>'
-        + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub">' + rich(c.sub) + '</p><p class="sc-sub muted">가사를 받으면 한 줄씩 해석이 채워져요.</p></div>';
+        + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub muted">가사를 받으면 한 줄씩 해석이 채워져요.</p></div>';
     }
     return '<a class="song-card" href="#song.' + c.id + '" data-a="nav" data-to="song.' + c.id + '"><div class="sc-top"><span class="pill ' + (c.demo ? 'demo' : 'ready') + '">' + (c.demo ? '예시' : '해석 완료') + '</span><span class="sc-meta">' + rich(c.meta) + '</span></div>'
-      + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub">' + rich(c.sub) + '</p>' + progHTML(c.id) + '</a>';
+      + '<h3 class="sc-title">' + rich(c.title) + '</h3>' + progHTML(c.id) + '</a>';
   }
   function resumeHTML() {
     const last = store.get('hgn.last', null);
@@ -1203,19 +1238,47 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
       + '</ol></div></div>';
   }
+  /* 곡 목록: 가수 버튼(전체·가수별) + 카드. 전체는 가수마다 묶어서, 가수를 고르면 그 가수의 소개와 곡만 보여 줘요. */
+  function songListHTML() {
+    const sel = ARTISTS.some((a) => a.id === state.artist) ? state.artist : 'all';
+    const songsOf = (a) => CATALOG.filter((c) => c.artist === a.id);
+    const head = (a) => '<h3 class="artist-h"><span>' + esc(a.ko) + '</span><span class="jp" lang="ja">' + renderJP(a.name) + '</span></h3>';
+    const tabs = '<div class="seg artist-tg" role="group" aria-label="가수">' + [['all', '전체', CATALOG.filter((c) => c.artist).length]].concat(ARTISTS.map((a) => [a.id, a.ko, songsOf(a).length]))
+      .map((x) => '<button class="tg sm" data-a="artist" data-v="' + x[0] + '" aria-pressed="' + (sel === x[0]) + '">' + esc(x[1]) + '<span class="cnt">' + x[2] + '</span></button>').join('') + '</div>';
+    if (sel === 'all') return tabs + ARTISTS.filter((a) => songsOf(a).length).map((a) => '<div class="artist-group">' + head(a) + '<div class="cards">' + songsOf(a).map(cardHTML).join('') + '</div></div>').join('');
+    const a = ARTISTS.find((x) => x.id === sel);
+    return tabs + '<div class="artist-about">' + a.about() + '</div><div class="cards">' + songsOf(a).map(cardHTML).join('') + '</div>';
+  }
+  function aimyonHTML() {
+    const tl = [
+      ['2016', '{生|い}きていたんだよな', '메이저 데뷔 싱글'],
+      ['2017', '{愛|あい}を{伝|つた}えたいだとか', '싱글'],
+      ['2017', '{君|きみ}はロックを{聴|き}かない', '3번째 싱글 · 첫 앨범 『青春のエキサイトメント』 수록'],
+      ['2018', 'マリーゴールド', '5번째 싱글 · 타이업 없이 스트리밍으로 크게 퍼진 대표곡'],
+      ['2019', 'ハルノヒ', '영화 「クレヨンしんちゃん 新婚旅行ハリケーン」 주제가'],
+      ['2020', '{裸|はだか}の{心|こころ}', '드라마 「私の家政夫ナギサさん」 주제가'],
+      ['2023', '{愛|あい}の{花|はな}', 'NHK 아침 드라마 「らんまん」 주제가']
+    ];
+    return '<div class="band"><div class="band-text"><h2 class="h2">아이묭은 어떤 가수?</h2>'
+      + '<p>' + rich('[[あいみょん]]') + '(아이묭)은 1995년 효고현 니시노미야시 출신의 싱어송라이터예요. 2016년 싱글 ' + rich('「[[{生|い}きていたんだよな]]」') + '로 메이저 데뷔했고, 자기 노래를 대부분 직접 작사·작곡해요.</p>'
+      + '<p>2018년의 マリーゴールド가 드라마·광고 주제가 없이 라디오와 스트리밍으로 퍼지면서 이름이 널리 알려졌어요. 그해 연말 NHK ' + rich('「紅白歌合戦」') + '(홍백가합전)에 처음 출전했어요.</p>'
+      + '<div class="aside-box"><span class="eyebrow">이름 속 히라가나</span>활동명 ' + rich('[[あいみょん]]') + '은 한자도 가타카나도 아닌 히라가나로만 써요. 히라가나 이름은 둥글고 부드러운 인상을 줘서, 친구가 부르는 별명처럼 친근하게 느껴져요. 히게단의 ' + rich('[[ヒゲダン]]') + '이 가타카나 애칭인 것과 비교해 보세요.</div>'
+      + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
+      + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></div></div>';
+  }
   function viewHome() {
     setView('<section class="hero">'
       + '<h1 class="hero-title">가사로 읽는 일본어</h1>'
       + '<p class="lede">노래 가사를 한 줄씩 뜯어보며 일본어의 문자와 문법, 그 안에 담긴 문화까지 함께 익혀요. 한 문장 안에서 글자 종류가 바뀌는 데에는 다 이유가 있어요. 그 이유부터 짚어 갑니다.</p>'
       + legendHTML() + '<div class="hero-links">' + resumeHTML() + '<button class="resume" data-a="nav" data-to="kana">히라가나·가타카나부터 익히기 →</button><button class="resume" data-a="download" data-dl>HTML 파일로 내려받기 ↓</button></div></section>'
-      + '<section class="block"><div class="block-head"><h2 class="h2">곡 목록</h2><p class="muted">곡이 추가될 때마다 여기에 쌓여요.</p></div><div class="cards">' + CATALOG.map(cardHTML).join('') + '</div></section>'
+      + '<section class="block"><div class="block-head"><h2 class="h2">곡 목록</h2><p class="muted">곡이 추가될 때마다 여기에 쌓여요.</p></div><div id="song-list" class="song-list">' + songListHTML() + '</div></section>'
       + '<section class="block"><h2 class="h2">공부하는 순서</h2><ol class="steps">'
       + '<li><b>색으로 문자 구분하기</b><p>가사 한 줄을 읽으며 한자·히라가나·가타카나가 어디서 바뀌는지 먼저 봐요. 바뀌는 지점이 대개 단어의 경계예요.</p></li>'
       + '<li><b>단어를 눌러 이유 확인</b><p>단어를 누르면 읽기·뜻·사전형과 함께 \'왜 이 문자로 썼는지\'가 나와요.</p></li>'
       + '<li><b>직역과 해석 비교</b><p>\'자세히 보기\'에서 직역과 자연스러운 해석을 비교하고 문법·문화 노트를 읽어요.</p></li>'
       + '<li><b>체크하며 쌓기</b><p>이해한 줄과 외운 단어를 체크하면 곡마다 진행률이 쌓여요.</p></li>'
-      + '</ol></section>'
-      + '<section class="block">' + bandHTML() + '</section>');
+      + '</ol></section>');
     CATALOG.filter((c) => c.status === 'ready').forEach((c) => loadSong(c.id).then(refreshProgressUI).catch(() => {}));
   }
 
@@ -1232,6 +1295,24 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<div class="role h"><h3>히라가나 · 문법의 접착제</h3><p>조사, 활용 어미, 조동사</p><p>' + rich('[[は・だから・を・みます]]') + '</p></div>'
       + '<div class="role a"><h3>가타카나 · 바깥에서 온 말</h3><p>외래어, 외국 이름, 강조</p><p>' + rich('[[コーヒー]]') + '</p></div></div>'
       + '<p>한국어로 비유하면 한자는 <b>단어의 몸통</b>, 히라가나는 \'은/는·을/를·-습니다\' 같은 <b>조사와 어미</b>예요. 일본어는 띄어쓰기를 하지 않는데, 문자 종류가 바뀌는 지점이 대개 단어의 경계라서 읽을 수 있어요.</p>' },
+    { id: 'g-sentence', ko: '문장의 기본 틀', jp: '{文|ぶん}の{形|かたち}', body: () =>
+      '<p>영어는 어순으로 역할이 정해져서 1~5형식을 먼저 배워요. 일본어는 한국어처럼 <b>조사가 역할을 정하고, 문장 끝에 서술어가 와요</b>. 그래서 형식 대신, 문장 끝에 무엇이 오는지로 세 가지 틀을 나눠요.</p>'
+      + '<h3 class="k-sub">1. 명사문(名詞文) · A는 B다</h3><p class="k-p">명사로 끝나는 문장이에요. 끝에 だ(~이다), 정중하게는 です가 붙어요. 가사에서는 だ를 빼기도 해요.</p>'
+      + exBox('あれは{空|そら}がまだ{青|あお}い{夏|なつ}のこと', '그건 하늘이 아직 파랗던 여름의 일 · マリーゴールド')
+      + exBox('いざ{始|はじ}まればひとり{芝居|しばい}だ', '막상 시작되면 혼자 하는 연극이야 · Pretender')
+      + '<h3 class="k-sub">2. 형용사문(形容詞文) · A는 ~하다</h3><p class="k-p">형용사로 끝나는 문장이에요. い형용사는 그대로 끝나고, な형용사는 だ를 붙여요.</p>'
+      + exBox('{君|きみ}が{恋|こい}しい', '네가 그리워 · マリーゴールド (い형용사)')
+      + exBox('{幸|しあわ}せだ', '행복해 · マリーゴールド (な형용사)')
+      + '<h3 class="k-sub">3. 동사문(動詞文) · A가 (B를) ~하다</h3><p class="k-p">동사로 끝나는 문장이에요. 가사에 가장 많이 나와요. 무엇을 하는지는 を, 누구에게·어디에는 に로 붙여요.</p>'
+      + exBox('{君|きみ}はロックを{聴|き}かない', '너는 록을 듣지 않아 · 君はロックを聴かない')
+      + exBox('{雲|くも}がまだ{2人|ふたり}の{影|かげ}を{残|のこ}す', '구름이 아직 두 사람의 그림자를 남겨 · マリーゴールド')
+      + '<h3 class="k-sub">알아 두면 가사가 술술 읽히는 네 가지</h3>'
+      + ul([
+        '**순서는 한국어와 같아요**: 주어 → 목적어 → 서술어, 꾸미는 말은 꾸밈받는 말 앞. [[{寂|さび}しそうな{君|きみ}]] = 쓸쓸해 보이는 너. 일본어 직역(곡 해석의 \'직역\')을 보면 한국어 어순과 거의 같아요.',
+        '**조사가 붙어 있으면 순서를 바꿔도 돼요**: 가사는 강조하려고 말 순서를 자주 뒤집어요. [[{誇|ほこ}るよ{全部|ぜんぶ}]](らしさ) = 全部を誇るよ(전부를 자랑할 거야)의 순서를 바꾼 말이에요.',
+        '**は와 が**: は는 \'~로 말하자면\' 하고 이야기의 주제를 꺼내고, が는 \'누가·무엇이\'를 짚어요. [[{君|きみ}はロックを{聴|き}かない]](너는 록을 안 들어)와 [[{君|きみ}がロックを{聴|き}かないこと]](네가 록을 안 듣는다는 것)의 차이예요. 문장 안의 작은 문장에는 が를 써요.',
+        '**주어는 자주 빠져요**: 누가 하는지 뻔하면 말하지 않아요. [[{離|はな}さない]](놓지 않아)는 \'내가\'가 빠진 문장이에요. 한국어도 \'(내가) 놓지 않아\'처럼 빼는 것과 같아요.'])
+      + '<p>조사 하나하나의 뜻은 아래 <b>조사 한눈에 보기</b>, 동사·형용사의 끝 모양은 <b>동사·형용사 활용</b>에서 볼 수 있어요.</p>' },
     { id: 'g-hira', ko: '히라가나 · 문법을 잇는 글자', jp: 'ひらがな', body: () =>
       ul(['**조사**: [[は・が・を・に・で・の]] 단어 뒤에 붙어 문장 속 역할을 정해요.',
         '**활용 어미(오쿠리가나)**: [[{飲|の}む・{飲|の}まない・{飲|の}んで]] 한자 부분은 그대로, 뒤의 히라가나만 바뀌어요.',
@@ -1250,13 +1331,13 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     { id: 'g-kanji', ko: '한자 · 뜻을 담는 글자', jp: '{漢字|かんじ}', body: () =>
       ul(['**명사**: [[{雨|あめ}・{空|そら}・{心|こころ}]]',
         '**동사·형용사의 어간**: [[{飲|の}む・{好|す}き・{美|うつく}しい]]',
-        '**두 가지 읽기**: 중국 발음에서 온 **음독(音読み)**과, 일본 고유어를 붙인 **훈독(訓読み)**이 있어요. [[{山|やま}]]은 훈독, [[{富士山|ふじさん}]]의 山은 음독이에요.',
-        '**한국어 화자의 지름길**: 음독은 한국 한자음과 닮은 경우가 많아요. [[{運命|うんめい}]] 운명, [[{世界|せかい}]] 세계, [[{約束|やくそく}]] 약속.',
+        '**두 가지 읽기**: 중국 발음에서 온 **온요미(音読み)**와, 일본 고유어를 붙인 **쿤요미(訓読み)**가 있어요. [[{山|やま}]]은 쿤요미, [[{富士山|ふじさん}]]의 山은 온요미예요.',
+        '**한국어 화자의 지름길**: 온요미는 한국 한자음과 닮은 경우가 많아요. [[{運命|うんめい}]] 운명, [[{世界|せかい}]] 세계, [[{約束|やくそく}]] 약속.',
         '**반복 기호 々**: 같은 한자를 되풀이할 때 써요. [[{人々|ひとびと}・{時々|ときどき}]]'])
-      + '<div class="aside-box"><span class="eyebrow">알아 두기</span>일본 정부가 일상 표기의 기준으로 정한 상용한자(常用漢字)는 2,136자예요. 그 밖의 어려운 한자는 히라가나로 풀어 쓰거나 루비를 달아요.</div>' },
+      + '<div class="aside-box"><span class="eyebrow">알아 두기</span>일본 정부가 일상 표기의 기준으로 정한 조요칸지(常用漢字)는 2,136자예요. 그 밖의 어려운 한자는 히라가나로 풀어 쓰거나 루비를 달아요.</div>' },
     { id: 'g-ruby', ko: '후리가나와 가사 속 특수 읽기', jp: 'ルビ', body: () =>
       '<p>후리가나(ルビ)는 한자 위에 작게 단 읽는 법이에요. 어린이 책이나 어려운 한자에 달고, 가사집에도 자주 보여요. 이 노트에서는 설정에서 켜고 끌 수 있어요.</p>'
-      + ul(['**숙자훈(熟字訓)**: 글자 하나하나가 아니라 단어 전체에 읽기가 붙은 경우예요. [[{今日|きょう}・{明日|あした}・{大人|おとな}]]',
+      + ul(['**주쿠지쿤(熟字訓)**: 글자 하나하나가 아니라 단어 전체에 읽기가 붙은 경우예요. [[{今日|きょう}・{明日|あした}・{大人|おとな}]]',
         '**가사의 특수 읽기**: 한자로는 \'뜻\'을, 루비로는 \'실제로 부르는 소리\'를 보여 줘요. 이 노트에서는 점선 밑줄과 다른 색 루비로 표시해요.'])
       + '<div class="ex-grid">' + exBox('{運命|さだめ|*}', '운명 → さだめ(정해진 숙명)') + exBox('{本気|マジ|*}', '진심 → マジ(진짜)') + exBox('{地球|ほし|*}', '지구 → ほし(별)') + exBox('{未来|あした|*}', '미래 → あした(내일)') + '</div>'
       + '<p>한 단어에 두 가지 뜻을 겹쳐 놓는 기법이라, 한국어 번역으로는 하나밖에 살리지 못하는 경우가 많아요. 곡 해석에서 그 차이를 따로 짚을게요.</p>' },
@@ -1292,7 +1373,32 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         + '<tr><td>사전형</td>' + as.map((c) => '<td class="jp force-color" lang="ja">' + renderJP(c.b) + '</td>').join('') + '</tr>'
         + [['부정', '~하지 않다', 'neg'], ['과거', '~했다', 'past'], ['て형', '~하고', 'te'], ['부사형', '~하게', 'adv']].map((r) => '<tr><td>' + r[0] + '<br><small class="muted">' + r[1] + '</small></td>'
           + as.map((c) => { const f = c.f.find((x) => x.l === r[0]); return '<td class="jp force-color" lang="ja">' + (f ? renderJP(f.t) : '') + '</td>'; }).join('') + '</tr>').join('')
-        + '</tbody></table></div><p>단어장에서 동사·형용사를 펼치면 이 규칙대로 만든 활용표가 나와요. 가사에 나온 형태는 색칠돼 있어요.</p>'; } }
+        + '</tbody></table></div><p>단어장에서 동사·형용사를 펼치면 이 규칙대로 만든 활용표가 나와요. 가사에 나온 형태는 색칠돼 있어요.</p>'; } },
+    { id: 'g-terms', ko: '용어 정리', jp: '{用語|ようご}', body: () => {
+      /* [이 노트에서 부르는 이름, 일본어, 한국 교재에서 흔히 쓰는 이름, 뜻과 예] */
+      const rows = [
+        ['후리가나', '{振|ふ}り{仮名|がな}', '후리가나, 루비', '한자 위(가로쓰기)에 작게 단 읽기. [[{雨|あめ}]]의 あめ'],
+        ['오쿠리가나', '{送|おく}り{仮名|がな}', '오쿠리가나', '한자 뒤에 붙어 활용하는 히라가나. [[{飲|の}む]]의 む'],
+        ['다쿠텐', '{濁点|だくてん}', '탁점', '글자 오른쪽 위의 점 두 개 ゛. か → が'],
+        ['한다쿠텐', '{半濁点|はんだくてん}', '반탁점', 'は행 오른쪽 위의 동그라미 ゜. は → ぱ'],
+        ['다쿠온', '{濁音|だくおん}', '탁음', '다쿠텐이 붙은 탁한 소리. が·ざ·だ·ば행'],
+        ['한다쿠온', '{半濁音|はんだくおん}', '반탁음', '한다쿠텐이 붙은 p 소리. ぱ행'],
+        ['요온', '{拗音|ようおん}', '요음', 'い단 글자 + 작은 ゃ·ゅ·ょ로 만든 한 음절. [[きゃ]]'],
+        ['소쿠온', '{促音|そくおん}', '촉음', '작은 っ. 한 박자 멈추는 소리. [[きって]](우표)'],
+        ['장음', '{長音|ちょうおん}', '장음', '길게 늘이는 소리. 가타카나는 ー로 써요. [[コーヒー]]'],
+        ['고주온즈', '{五十音図|ごじゅうおんず}', '오십음도', 'あいうえお 순서로 가나를 늘어놓은 표'],
+        ['온요미', '{音読|おんよ}み', '음독', '중국 발음에서 온 한자 읽기. [[{富士山|ふじさん}]]의 山(さん)'],
+        ['쿤요미', '{訓読|くんよ}み', '훈독', '일본 고유어를 붙인 한자 읽기. [[{山|やま}]]'],
+        ['주쿠지쿤', '{熟字訓|じゅくじくん}', '숙자훈', '단어 전체에 통째로 붙인 고유어 읽기. [[{今日|きょう}]]'],
+        ['아테지', '{当|あ}て{字|じ}', '취음자', '뜻보다 소리에 맞춰 빌려 쓴 한자. [[{寿司|すし}]]'],
+        ['렌다쿠', '{連濁|れんだく}', '연탁', '두 말이 합쳐질 때 뒷말 첫소리가 탁해지는 현상. [[{人|ひと}]] → [[{人々|ひとびと}]]'],
+        ['조요칸지', '{常用漢字|じょうようかんじ}', '상용한자', '일상 글에 쓰도록 정부가 정한 한자 2,136자'],
+        ['헨타이가나', '{変体仮名|へんたいがな}', '변체가나', '1900년 표기 정리 때 빠진 옛 히라가나'],
+        ['만요가나', '{万葉仮名|まんようがな}', '만요가나', '한자의 소리만 빌려 일본어를 적던 옛 방식']
+      ];
+      return '<p>이 노트는 일본에서 실제로 쓰는 이름으로 용어를 불러요. 일본 사전이나 일본어 설명을 볼 때 그대로 통하기 때문이에요. 한국 교재에서는 한자를 한국식으로 읽은 이름을 많이 쓰니, 둘을 함께 알아 두면 좋아요.</p>'
+        + '<div class="terms">' + rows.map((r) => '<div class="term"><div class="term-top"><b>' + r[0] + '</b><span class="jp force-color" lang="ja">' + renderJP(r[1]) + '</span>'
+          + (r[2] !== r[0] ? '<span class="term-ko">한국 교재: ' + r[2] + '</span>' : '') + '</div><p>' + rich(r[3]) + '</p></div>').join('') + '</div>'; } }
   ];
   function viewGuide() {
     setView('<header class="page-head"><p class="eyebrow">가사를 읽기 전에</p><h1 class="page-title">문자 가이드</h1>'
@@ -1349,11 +1455,11 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       ['いらっしゃいませ', '어서 오세요', '점원'],
       ['{何名様|なんめいさま}ですか', '몇 분이세요?', '점원'],
       ['{二人|ふたり}です', '두 명이에요', '나'],
-      ['おすすめは{何|なん}ですか', '추천 메뉴는 뭐예요?', '나'],
-      ['これをください', '이거 주세요', '나'],
-      ['お{水|みず}をください', '물 주세요', '나'],
-      ['お{会計|かいけい}お{願|ねが}いします', '계산해 주세요', '나'],
-      ['カードで{払|はら}えますか', '카드로 계산할 수 있어요?', '나'],
+      ['おすすめ^は {何|なん}ですか', '추천 메뉴는 뭐예요?', '나'],
+      ['これを ください', '이거 주세요', '나'],
+      ['お{水|みず}を ください', '물 주세요', '나'],
+      ['お{会計|かいけい} お{願|ねが}いします', '계산해 주세요', '나'],
+      ['カードで {払|はら}えますか', '카드로 계산할 수 있어요?', '나'],
       ['いただきます', '잘 먹겠습니다', '먹기 전'],
       ['ごちそうさまでした', '잘 먹었습니다', '먹은 뒤']
     ]
@@ -1372,8 +1478,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + sec('f-taste', '맛과 식감', '{味|あじ}と{食感|しょっかん}', '<p>맛은 주로 형용사(~い)로 말해요.</p>' + foodCards(FOOD.taste)
         + '<h3 class="k-sub">식감 의태어</h3><p class="k-p">식감은 같은 소리를 두 번 겹친 의태어로 많이 말해요. 광고나 메뉴판에서는 소리를 또렷하고 경쾌하게 보이려고 가타카나로 쓰기도 해요.</p>' + foodCards(FOOD.texture))
       + sec('f-talk', '식당 회화', 'お{店|みせ}で', '<p>가게에 들어가서 나올 때까지 자주 듣고 말하는 표현이에요. 누르면 발음을 들을 수 있어요.</p>'
-        + '<div class="food-talk">' + FOOD.talk.map((x) => '<div class="ex"><div class="ex-row"><span class="food-who">' + esc(x[2]) + '</span><p class="ex-jp force-color" lang="ja">' + renderJP(x[0]) + '</p>' + speakBtn(speechOf(x[0])) + '</div>'
-          + '<p class="food-hg">' + esc(kanaToHangul(readingOf(x[0]))) + '</p><p class="ex-ko">' + esc(x[1]) + '</p></div>').join('') + '</div>')
+        + talkHTML(FOOD.talk))
       + sec('f-manner', '식사 매너', '{食事|しょくじ}のマナー', ul([
         '**いただきます · ごちそうさまでした**: 먹기 전과 먹은 뒤에 손을 모으고 말해요. 음식과 만든 사람에게 고마움을 전하는 인사예요.',
         '**식권 발매기(食券機)**: 라멘·덮밥 가게는 입구의 기계에서 먼저 식권을 사서 점원에게 건네는 곳이 많아요.',
@@ -1382,6 +1487,47 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         '**お通し(오토오시)**: 이자카야에서 주문하지 않아도 나오는 작은 안주예요. 자릿값처럼 계산에 들어가요.',
         '**물과 물수건**: 자리에 앉으면 물(お冷)과 물수건(おしぼり)을 무료로 주는 가게가 많아요.']))
     );
+  }
+
+  /* ── 여행에서 바로 쓰는 일본어 ─────────────────────────── */
+  /* 회화 문장 표기: 띄어쓰기( )는 한글 발음의 단어 경계, ^は·^へ는 조사라서 wa·e로 읽어요. 화면과 음성에는 둘 다 빠져요. */
+  const phraseJP = (m) => m.replace(/[ ^]/g, '');
+  function phraseHg(m) {
+    const segs = m.split(' ').map((x) => readingOf(x.replace(/\^は/g, 'わ').replace(/\^へ/g, 'え')));
+    return segs.map((r, i) => kanaToHangul(r, (segs[i + 1] || '')[0] || '')).join(' ').replace(/、/g, ',').replace(/。/g, '.');
+  }
+  function talkHTML(list) {
+    return '<div class="food-talk">' + list.map((x) => '<div class="ex"><div class="ex-row"><span class="food-who">' + esc(x[2]) + '</span><p class="ex-jp force-color" lang="ja">' + renderJP(phraseJP(x[0])) + '</p>' + speakBtn(speechOf(phraseJP(x[0]))) + '</div>'
+      + '<p class="food-hg">' + esc(phraseHg(x[0])) + '</p><p class="ex-ko">' + esc(x[1]) + '</p>' + (x[3] ? '<p class="food-n">' + rich(x[3]) + '</p>' : '') + '</div>').join('') + '</div>';
+  }
+
+  /* 같은 grp를 단 이웃 문장(질문과 대답 등)을 하나의 대화 상자로 묶어요. */
+  function dialogHTML(lines) {
+    let out = '', i = 0;
+    while (i < lines.length) {
+      const g = lines[i].grp; let j = i + 1;
+      while (g && j < lines.length && lines[j].grp === g) j++;
+      out += j - i > 1 ? '<li class="dlg"><span class="dlg-label">대화</span><ol class="line-list">' + lines.slice(i, j).map(lineHTML).join('') + '</ol></li>' : lineHTML(lines[i]);
+      i = j;
+    }
+    return out;
+  }
+  async function viewTravel() {
+    setView('<p class="empty">문장을 불러오는 중…</p>');
+    let t;
+    try { t = (await Promise.all([loadSong('travel'), loadWords()]))[0]; }
+    catch (e) { if (state.route === 'travel') setView('<p class="empty">여행 문장 파일(travel.json)을 불러오지 못했어요. 페이지를 새로고침해 보세요.</p>'); return; }
+    if (state.route !== 'travel') return;
+    state.song = t;
+    setView('<header class="page-head"><p class="eyebrow">여행에서 바로 쓰는 일본어</p><h1 class="page-title">여행</h1>'
+      + '<p class="lede">상황마다 꼭 쓰는 문장만 모았어요. 🔊로 발음을 듣고, 단어를 누르거나 \'자세히 보기\'로 문장을 뜯어볼 수 있어요.</p>'
+      + '<div class="toc">' + t.sections.map((sec, i) => '<button class="tg sm" data-a="jump" data-target="sec-' + i + '">' + esc(sec.label) + '</button>').join('') + '</div></header>'
+      + '<div class="toolbar" role="toolbar" aria-label="표시 옵션">' + optBtn('furi', '후리가나') + optBtn('kr', '한글 발음') + optBtn('hideKo', '해석 가리기')
+      + '<span class="tg-sep" aria-hidden="true"></span><button class="tg" data-a="expand-all">모두 펼치기</button></div>'
+      + '<div class="lines-col">' + t.sections.map((sec, i) => '<section class="sec" id="sec-' + i + '"><h2 class="sec-h">' + esc(sec.label) + '</h2>'
+        + (sec.note ? '<p class="sec-note">' + rich(sec.note) + '</p>' : '')
+        + '<ol class="line-list">' + dialogHTML(sec._lines) + '</ol>'
+        + (sec.signs ? '<h3 class="k-sub">표지판에서 보는 말</h3>' + foodCards(sec.signs) : '') + '</section>').join('') + '</div>');
   }
 
   /* ── 히라가나·가타카나 ─────────────────────────────────── */
@@ -1557,7 +1703,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + (info ? '<span class="kd-src">' + (src ? '← <span class="jp" lang="ja">' + src + '</span> · ' : '') + how + '</span>' : '') + '</div>'
       + '<div class="kd-read"><span class="kd-ro">' + esc(kanaRo(h)) + '</span><span>' + esc(kanaHg(h)) + '</span>' + speakBtn(h) + '</div>';
     const notes = [];
-    if (ds) notes.push((DAKU[4].indexOf(h) >= 0 ? '반탁점(゜)' : '탁점(゛)') + '을 붙여 만든 글자예요. [[' + ch(ds) + ']] → [[' + c + ']] (' + esc(kanaRo(ds)) + ' → ' + esc(kanaRo(h)) + ')');
+    if (ds) notes.push((DAKU[4].indexOf(h) >= 0 ? '한다쿠텐(゜)' : '다쿠텐(゛)') + '을 붙여 만든 글자예요. [[' + ch(ds) + ']] → [[' + c + ']] (' + esc(kanaRo(ds)) + ' → ' + esc(kanaRo(h)) + ')');
     if (h.length > 1) notes.push(ch('い') + '단 글자에 작은 ' + ch('ゃ·ゅ·ょ') + '를 붙여 한 음절로 읽어요. [[' + ch(h[0]) + ']] + [[' + ch(h[1]) + ']] = [[' + c + ']]. 작은 글자를 크게 쓰면(' + ch(h[0] + 'や') + ') 두 음절이 돼요.');
     const note = kata && h in KATA_NOTE ? KATA_NOTE[h] : KANA_NOTE[h];
     if (note) notes.push(note);
@@ -1615,10 +1761,10 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function viewKana() {
     state.ksel = null; /* 가나 탭을 열 때는 아무 글자도 고르지 않은 상태로 시작해요. */
     const jp = (s) => '<span class="jp ex-inline force-color" lang="ja">' + renderJP(s) + '</span>';
-    const kanaChart = kgrid(KANA_ROWS.map((r) => ({ label: r[0][0] + (r[0][0] === 'ん' ? '' : '행'), cells: [0, 1, 2, 3, 4].map((i) => (r[i] ? r[i][0] : null)) })), ['a', 'i', 'u', 'e', 'o'], '오십음도');
+    const kanaChart = kgrid(KANA_ROWS.map((r) => ({ label: r[0][0] + (r[0][0] === 'ん' ? '' : '행'), cells: [0, 1, 2, 3, 4].map((i) => (r[i] ? r[i][0] : null)) })), ['a', 'i', 'u', 'e', 'o'], '고주온즈');
     const kmodeSeg = '<div class="seg" role="group" aria-label="표시할 문자">' + [['h', '히라가나'], ['k', '가타카나']].map((x) => '<button class="tg sm" data-a="kmode" data-v="' + x[0] + '" aria-pressed="' + (state.kmode === x[0]) + '">' + x[1] + '</button>').join('') + '</div>';
-    const dakuChart = kgrid(DAKU.map((r) => ({ label: r[0] + '행', cells: r })), ['a', 'i', 'u', 'e', 'o'], '탁음·반탁음');
-    const yoonChart = kgrid(YOON.map((b) => ({ label: b, cells: ['ゃ', 'ゅ', 'ょ'].map((y) => b + y) })), ['ya', 'yu', 'yo'], '요음');
+    const dakuChart = kgrid(DAKU.map((r) => ({ label: r[0] + '행', cells: r })), ['a', 'i', 'u', 'e', 'o'], '다쿠온·한다쿠온');
+    const yoonChart = kgrid(YOON.map((b) => ({ label: b, cells: ['ゃ', 'ゅ', 'ょ'].map((y) => b + y) })), ['ya', 'yu', 'yo'], '요온');
     const EXT = [['ファ', 'ファン', '팬'], ['フィ', 'フィルム', '필름'], ['フェ', 'カフェ', '카페'], ['フォ', 'フォーク', '포크'], ['ティ', 'パーティー', '파티'], ['ディ', 'ディズニー', '디즈니'], ['トゥ', 'タトゥー', '타투'],
       ['ウィ', 'ウィンドウ', '윈도'], ['ウェ', 'ウェブ', '웹'], ['ウォ', 'ウォーター', '워터'], ['シェ', 'シェフ', '셰프'], ['ジェ', 'ジェット', '제트'], ['チェ', 'チェック', '체크'], ['ヴァ', 'ヴァイオリン', '바이올린']];
     const CONF = [['シ・ツ', '점 두 개가 シ는 왼쪽에 세로로, ツ는 위에 가로로 놓여요. 마지막 획도 シ는 아래에서 위로 올려 긋고, ツ는 위에서 아래로 내려 그어요.'],
@@ -1628,7 +1774,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       ['ク・ケ・タ', 'タ는 ク 안에 짧은 획이 하나 더 있고, ケ는 오른쪽 획이 위로 튀어나와 길게 내려와요.'], ['コ・ユ', 'ユ는 아래 가로획이 왼쪽으로 길게 튀어나와요.'], ['フ・ワ・ウ', 'ワ는 왼쪽에 짧은 세로획이 있고, ウ는 그 위에 점이 하나 더 있어요.']];
     const TWIN = [['カ', '力', '힘 력'], ['エ', '工', '장인 공'], ['ロ', '口', '입 구'], ['ニ', '二', '두 이'], ['ハ', '八', '여덟 팔'], ['タ', '夕', '저녁 석'], ['ト', '卜', '점 복']];
     setView('<div id="kana-page" class="kmode-' + state.kmode + '"><header class="page-head"><p class="eyebrow">문자 공부</p><h1 class="page-title">히라가나 · 가타카나</h1>'
-      + '<p class="lede">일본어의 소리글자 두 가지예요. 둘 다 한자에서 태어났지만, 히라가나는 한자를 흘려 써서, 가타카나는 한자의 일부를 떼어 내서 만들어졌어요. 글자마다 어떤 한자에서 왔는지, 언제 어떤 문자를 쓰는지 정리했어요.</p>'
+      + '<p class="lede">일본어의 소리글자 두 가지예요. 둘 다 한자에서 태어났지만, 히라가나는 한자를 흘려 써서, 가타카나는 한자의 일부를 떼어 내서 만들어졌어요. 글자마다 어떤 한자에서 왔는지, 언제 어떤 문자를 쓰는지 정리했어요. 용어가 낯설면 <button class="ref" data-a="nav" data-to="guide">문자 가이드</button>의 용어 정리를 보세요.</p>'
       + '<div class="toc">' + [['k-origin', '탄생'], ['k-chart', '글자표'], ['k-use', '쓰임·구별'], ['k-quiz', '퀴즈']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
 
       + '<section class="gsec" id="k-origin"><h2><span>두 문자의 탄생</span><span class="jp force-color" lang="ja">' + renderJP('{仮名|かな}') + '</span></h2>'
@@ -1641,12 +1787,12 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         ['9세기 무렵', '히라가나', '만요가나를 흘려 쓴 초서체가 더 간략해져 생겼어요. 궁정 여성들이 편지·와카·이야기에 즐겨 써서 \'女手(おんなで)\'라고도 불렸고, 『源氏物語』가 히라가나로 쓰였어요.'],
         ['9세기 무렵', '가타카나', '승려들이 한문 불경을 읽으며 행간에 읽는 법을 작게 적으려고 한자의 일부만 떼어 썼어요. 학문의 글자라 남성의 글자라는 이미지가 있었어요. 한문에 토를 달던 한국의 구결(口訣)과 비슷한 발상이에요.'],
         ['935년 무렵', '『土佐日記』', '남성 귀족 紀貫之가 여성인 척 히라가나로 쓴 일기예요. 첫 문장이 \'남자도 쓴다는 일기를 여자인 나도 써 보려 한다\'예요. 히라가나가 여성의 글자로 여겨졌다는 걸 보여 주는 유명한 예예요.'],
-        ['1900년', '한 소리 한 글자', '원래 한 소리를 여러 히라가나로 썼어요(서로 다른 한자에서 온 글자들). 소학교 교육을 위해 하나로 정리했고, 이때 빠진 글자를 변체가나(変体仮名)라고 해요. 지금도 소바 가게 간판에서 볼 수 있어요.'],
+        ['1900년', '한 소리 한 글자', '원래 한 소리를 여러 히라가나로 썼어요(서로 다른 한자에서 온 글자들). 소학교 교육을 위해 하나로 정리했고, 이때 빠진 글자를 헨타이가나(変体仮名)라고 해요. 지금도 소바 가게 간판에서 볼 수 있어요.'],
         ['1946년', '현대 가나 표기법', '소리대로 적는 방향으로 바뀌어 ゐ·ゑ를 일상에서 쓰지 않게 됐고, を는 조사에만 남았어요. 옛 표기 けふ(今日)가 きょう로 바뀐 것도 이때예요.']]
         .map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
       + '</ol></section>'
 
-      + '<section class="gsec wide" id="k-chart"><h2><span>오십음도</span><span class="jp force-color" lang="ja">' + renderJP('{五十音図|ごじゅうおんず}') + '</span></h2>'
+      + '<section class="gsec wide" id="k-chart"><h2><span>고주온즈</span><span class="jp force-color" lang="ja">' + renderJP('{五十音図|ごじゅうおんず}') + '</span></h2>'
       + '<p>기본 글자를 모음(a·i·u·e·o)과 자음 줄로 늘어놓은 표예요. 글자를 누르면 그 글자가 나온 한자와 발음, 가사에 나온 단어가 보여요.</p>'
       + kmodeSeg
       + '<div class="kana-wrap"><div class="kana-main">' + kanaChart + '<div class="kdetail" id="kdetail" hidden></div>'
@@ -1654,14 +1800,14 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<p><b>50음인데 왜 46자일까?</b> 모음 5칸 × 자음 줄 10개라서 칸은 50개예요. 그런데 や행의 い·え 자리와 わ행의 い·う·え 자리, 이렇게 다섯 칸은 소리가 あ행과 겹쳐서 따로 쓰는 글자가 없어요. 50 − 5 = 45자에, 표 밖에 따로 붙는 ん을 더하면 46자가 돼요.</p>'
       + '<p><b>왜 あ·い·う·え·お 순서일까?</b> あ·い·う를 기본 모음으로 먼저 놓고, え(あ+い가 섞인 소리)와 お(あ+う가 섞인 소리)를 뒤에 놓았다고 해요.</p>'
       + '<p><b>왜 あ·か·さ·た·な… 순서일까?</b> 소리가 나는 자리를 입 안쪽에서 바깥쪽으로 따라간 순서라고 알려져 있어요. か(목 안쪽) → さ·た·な(혀) → は·ま(입술) 순이에요. 옛날에는 は를 \'파\'처럼 입술을 붙였다 떼며 발음해서 입술 소리였어요. 끝의 や·ら·わ는 모음에 가까운 부드러운 소리라 따로 모아 맨 뒤에 놓았어요.</p></div>'
-      + '<h3 class="k-sub" id="k-daku">탁음·반탁음</h3><p class="k-p">か·さ·た·は행 글자 오른쪽 위에 점 두 개(゛, 탁점)를 찍으면 탁한 소리(g·z·d·b)가 되고, は행에 동그라미(゜, 반탁점)를 붙이면 p 소리가 돼요.</p>' + kmodeSeg + dakuChart
-      + '<h3 class="k-sub">요음</h3><p class="k-p">い단 글자 뒤에 작은 ゃ·ゅ·ょ를 붙여 한 음절로 읽어요. き + ゃ = きゃ(캬).</p>' + kmodeSeg + yoonChart
+      + '<h3 class="k-sub" id="k-daku">다쿠온·한다쿠온 <span class="k-jp jp" lang="ja">濁音・半濁音</span></h3><p class="k-p">か·さ·た·は행 글자 오른쪽 위에 점 두 개(゛, 다쿠텐 濁点)를 찍으면 탁한 소리(g·z·d·b)가 되고, は행에 동그라미(゜, 한다쿠텐 半濁点)를 붙이면 p 소리가 돼요.</p>' + kmodeSeg + dakuChart
+      + '<h3 class="k-sub">요온 <span class="k-jp jp" lang="ja">拗音</span></h3><p class="k-p">い단 글자 뒤에 작은 ゃ·ゅ·ょ를 붙여 한 음절로 읽어요. き + ゃ = きゃ(캬).</p>' + kmodeSeg + yoonChart
       + '</div><aside class="kana-side" id="kside"></aside></div></section>'
 
       + '<section class="gsec" id="k-small"><h2><span>작은 글자와 긴 소리</span><span class="jp force-color" lang="ja">' + renderJP('{促音|そくおん}・{長音|ちょうおん}') + '</span></h2>'
-      + ul(['**촉음 っ·ッ**: 작은 つ예요. 다음 자음 앞에서 한 박자 멈춰요. 한글로 적으면 ㅅ 받침처럼 보여요.',
-        '**장음**: 히라가나는 모음을 하나 더 써서(おかあさん, おとうさん, せんせい), 가타카나는 ー를 써서(コーヒー, ケーキ) 길게 읽어요. えい·おう는 실제로는 \'에-\'·\'오-\'처럼 길게 들려요.',
-        '**작은 ゃ·ゅ·ょ**: 앞 글자와 합쳐 한 음절을 만들어요(요음).',
+      + ul(['**소쿠온(促音) っ·ッ**: 작은 つ예요. 다음 자음 앞에서 한 박자 멈춰요. 한글로 적으면 ㅅ 받침처럼 보여요.',
+        '**장음(長音, ちょうおん)**: 히라가나는 모음을 하나 더 써서(おかあさん, おとうさん, せんせい), 가타카나는 ー를 써서(コーヒー, ケーキ) 길게 읽어요. えい·おう는 실제로는 \'에-\'·\'오-\'처럼 길게 들려요.',
+        '**작은 ゃ·ゅ·ょ**: 앞 글자와 합쳐 한 음절을 만들어요(요온).',
         '**작은 ァ·ィ·ゥ·ェ·ォ**: 주로 가타카나 외래어에서 일본어에 없던 소리를 만들 때 써요(ファ, ティ).'])
       + '<p>길이 하나로 뜻이 완전히 바뀌니 귀로 구별하는 연습이 필요해요.</p>'
       + '<div class="ex-grid">' + exBox('きて', '와 (来て)') + exBox('きって', '우표 (切手)') + exBox('おばさん', '아주머니') + exBox('おばあさん', '할머니') + exBox('ビル', '빌딩') + exBox('ビール', '맥주') + '</div></section>'
@@ -1790,7 +1936,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function lineHTML(l) {
     const done = Progress.has('l', l.key);
     return '<li class="line' + (done ? ' done' : '') + '" id="line-' + l.no + '" data-line="' + l.no + '">'
-      + '<div class="line-head"><span class="ln">' + String(l.no).padStart(2, '0') + '</span>' + (l.rep ? '<span class="rep-tag">반복 · ' + String(l.rep).padStart(2, '0') + '</span>' : '') + '<span class="grow"></span>'
+      + '<div class="line-head"><span class="ln">' + String(l.no).padStart(2, '0') + '</span>' + (l.who ? '<span class="who-tag">' + esc(l.who) + '</span>' : '') + (l.rep ? '<span class="rep-tag">반복 · ' + String(l.rep).padStart(2, '0') + '</span>' : '') + '<span class="grow"></span>'
       + '<button class="ico" data-a="speak-line" aria-label="이 줄 듣기" title="이 줄 듣기">' + I.speaker + '</button>'
       + '<button class="check" data-a="toggle-line" data-lk="' + esc(l.key) + '" aria-pressed="' + done + '" aria-label="이해했어요" title="이해했어요">' + I.check + '</button></div>'
       + (() => { const hg = l.kr ? null : tokHangul(l);
@@ -1901,7 +2047,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 
   /* ── 줄 카드 동작 ──────────────────────────────────────── */
   const lineOf = (li) => state.song && state.song.lines[+li.dataset.line - 1];
-  function remember(li) { if (state.song) store.set('hgn.last', { song: state.song.id, line: +li.dataset.line }); }
+  function remember(li) { if (state.song && state.song.kind !== 'travel') store.set('hgn.last', { song: state.song.id, line: +li.dataset.line }); }
   function setOpen(li, open) {
     const d = li.querySelector('.detail');
     if (open && !d.dataset.ready) { d.innerHTML = detailHTML(lineOf(li)); d.dataset.ready = '1'; }
@@ -1953,12 +2099,12 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   /* ── 라우팅 ───────────────────────────────────────────── */
   function markNav(a, b) {
     /* 노래·음식 모드: 홈·곡 화면이면 노래, 음식 화면이면 음식. 가나·가이드·단어장은 마지막 모드를 그대로 둬요. */
-    if (a === 'food') state.mode = 'food'; else if (a === 'home' || a === 'song' || !a) state.mode = 'song';
+    if (a === 'food' || a === 'travel') state.mode = a; else if (a === 'home' || a === 'song' || !a) state.mode = 'song';
     $$('[data-a="mode"]').forEach((t) => t.setAttribute('aria-pressed', String(t.dataset.v === state.mode)));
-    const sw = $('#side-songs-wrap'); if (sw) sw.hidden = state.mode === 'food';
+    const sw = $('#side-songs-wrap'); if (sw) sw.hidden = state.mode !== 'song';
     const key = a === 'song' ? 'song.' + b : (a || 'home');
     $$('[data-nav]').forEach((el) => {
-      const n = el.dataset.nav, on = n === key || (n === 'home' && (a === 'food' || (a === 'song' && !!el.closest('.tabbar'))));
+      const n = el.dataset.nav, on = n === key || (n === 'home' && (a === 'food' || a === 'travel' || (a === 'song' && !!el.closest('.tabbar'))));
       if (on) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
     });
   }
@@ -1971,6 +2117,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     else if (a === 'kana') viewKana();
     else if (a === 'vocab') viewVocab();
     else if (a === 'food') viewFood();
+    else if (a === 'travel') viewTravel();
     else if (a === 'song' && b) viewSong(b, TABS.some((t) => t[0] === parts[2]) ? parts[2] : 'lyrics', sameSong);
     else viewHome();
     markNav(a, b);
@@ -2019,7 +2166,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     arrive(r, H.pos[j] || 0);
   }
   function navigate(to) {
-    const next = (to || 'home') === 'home' && state.mode === 'food' ? 'food' : to || 'home', moved = next !== state.route;
+    const next = (to || 'home') === 'home' && state.mode !== 'song' ? state.mode : to || 'home', moved = next !== state.route;
     state.route = next;
     if (moved) {
       H.pos[H.i] = window.scrollY;
@@ -2053,7 +2200,8 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     const a = el.dataset.a, li = el.closest('.line');
     switch (a) {
       case 'nav': e.preventDefault(); closeSheet(); navigate(el.dataset.to); break;
-      case 'mode': state.mode = el.dataset.v; closeSheet(); navigate(state.mode === 'food' ? 'food' : 'home'); break;
+      case 'artist': state.artist = el.dataset.v; store.set('hgn.artist', state.artist); { const box = $('#song-list'); if (box) { box.innerHTML = songListHTML(); refreshProgressUI(); } } break;
+      case 'mode': state.mode = el.dataset.v; closeSheet(); navigate(state.mode === 'song' ? 'home' : state.mode); break;
       case 'opt': setOpt(el.dataset.opt, !S[el.dataset.opt]); break;
       case 'set': setOpt(el.dataset.key, el.dataset.key === 'rate' ? +el.dataset.val : el.dataset.val); break;
       case 'expand': setOpen(li, !li.classList.contains('open')); break;
@@ -2106,9 +2254,12 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
 
   /* ── 시작 ─────────────────────────────────────────────── */
-  $('#side-songs').innerHTML = CATALOG.map((c) => (c.status === 'ready'
-    ? '<button class="nav-item song-item" data-a="nav" data-to="song.' + c.id + '" data-nav="song.' + c.id + '"><span class="si-t">' + rich(c.title) + '</span>' + (c.demo ? '<span class="si-tag">예시</span>' : '') + '</button>'
-    : '<div class="nav-item song-item soon" aria-disabled="true"><span class="si-t">' + rich(c.title) + '</span><span class="si-tag">준비 중</span></div>')).join('');
+  $('#side-songs').innerHTML = ARTISTS.map((a) => {
+    const list = CATALOG.filter((c) => c.artist === a.id); if (!list.length) return '';
+    return '<p class="side-artist">' + esc(a.ko) + '</p>' + list.map((c) => (c.status === 'ready'
+      ? '<button class="nav-item song-item" data-a="nav" data-to="song.' + c.id + '" data-nav="song.' + c.id + '"><span class="si-t">' + rich(c.title) + '</span>' + (c.demo ? '<span class="si-tag">예시</span>' : '') + '</button>'
+      : '<div class="nav-item song-item soon" aria-disabled="true"><span class="si-t">' + rich(c.title) + '</span><span class="si-tag">준비 중</span></div>')).join('');
+  }).join('');
   applyS();
   loadWords();
   Progress.load();
