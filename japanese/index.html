@@ -636,11 +636,14 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     { id: 'aimyon', ko: '아이묭', name: 'あいみょん', about: () => aimyonHTML() },
     { id: 'backnumber', ko: '백넘버', name: 'back number', about: () => backnumberHTML() },
     { id: 'lisa', ko: '리사', name: 'LiSA', about: () => lisaHTML() },
-    { id: 'aimer', ko: '에메', name: 'Aimer', about: () => aimerHTML() }
+    { id: 'aimer', ko: '에메', name: 'Aimer', about: () => aimerHTML() },
+    { id: 'takahashi', ko: '다카하시 요코', name: '{高橋洋子|たかはしようこ}', about: () => takahashiHTML() }
   ].sort((a, b) => a.ko.localeCompare(b.ko, 'ko'));
   const CATALOG = [
     /* 여행 회화도 곡과 같은 형식(travel.json)이라 같은 엔진으로 그려요. artist가 없어 곡 목록에는 안 나오고, 단어장에도 넣지 않아요. */
     { id: 'travel', file: 'travel.json', status: 'ready', kind: 'travel', title: '여행', sub: '', meta: '' },
+    { id: 'thesis', file: 'songs/thesis.json', status: 'ready', artist: 'takahashi',
+      title: '{残酷|ざんこく}な{天使|てんし}のテーゼ', sub: 'TV 애니메이션 「新世紀エヴァンゲリオン」 주제가 · 싱글', meta: '1995 · 작사 及川眠子 · 작곡 佐藤英敏' },
     { id: 'hanako', file: 'songs/hanako.json', status: 'ready', artist: 'backnumber',
       title: '{高嶺|たかね}の{花子|はなこ}さん', sub: '싱글', meta: '2013 · 작사·작곡 清水依与吏' },
     { id: 'heroine', file: 'songs/heroine.json', status: 'ready', artist: 'backnumber',
@@ -1278,6 +1281,20 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<p>밴드 이름은 시미즈가 사귀던 사람을 다른 밴드맨에게 빼앗긴 경험에서 왔다고 해요. 그 사람에게 자신은 이제 back number(지난 호, 철 지난 것)라는 뜻이에요. 그래서인지 짝사랑과 이별을 솔직하게 그린 곡이 많아요.</p>'
       + '<div class="members">' + members.map((m) => '<div class="member"><span class="jp" lang="ja">' + rich(m[0]) + '</span><small>' + m[1] + '</small></div>').join('') + '</div>'
       + '<div class="aside-box"><span class="eyebrow">이름 속 알파벳</span>밴드 이름은 가타카나 バックナンバー가 아니라 영어 소문자 그대로 back number라고 써요. 일본어 문장 안에서도 알파벳을 그대로 쓰는 이름이 많아요(Official髭男dism도 그렇죠).</div>'
+      + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
+      + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
+      + '</ol></div></div>';
+  }
+  function takahashiHTML() {
+    const tl = [
+      ['1991', 'P.S. I miss you', '솔로 데뷔곡'],
+      ['1995', '{残酷|ざんこく}な{天使|てんし}のテーゼ', 'TV 애니메이션 「新世紀エヴァンゲリオン」 주제가'],
+      ['1997', '{魂|たましい}のルフラン', '극장판 「シト新生」 주제가']
+    ];
+    return '<div class="band"><div class="band-text"><h2 class="h2">다카하시 요코는 어떤 가수?</h2>'
+      + '<p>高橋洋子(다카하시 요코)는 도쿄 출신의 가수예요. 다른 가수들의 공연에 참여하며 노래하다가 1991년 「P.S. I miss you」로 솔로 데뷔했어요.</p>'
+      + '<p>1995년 「新世紀エヴァンゲリオン」의 주제가 残酷な天使のテーゼ로 널리 알려졌고, 1997년 극장판 주제가 魂のルフラン도 불렀어요. 2018년에는 두 곡을 묶은 싱글이 다시 나왔어요.</p>'
+      + '<div class="aside-box"><span class="eyebrow">이름 읽기</span>高橋洋子는 たかはし ようこ라고 읽어요. 高橋(높은 다리)는 일본에서 아주 흔한 성이고, 洋子의 子는 여성 이름에 많이 붙는 글자예요.</div>'
       + '</div><div><p class="eyebrow">대표곡</p><ol class="timeline">'
       + tl.map((x) => '<li><span class="tl-y">' + x[0] + '</span><span><span class="tl-t">' + rich(x[1]) + '</span><span class="tl-d">' + rich(x[2]) + '</span></span></li>').join('')
       + '</ol></div></div>';
