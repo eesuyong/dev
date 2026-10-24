@@ -517,6 +517,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 @media (min-width:960px){ .toast{ bottom:28px } }
 @media (prefers-reduced-motion:reduce){ *,*::before,*::after{ transition:none!important; animation:none!important; scroll-behavior:auto!important } }
 </style>
+<link rel="stylesheet" href="learning.css">
 
 <div class="shell" lang="ko">
   <aside class="side" aria-label="탐색">
@@ -532,9 +533,10 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     <nav class="side-nav" aria-label="주요 메뉴">
       <button class="nav-item" data-a="nav" data-to="home" data-nav="home"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>홈</span></button>
       <button class="nav-item" data-a="nav" data-to="kana" data-nav="kana"><span class="nav-glyph" lang="ja" aria-hidden="true">あ</span><span>히라가나·가타카나</span></button>
-      <button class="nav-item" data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>문자 가이드</span></button>
+      <button class="nav-item" data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg><span>문자·기초 문법</span></button>
       <button class="nav-item" data-a="nav" data-to="vocab" data-nav="vocab"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3.5" y="7" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>단어장</span></button>
     </nav>
+    <nav class="side-nav" aria-label="복습"><button class="nav-item" data-a="nav" data-to="review" data-nav="review"><span class="nav-glyph" aria-hidden="true">↻</span><span>복습</span></button></nav>
     <div id="side-songs-wrap">
       <p class="eyebrow side-h">곡</p>
       <div class="side-nav" id="side-songs"></div>
@@ -564,9 +566,9 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 <nav class="tabbar" aria-label="주요 메뉴" lang="ko">
   <button data-a="nav" data-to="home" data-nav="home"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>홈</button>
   <button data-a="nav" data-to="kana" data-nav="kana"><span class="nav-glyph big" lang="ja" aria-hidden="true">あ</span>가나</button>
-  <button data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>문자 가이드</button>
+  <button data-a="nav" data-to="guide" data-nav="guide"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>기초</button>
   <button data-a="nav" data-to="vocab" data-nav="vocab"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="3.5" y="7" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>단어장</button>
-  <button data-a="open-settings"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15" cy="7" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="17" r="2.2" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>설정</button>
+  <button data-a="nav" data-to="review" data-nav="review"><span class="nav-glyph big" aria-hidden="true">↻</span>복습</button>
 </nav>
 
 <div class="scrim" id="scrim" hidden></div>
@@ -614,6 +616,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
 </section>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
+<script src="learning.js"></script>
 <script>
 (function () {
   'use strict';
@@ -686,7 +689,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   };
   const state = { route: 'home', rendered: null, song: null, pendingLine: null, allOpen: false,
     vf: { cat: 'all', lv: 'all', q: '', hide: false }, vopen: new Set(), lastFocus: null, toastT: 0, resetT: 0,
-    mode: 'song', artist: store.get('hgn.artist', 'all'), ksel: null, kmode: 'h', quiz: { mode: 'h', cur: null, right: 0, total: 0, streak: 0, best: +store.get('hgn.kanaBest', 0) || 0 } };
+    mode: 'song', artist: store.get('hgn.artist', 'all'), ksel: null, kmode: 'h', quiz: { mode: 'h', cur: null, right: 0, total: 0, streak: 0, best: +store.get('hgn.kanaBest', 0) || 0, scope: 'a' } };
 
   const I = {
     speaker: '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
@@ -1017,11 +1020,16 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     }
     return F ? L.filter((x) => no.indexOf(x[0]) < 0).map((x) => ({ l: x[1], t: F[x[0]], h: x[2] })) : [];
   }
+  function canonicalTok(t) {
+    const w = (WORDS && WORDS[t.vkey]) || {};
+    const pos = { v5: '동사', v1: '동사', vs: '동사', vk: '동사', 'adj-i': 'い형용사', 'adj-na': 'な형용사' };
+    return Object.assign({}, t, { b: w.base || t.b || t.t, p: w.p || pos[w.cls] || t.p, bm: w.meaning || t.bm || t.m });
+  }
   const wBlock = (label, inner) => '<div class="wd-block"><h4 class="d-label">' + label + '</h4>' + inner + '</div>';
   /* 예문·형태 변화·관련 단어. surf = 가사에 나온 형태들 (plain → 표기) */
   function wordExtraHTML(key, base, surf) {
-    const w = (WORDS && WORDS[key]) || {}, forms = conjugate(base, w);
-    let h = '';
+    const w = (WORDS && WORDS[key]) || {}; base = w.base || base; const forms = conjugate(base, w);
+    let h = w.senses ? wBlock('문맥에 따른 뜻', '<ul class="rules">' + w.senses.map((x) => '<li>' + esc(x.p) + ' · ' + esc(x.m) + '</li>').join('') + '</ul>') : '';
     if (w.ex && w.ex.length) h += wBlock('예문', w.ex.map((x) => '<div class="wex"><div class="ex-row"><p class="wex-jp" lang="ja">' + renderJP(x.t) + '</p>' + speakBtn(speechOf(x.t)) + '</div><p class="ex-ko">' + rich(x.ko) + '</p></div>').join(''));
     if (forms.length) {
       const all = [{ l: '사전형', t: base, h: '기본' }].concat(forms), lab = new Map(all.map((f) => [plainOf(f.t), f.l]));
@@ -1048,7 +1056,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         + '<p class="ctx-meta">' + (scope === 'all' ? esc(songTitle(r.song)) + ' · ' : '') + r.line + '번째 줄 · <button class="ref" data-a="goto-line" data-song="' + esc(r.song) + '" data-line="' + r.line + '">가사에서 보기</button></p></div>';
     }).join('') + (e.refs.length > 3 ? '<p class="cls-note">이 밖에 ' + (e.refs.length - 3) + '줄에 더 나와요.</p>' : '');
     const lvNote = lvText(e.key);
-    return wBlock('가사 속 문장', (lvNote ? '<p class="cls-note">' + esc(lvNote) + '</p>' : '') + ctx) + wordExtraHTML(e.key, e.tok.b || e.tok.t, surfacesOf(e));
+    return wBlock('가사 속 문장', (lvNote ? '<p class="cls-note">' + esc(lvNote) + '</p>' : '') + ctx) + wordExtraHTML(e.key, canonicalTok(e.tok).b, surfacesOf(e));
   }
 
   /* ── 설정 ─────────────────────────────────────────────── */
@@ -1149,7 +1157,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         ? '이 파일은 ' + built + '에 내려받은 판이에요. 이해한 줄과 외운 단어는 지금 쓰는 브라우저에만 저장돼요.'
         : Progress.viewOnly
         ? '이 페이지에서는 계정에 기록을 남길 수 없어서, 이해한 줄과 외운 단어가 이 브라우저에만 저장돼요.'
-        : '이해한 줄과 외운 단어가 이 브라우저에만 저장돼요. claude.ai에 로그인한 상태로 열면 기기 사이에 기록이 이어져요.';
+        : '이해한 줄과 외운 단어가 이 브라우저에만 저장돼요. 계정 동기화는 지원하는 실행 환경에서 연결됐을 때만 가능해요.';
     const s = $('#side-sync');
     if (s) { s.textContent = cloud ? '기기 간 기록 동기화 중' : '이 브라우저에만 저장'; s.setAttribute('data-on', cloud ? '1' : '0'); }
   }
@@ -1209,9 +1217,10 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function whyAuto(t) {
     const s = t.scripts, p = t.p || '';
     if (t.special) return '가사 특유의 읽기예요. 한자로는 뜻을 보여 주고, 위에 단 루비로 실제로 부르는 소리를 따로 정했어요.';
-    if (p.indexOf('조사') === 0) return '조사는 단어 뒤에 붙어 문법 관계만 나타내는 기능어라서 항상 히라가나로 써요.';
+    if (p.indexOf('조사') === 0) return '조사는 단어 뒤에서 문법 관계를 나타내며, 현대의 일반적인 문장에서는 히라가나로 써요.';
     if (p.indexOf('조동사') === 0) return '조동사(〜ます・〜たい・〜ない 등)는 문법 요소라서 히라가나로 써요.';
-    if (s.indexOf('k') >= 0 && s.indexOf('h') >= 0) return '뜻을 담은 앞부분(어간)은 한자로, 활용하면서 모양이 바뀌는 뒷부분(오쿠리가나)은 히라가나로 써요.';
+    if (s.indexOf('k') >= 0 && s.indexOf('h') >= 0 && /동사|형용사/.test(p)) return '뜻을 담은 앞부분(어간)은 한자로, 활용하면서 모양이 바뀌는 뒷부분(오쿠리가나)은 히라가나로 써요.';
+    if (s.indexOf('k') >= 0 && s.indexOf('h') >= 0) return '한자와 히라가나를 함께 쓴 말이에요. 뒤의 히라가나가 모두 활용 어미인 것은 아니며, 명사·부사의 일부일 수도 있어요.';
     if (s.length === 1 && s[0] === 'k') return '뜻을 가진 내용어는 보통 한자로 써요. 한자 덕분에 띄어쓰기 없이도 단어의 경계가 눈에 들어와요.';
     if (s.length === 1 && s[0] === 'a') return '외래어나 외국어 소리를 옮긴 말, 또는 강조하고 싶은 말은 가타카나로 써요.';
     if (s.length === 1 && s[0] === 'l') return '영어를 알파벳 그대로 썼어요. J-POP 가사에서는 영어 단어나 구절을 그대로 섞는 일이 흔해요.';
@@ -1230,7 +1239,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         + '<h3 class="sc-title">' + rich(c.title) + '</h3><p class="sc-sub muted">가사를 받으면 한 줄씩 해석이 채워져요.</p></div>';
     }
     return '<a class="song-card" href="#song.' + c.id + '" data-a="nav" data-to="song.' + c.id + '"><div class="sc-top"><span class="pill ' + (c.demo ? 'demo' : 'ready') + '">' + (c.demo ? '예시' : '해석 완료') + '</span><span class="sc-meta">' + rich(c.meta) + '</span></div>'
-      + '<h3 class="sc-title">' + rich(c.title) + '</h3>' + progHTML(c.id) + '</a>';
+      + '<h3 class="sc-title">' + rich(c.title) + '</h3>' + Learning.cardHTML(c.id) + progHTML(c.id) + '</a>';
   }
   function resumeHTML() {
     const last = store.get('hgn.last', null);
@@ -1347,11 +1356,12 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function viewHome() {
     setView('<section class="hero">'
       + '<h1 class="hero-title">가사로 읽는 일본어</h1>'
-      + '<p class="lede">노래 가사를 한 줄씩 뜯어보며 일본어의 문자와 문법, 그 안에 담긴 문화까지 함께 익혀요. 한 문장 안에서 글자 종류가 바뀌는 데에는 다 이유가 있어요. 그 이유부터 짚어 갑니다.</p>'
+      + '<p class="lede">노래 가사를 한 줄씩 뜯어보며 일본어의 문자와 문법, 그 안에 담긴 문화까지 함께 익혀요. 글자 종류의 역할을 살펴보고, 가사에서 느껴지는 표기의 효과도 함께 읽어 봐요.</p>'
       + legendHTML() + '<div class="hero-links">' + resumeHTML() + '<button class="resume" data-a="nav" data-to="kana">히라가나·가타카나부터 익히기 →</button><button class="resume" data-a="download" data-dl>HTML 파일로 내려받기 ↓</button></div></section>'
+      + Learning.homeHTML()
       + '<section class="block"><div class="block-head"><h2 class="h2">곡 목록</h2><p class="muted">곡이 추가될 때마다 여기에 쌓여요.</p></div><div id="song-list" class="song-list">' + songListHTML() + '</div></section>'
       + '<section class="block"><h2 class="h2">공부하는 순서</h2><ol class="steps">'
-      + '<li><b>색으로 문자 구분하기</b><p>가사 한 줄을 읽으며 한자·히라가나·가타카나가 어디서 바뀌는지 먼저 봐요. 바뀌는 지점이 대개 단어의 경계예요.</p></li>'
+      + '<li><b>색으로 문자 구분하기</b><p>가사 한 줄을 읽으며 한자·히라가나·가타카나가 어디서 바뀌는지 먼저 봐요. 읽는 단서가 되지만, 한 단어 안에서도 문자 종류는 바뀔 수 있어요.</p></li>'
       + '<li><b>단어를 눌러 이유 확인</b><p>단어를 누르면 읽기·뜻·사전형과 함께 \'왜 이 문자로 썼는지\'가 나와요.</p></li>'
       + '<li><b>직역과 해석 비교</b><p>\'자세히 보기\'에서 직역과 자연스러운 해석을 비교하고 문법·문화 노트를 읽어요.</p></li>'
       + '<li><b>체크하며 쌓기</b><p>이해한 줄과 외운 단어를 체크하면 곡마다 진행률이 쌓여요.</p></li>'
@@ -1359,7 +1369,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     CATALOG.filter((c) => c.status === 'ready').forEach((c) => loadSong(c.id).then(refreshProgressUI).catch(() => {}));
   }
 
-  /* ── 문자 가이드 ───────────────────────────────────────── */
+  /* ── 문자·기초 문법 ───────────────────────────────────────── */
   function exBox(markup, ko) {
     return '<div class="ex"><div class="ex-row"><p class="ex-jp force-color" lang="ja">' + renderJP(markup) + '</p>' + speakBtn(speechOf(markup)) + '</div>' + (ko ? '<p class="ex-ko">' + rich(ko) + '</p>' : '') + '</div>';
   }
@@ -1371,7 +1381,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<div class="roles"><div class="role k"><h3>한자 · 뜻의 덩어리</h3><p>명사, 동사·형용사의 앞부분</p><p>' + rich('[[{今日|きょう}・{雨|あめ}・{飲|の}]]') + '</p></div>'
       + '<div class="role h"><h3>히라가나 · 문법의 접착제</h3><p>조사, 활용 어미, 조동사</p><p>' + rich('[[は・だから・を・みます]]') + '</p></div>'
       + '<div class="role a"><h3>가타카나 · 바깥에서 온 말</h3><p>외래어, 외국 이름, 강조</p><p>' + rich('[[コーヒー]]') + '</p></div></div>'
-      + '<p>한국어로 비유하면 한자는 <b>단어의 몸통</b>, 히라가나는 \'은/는·을/를·-습니다\' 같은 <b>조사와 어미</b>예요. 일본어는 띄어쓰기를 하지 않는데, 문자 종류가 바뀌는 지점이 대개 단어의 경계라서 읽을 수 있어요.</p>' },
+      + '<p>한국어로 비유하면 한자는 <b>단어의 몸통</b>, 히라가나는 \'은/는·을/를·-습니다\' 같은 <b>조사와 어미</b>예요. 일본어는 띄어쓰기를 하지 않는데, 문자 종류와 조사가 읽는 단서가 돼요. 다만 飲みます처럼 한 단어 안에서도 한자와 히라가나가 섞이므로, 색이 바뀔 때마다 단어가 나뉘는 것은 아니에요.</p>' },
     { id: 'g-sentence', ko: '문장의 기본 틀', jp: '{文|ぶん}の{形|かたち}', body: () =>
       '<p>영어는 어순으로 역할이 정해져서 1~5형식을 먼저 배워요. 일본어는 한국어처럼 <b>조사가 역할을 정하고, 문장 끝에 서술어가 와요</b>. 그래서 형식 대신, 문장 끝에 무엇이 오는지로 세 가지 틀을 나눠요.</p>'
       + '<h3 class="k-sub">1. 명사문(名詞文) · A는 B다</h3><p class="k-p">명사로 끝나는 문장이에요. 끝에 だ(~이다), 정중하게는 です가 붙어요. 가사에서는 だ를 빼기도 해요.</p>'
@@ -1387,7 +1397,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + ul([
         '**순서는 한국어와 같아요**: 주어 → 목적어 → 서술어, 꾸미는 말은 꾸밈받는 말 앞. [[{寂|さび}しそうな{君|きみ}]] = 쓸쓸해 보이는 너. 일본어 직역(곡 해석의 \'직역\')을 보면 한국어 어순과 거의 같아요.',
         '**조사가 붙어 있으면 순서를 바꿔도 돼요**: 가사는 강조하려고 말 순서를 자주 뒤집어요. [[{誇|ほこ}るよ{全部|ぜんぶ}]](らしさ) = 全部を誇るよ(전부를 자랑할 거야)의 순서를 바꾼 말이에요.',
-        '**は와 が**: は는 \'~로 말하자면\' 하고 이야기의 주제를 꺼내고, が는 \'누가·무엇이\'를 짚어요. [[{君|きみ}はロックを{聴|き}かない]](너는 록을 안 들어)와 [[{君|きみ}がロックを{聴|き}かないこと]](네가 록을 안 듣는다는 것)의 차이예요. 문장 안의 작은 문장에는 が를 써요.',
+        '**は와 が**: は는 \'~로 말하자면\' 하고 이야기의 주제를 꺼내고, が는 \'누가·무엇이\'를 짚어요. [[{君|きみ}はロックを{聴|き}かない]](너는 록을 안 들어)와 [[{君|きみ}がロックを{聴|き}かないこと]](네가 록을 안 듣는다는 것)의 차이예요. 이 예문처럼 문장 안에서 주어를 나타낼 때 が가 자주 쓰여요. 다만 대조나 인용 등 문맥에 따라 は도 가능해요.',
         '**주어는 자주 빠져요**: 누가 하는지 뻔하면 말하지 않아요. [[{離|はな}さない]](놓지 않아)는 \'내가\'가 빠진 문장이에요. 한국어도 \'(내가) 놓지 않아\'처럼 빼는 것과 같아요.'])
       + '<p>조사 하나하나의 뜻은 아래 <b>조사 한눈에 보기</b>, 동사·형용사의 끝 모양은 <b>동사·형용사 활용</b>에서 볼 수 있어요.</p>' },
     { id: 'g-hira', ko: '히라가나 · 문법을 잇는 글자', jp: 'ひらがな', body: () =>
@@ -1420,7 +1430,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<p>한 단어에 두 가지 뜻을 겹쳐 놓는 기법이라, 한국어 번역으로는 하나밖에 살리지 못하는 경우가 많아요. 곡 해석에서 그 차이를 따로 짚을게요.</p>' },
     { id: 'g-lyric', ko: '가사만의 표기 습관', jp: '{歌詞|かし}の{書|か}き{方|かた}', body: () =>
       ul(['**띄어쓰기는 호흡**: 일본어 문장엔 원래 띄어쓰기가 없어요. 가사에서는 넓은 공백(전각 공백)으로 프레이즈를 나눠요.',
-        '**영어 섞기**: 알파벳으로 쓰면 영어 발음 그대로, 가타카나로 쓰면 일본식 발음으로 부른다는 신호예요. [[Goodbye]]와 [[グッバイ]]의 차이죠.',
+        '**영어 섞기**: 알파벳과 가타카나는 표기의 인상을 달리해요. 알파벳 표기여도 실제 발음은 가수와 곡에 따라 달라서 음원으로 확인해야 해요. [[Goodbye]]와 [[グッバイ]]의 차이죠.',
         '**1인칭이 화자를 정해요**: [[{僕|ぼく}]] 부드러운 남성·소년, [[{俺|おれ}]] 거칠고 솔직한 남성, [[{私|わたし}]] 중립적·공적, [[あたし]] 여성의 구어체. 히게단 곡에는 僕가 자주 나와요.',
         '**2인칭 君**: 일상 대화에서는 상대를 [[{君|きみ}]]나 [[あなた]]로 직접 부르기보다 이름을 부르는 게 자연스러워요. 그래서 가사 속 君는 \'특별한 단 한 사람\'을 향한 느낌이 강해요.']) },
     { id: 'g-particle', ko: '조사 한눈에 보기', jp: '{助詞|じょし}', body: () => {
@@ -1478,7 +1488,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
           + (r[2] !== r[0] ? '<span class="term-ko">한국 교재: ' + r[2] + '</span>' : '') + '</div><p>' + rich(r[3]) + '</p></div>').join('') + '</div>'; } }
   ];
   function viewGuide() {
-    setView('<header class="page-head"><p class="eyebrow">가사를 읽기 전에</p><h1 class="page-title">문자 가이드</h1>'
+    setView('<header class="page-head"><p class="eyebrow">가사를 읽기 전에</p><h1 class="page-title">문자·기초 문법</h1>'
       + '<p class="lede">왜 여기는 히라가나고 저기는 가타카나인지, 가사에 나오는 표기 규칙을 모았어요. 곡 해석의 \'왜 이 문자?\' 설명은 모두 이 규칙과 이어져요. 글자 하나하나의 모양과 유래는 <button class="ref" data-a="nav" data-to="kana">히라가나·가타카나</button> 탭에서 볼 수 있어요.</p>'
       + '<div class="toc">' + GUIDE.map((g) => '<button class="tg sm" data-a="jump" data-target="' + g.id + '">' + g.ko.split(' · ')[0] + '</button>').join('') + '</div></header>'
       + GUIDE.map((g) => '<section class="gsec" id="' + g.id + '"><h2><span>' + esc(g.ko) + '</span><span class="jp force-color" lang="ja">' + renderJP(g.jp) + '</span></h2>' + g.body() + '</section>').join(''));
@@ -1649,6 +1659,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     const sec = (id, ko, jp, body) => '<section class="gsec" id="' + id + '"><h2><span>' + ko + '</span><span class="jp force-color" lang="ja">' + renderJP(jp) + '</span></h2>' + body + '</section>';
     setView('<header class="page-head"><p class="eyebrow">음식으로 보는 일본어</p><h1 class="page-title">음식</h1>'
       + '<p class="lede">메뉴판과 가게 간판, 식당에서 오가는 말, 그리고 계절·행사·지역마다 다른 일본의 음식 문화를 함께 익혀요.</p>'
+      + '<div class="study-actions"><a href="#review.food" data-a="nav" data-to="review.food">음식 표현 복습 →</a></div>'
       + '<div class="toc">' + [['f-menu', '음식 이름'], ['f-sign', '메뉴판 한자'], ['f-taste', '맛 표현'], ['f-shop', '식당에서'], ['f-store', '편의점·돈키호테'], ['f-season', '계절·행사 음식'], ['f-region', '지역 음식'], ['f-idiom', '음식 표현'], ['f-table', '식탁 문화']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
       + sec('f-menu', '음식 이름', '{料理|りょうり}の{名前|なまえ}', '<p>메뉴판에 자주 나오는 음식이에요. 외국에서 들어온 음식은 가타카나, 한자가 어려운 음식은 히라가나로 쓰는 경우가 많아요.</p>' + foodCards(FOOD.menu))
       + sec('f-sign', '메뉴판·간판 한자', 'メニューの{漢字|かんじ}', '<p>재료와 양, 가격, 영업 안내에 쓰는 한자예요. 읽지 못해도 모양만 알아보면 주문이 훨씬 쉬워져요.</p>' + foodCards(FOOD.sign))
@@ -1710,6 +1721,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     state.song = t;
     setView('<header class="page-head"><p class="eyebrow">여행에서 바로 쓰는 일본어</p><h1 class="page-title">여행</h1>'
       + '<p class="lede">상황마다 꼭 쓰는 문장만 모았어요. 🔊로 발음을 듣고, 단어를 누르거나 \'자세히 보기\'로 문장을 뜯어볼 수 있어요.</p>'
+      + '<div class="study-actions"><a href="#review.travel" data-a="nav" data-to="review.travel">여행 회화 복습 →</a></div>'
       + '<div class="toc">' + t.sections.map((sec, i) => '<button class="tg sm" data-a="jump" data-target="sec-' + i + '">' + esc(sec.label) + '</button>').join('') + '</div></header>'
       + '<div class="toolbar" role="toolbar" aria-label="표시 옵션">' + optBtn('furi', '후리가나') + optBtn('kr', '한글 발음') + optBtn('hideKo', '해석 가리기')
       + '<span class="tg-sep" aria-hidden="true"></span><button class="tg" data-a="expand-all">모두 펼치기</button></div>'
@@ -1922,7 +1934,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   }
   /* 퀴즈 */
   function qPool() {
-    return Object.keys(KANA_MAP).concat(...DAKU);
+    return state.quiz.scope === 'a' ? ['あ', 'い', 'う', 'え', 'お'] : Object.keys(KANA_MAP).concat(...DAKU);
   }
   const qLabel = (h) => kanaRo(h).replace(' (wo)', '') + ' · ' + kanaHg(h).replace(' 받침', '');
   function qNew() {
@@ -1940,6 +1952,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     const chips = (key, list) => list.map((x) => '<button class="tg sm" data-a="q-opt" data-key="' + key + '" data-v="' + x[0] + '" aria-pressed="' + (q[key] === x[0]) + '">' + x[1] + '</button>').join('');
     const origin = info && (c.kata ? info.ok : info.oh) ? ' ' + c.ch + '는 <span class="jp" lang="ja">' + (c.kata ? info.ok : info.oh) + '</span>에서 온 글자예요.' : '';
     return '<div class="q-top"><div class="seg">' + chips('mode', [['h', '히라가나'], ['k', '가타카나'], ['mix', '섞어서']]) + '</div></div>'
+      + '<div class="seg" role="group" aria-label="퀴즈 범위">' + chips('scope', [['a', '처음 5자'], ['all', '기본·탁음 전체']]) + '</div>'
       + '<div class="q-card"><div class="q-char" lang="ja">' + c.ch + '</div><div class="q-choices">'
       + c.labels.map((l, i) => '<button class="q-btn' + (done ? (l === c.ans ? ' right' : i === c.picked ? ' wrong' : '') : '') + '" data-a="q-ans" data-i="' + i + '"' + (done ? ' disabled' : '') + '>' + esc(l) + '</button>').join('')
       + '</div><p class="q-fb" aria-live="polite">' + (!done ? '이 글자는 어떻게 읽을까요?' : (ok ? '정답이에요!' : '아쉬워요. 정답은 ' + esc(c.ans) + '예요.') + origin) + '</p>'
@@ -1963,8 +1976,8 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       ['ク・ケ・タ', 'タ는 ク 안에 짧은 획이 하나 더 있고, ケ는 오른쪽 획이 위로 튀어나와 길게 내려와요.'], ['コ・ユ', 'ユ는 아래 가로획이 왼쪽으로 길게 튀어나와요.'], ['フ・ワ・ウ', 'ワ는 왼쪽에 짧은 세로획이 있고, ウ는 그 위에 점이 하나 더 있어요.']];
     const TWIN = [['カ', '力', '힘 력'], ['エ', '工', '장인 공'], ['ロ', '口', '입 구'], ['ニ', '二', '두 이'], ['ハ', '八', '여덟 팔'], ['タ', '夕', '저녁 석'], ['ト', '卜', '점 복']];
     setView('<div id="kana-page" class="kmode-' + state.kmode + '"><header class="page-head"><p class="eyebrow">문자 공부</p><h1 class="page-title">히라가나 · 가타카나</h1>'
-      + '<p class="lede">일본어의 소리글자 두 가지예요. 둘 다 한자에서 태어났지만, 히라가나는 한자를 흘려 써서, 가타카나는 한자의 일부를 떼어 내서 만들어졌어요. 글자마다 어떤 한자에서 왔는지, 언제 어떤 문자를 쓰는지 정리했어요. 용어가 낯설면 <button class="ref" data-a="nav" data-to="guide">문자 가이드</button>의 용어 정리를 보세요.</p>'
-      + '<div class="toc">' + [['k-origin', '탄생'], ['k-chart', '글자표'], ['k-use', '쓰임·구별'], ['k-quiz', '퀴즈']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
+      + '<p class="lede">일본어의 소리글자 두 가지예요. 둘 다 한자에서 태어났지만, 히라가나는 한자를 흘려 써서, 가타카나는 한자의 일부를 떼어 내서 만들어졌어요. 글자마다 어떤 한자에서 왔는지, 언제 어떤 문자를 쓰는지 정리했어요. 용어가 낯설면 <button class="ref" data-a="nav" data-to="guide">문자·기초 문법</button>의 용어 정리를 보세요.</p>'
+      + '<div class="toc">' + [['k-chart', '글자표'], ['k-practice', '처음 5자'], ['k-quiz', '퀴즈'], ['k-origin', '문자의 유래']].map((x) => '<button class="tg sm" data-a="jump" data-target="' + x[0] + '">' + x[1] + '</button>').join('') + '</div></header>'
 
       + '<section class="gsec" id="k-origin"><h2><span>두 문자의 탄생</span><span class="jp force-color" lang="ja">' + renderJP('{仮名|かな}') + '</span></h2>'
       + '<p>가나(仮名)는 \'임시 글자\'라는 뜻이에요. 정식 글자인 한자(真名, まな)에 빗대어 붙은 이름이에요.</p>'
@@ -2010,7 +2023,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<div class="roles"><div class="role h"><h3>히라가나</h3><ul class="rules">'
       + ['조사·조동사·활용 어미 같은 문법 요소', '한자가 어렵거나 잘 쓰지 않는 고유어 (ありがとう, とても)', '어린이 책과 초등 교과서 (한자를 배우기 전)', '한자 위에 다는 후리가나', '부드럽고 친근한 느낌을 내고 싶을 때 (가사, 광고, 가게 이름)'].map((x) => '<li>' + rich(x) + '</li>').join('')
       + '</ul></div><div class="role a"><h3>가타카나</h3><ul class="rules">'
-      + ['외래어 (コーヒー, テレビ)', '외국의 인명·지명 (アメリカ, ソウル)', '의성어·의태어 (ドキドキ, ワンワン)', '동식물의 학술적인 이름 (ヒト, イヌ, サクラ). Pretender의 運命のヒト도 이 느낌을 빌렸어요.', '강조하거나 말투를 살릴 때 (ダメ, ホント)', '만화에서 로봇·외국인의 어색한 말투 (コンニチハ)'].map((x) => '<li>' + rich(x) + '</li>').join('')
+      + ['외래어 (コーヒー, テレビ)', '외국의 인명·지명 (アメリカ, ソウル)', '의성어·의태어 (ドキドキ, ワンワン)', '동식물의 학술적인 이름 (ヒト, イヌ, サクラ). 가사의 ヒト도 가타카나가 주는 강조 효과로 읽어 볼 수 있지만, 작사 의도로 확인된 설명은 아니에요.', '강조하거나 말투를 살릴 때 (ダメ, ホント)', '만화에서 로봇·외국인의 어색한 말투 (コンニチハ)'].map((x) => '<li>' + rich(x) + '</li>').join('')
       + '</ul></div></div>'
       + '<p>같은 말도 어떤 문자로 쓰느냐에 따라 느낌이 달라져요.</p>'
       + '<div class="table-wrap"><table><thead><tr><th>한자</th><th>히라가나</th><th>가타카나</th></tr></thead><tbody>'
@@ -2020,7 +2033,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
         .map((r) => '<tr><td><span class="jp force-color" lang="ja">' + renderJP(r[0]) + '</span><br><small class="muted">' + r[1] + '</small></td><td><span class="jp force-color" lang="ja">' + r[2] + '</span><br><small class="muted">' + r[3] + '</small></td><td><span class="jp force-color" lang="ja">' + r[4] + '</span><br><small class="muted">' + r[5] + '</small></td></tr>').join('')
       + '</tbody></table></div>'
       + '<div class="aside-box"><span class="eyebrow">문화 노트</span>제2차 세계대전 전까지 법률과 공문서는 한자 + 가타카나로 썼어요(大日本帝国憲法도 그래요). 전후에 한자 + 히라가나로 바뀌면서 지금처럼 히라가나가 문장의 기본이 됐어요.</div>'
-      + '<p>가사 속 표기 규칙은 <button class="ref" data-a="nav" data-to="guide">문자 가이드</button>에서 더 자세히 볼 수 있어요.</p></section>'
+      + '<p>가사 속 표기 규칙은 <button class="ref" data-a="nav" data-to="guide">문자·기초 문법</button>에서 더 자세히 볼 수 있어요.</p></section>'
 
       + '<section class="gsec" id="k-conf"><h2><span>헷갈리는 글자</span></h2>'
       + '<div class="conf-grid">' + CONF.map((x) => '<div class="conf"><span class="conf-k force-color" lang="ja">' + paint(x[0]) + '</span><p>' + rich(x[1]) + '</p></div>').join('') + '</div>'
@@ -2028,17 +2041,24 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<div class="conf-grid twins">' + TWIN.map((x) => '<div class="conf"><span class="conf-k" lang="ja"><span class="s-a">' + x[0] + '</span> <span class="muted">/</span> <span class="s-k">' + x[1] + '</span></span><p>가타카나 ' + kanaToRomaji(x[0]) + ' / 한자 \'' + x[2] + '\'</p></div>').join('') + '</div></section>'
 
       + '<section class="gsec" id="k-quiz"><h2><span>읽기 퀴즈</span></h2><p>글자를 보고 읽는 법을 골라 보세요. 답을 고르면 발음을 들려주고, 그 글자가 나온 한자도 알려 줘요.</p><div class="quiz" id="quiz">' + quizHTML() + '</div></section></div>');
+    const page = $('#kana-page'), chart = $('#k-chart'), quiz = $('#k-quiz'), origin = $('#k-origin');
+    page.querySelector('header').after(chart);
+    const practice = document.createElement('section'); practice.id = 'k-practice'; practice.className = 'study-box';
+    practice.innerHTML = '<h2>오늘은 あ행 5자부터</h2><p>글자를 눌러 소리를 확인하고, 다음 퀴즈에서 읽기를 떠올려 보세요.</p><div class="kana-practice">' + ['あ', 'い', 'う', 'え', 'お'].map(c => '<button class="tg" data-study="kana-practice" data-k="' + c + '" aria-label="' + c + ' 발음 확인">' + c + '</button>').join('') + '</div><p id="kana-practice-feedback" aria-live="polite">あ・い・う・え・お를 차례로 읽어 보세요.</p>';
+    chart.after(practice); practice.after(quiz);
+    const history = document.createElement('details'); history.className = 'study-details'; history.innerHTML = '<summary>심화 · 두 문자의 탄생과 역사</summary>';
+    page.appendChild(history); history.appendChild(origin);
     if (matchMedia('(min-width: 1000px)').matches) $('#kside').appendChild($('#kdetail'));
   }
 
   /* ── 단어장 ───────────────────────────────────────────── */
   function catOf(t) { const s = scriptsOf(plainOf(t.b || t.t)); return s.indexOf('k') >= 0 ? 'k' : s.indexOf('a') >= 0 ? 'a' : s.indexOf('l') >= 0 ? 'l' : 'h'; }
   function hay(e) {
-    const t = e.tok, base = t.b || t.t, r = readingOf(base);
+    const t = canonicalTok(e.tok), base = t.b, r = readingOf(base);
     return [plainOf(base), t.plain, toHira(r), kanaToRomaji(r), t.m, t.bm].join(' ').toLowerCase();
   }
   function vrowHTML(e, scope) {
-    const t = e.tok, base = t.b || t.t, reading = readingOf(base), on = Progress.has('w', e.key), open = state.vopen.has(e.key);
+    const t = canonicalTok(e.tok), base = t.b, reading = readingOf(base), on = Progress.has('w', e.key), open = state.vopen.has(e.key);
     const pos = (WORDS && WORDS[e.key] && WORDS[e.key].p) || t.p;
     return '<li class="vrow' + (on ? ' learned' : '') + (open ? ' open' : '') + '" data-vrow="' + esc(e.key) + '"><div class="v-top">'
       + '<button class="v-main" data-a="vx" aria-expanded="' + open + '"><span class="v-jp" lang="ja">' + renderJP(base) + '</span>'
@@ -2120,7 +2140,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   function songHeadHTML(s) {
     return '<header class="song-head"><button class="back" data-a="nav" data-to="home">' + I.back + '<span>곡 목록</span></button>'
       + '<p class="eyebrow">' + rich(s.eyebrow || [s.artist, s.year].filter(Boolean).join(' · ')) + '</p>'
-      + '<h1 class="song-title">' + rich(s.title) + '</h1>' + (s.sub ? '<p class="song-sub">' + rich(s.sub) + '</p>' : '') + progHTML(s.id) + '</header>';
+      + '<h1 class="song-title">' + rich(s.title) + '</h1>' + (s.sub ? '<p class="song-sub">' + rich(s.sub) + '</p>' : '') + progHTML(s.id) + Learning.lessonHTML(s.id) + '</header>';
   }
   function lineHTML(l) {
     const done = Progress.has('l', l.key);
@@ -2129,7 +2149,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       + '<button class="ico" data-a="speak-line" aria-label="이 줄 듣기" title="이 줄 듣기">' + I.speaker + '</button>'
       + '<button class="check" data-a="toggle-line" data-lk="' + esc(l.key) + '" aria-pressed="' + done + '" aria-label="이해했어요" title="이해했어요">' + I.check + '</button></div>'
       + (() => { const hg = l.kr ? null : tokHangul(l);
-        return '<p class="lyric' + (hg ? ' kr-map' : '') + '" lang="ja">' + l.toks.map((t, i) => '<span class="tok' + (t.kind === 'punct' ? ' punct' : '') + '" data-i="' + i + '"><span class="tok-jp">' + renderJP(t.t) + '</span>'
+        return '<p class="lyric' + (hg ? ' kr-map' : '') + '" lang="ja">' + l.toks.map((t, i) => '<span class="tok' + (t.kind === 'punct' ? ' punct' : '') + '"' + (t.kind === 'punct' ? '' : ' role="button" tabindex="0" aria-label="' + esc(t.plain + ' 단어 설명') + '"') + ' data-i="' + i + '"><span class="tok-jp">' + renderJP(t.t) + '</span>'
           + (hg ? '<span class="tok-kr" lang="ko">' + esc(hg[i]) + '</span>' : '') + '</span>').join('') + '</p>'
           + (hg ? '' : '<p class="kr-line">' + esc(lineHangul(l)) + '</p>'); })()
       + '<p class="romaji">' + esc(lineRomaji(l)) + '</p>'
@@ -2195,7 +2215,7 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   }
   function notesHTML(s) {
     const facts = [['아티스트', s.artist], ['발매', s.release], ['타이업', s.tieIn], ['작사', s.lyricist], ['작곡', s.composer]].filter((x) => x[1]);
-    return '<div class="notes-layout">' + (s.intro ? '<div class="intro">' + paras(s.intro) + '</div>' : '')
+    return '<div class="notes-layout">' + Learning.sourcesHTML(s) + '<p class="hint">「배경」은 자료에 근거한 설명, 「표기」는 규칙과 경향, 「표현·구성」은 이 노트의 해석을 중심으로 읽어 주세요.</p>' + (s.intro ? '<div class="intro">' + paras(s.intro) + '</div>' : '')
       + (facts.length ? '<dl class="facts">' + facts.map((x) => '<dt>' + x[0] + '</dt><dd>' + rich(x[1]) + '</dd>').join('') + '</dl>' : '')
       + (s.notes || []).map((n) => '<article class="note-card">' + (n.tag ? '<p class="eyebrow">' + esc(n.tag) + '</p>' : '') + '<h3>' + rich(n.title) + '</h3>' + paras(n.body) + '</article>').join('')
       + (s.listen ? '<a class="ext" href="' + esc(s.listen) + '" target="_blank" rel="noopener">YouTube에서 듣기 ↗</a>' : '') + '</div>';
@@ -2305,12 +2325,17 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
     if (a === 'guide') viewGuide();
     else if (a === 'kana') viewKana();
     else if (a === 'vocab') viewVocab();
+    else if (a === 'review') Learning.viewReview(b);
     else if (a === 'food') viewFood();
     else if (a === 'travel') viewTravel();
     else if (a === 'song' && b) viewSong(b, TABS.some((t) => t[0] === parts[2]) ? parts[2] : 'lyrics', sameSong);
     else viewHome();
     markNav(a, b);
     if (!sameSong && !state.pendingLine) window.scrollTo(0, 0);
+    if ((a === 'guide' || a === 'kana') && b) {
+      const target = document.getElementById(b);
+      if (target) { const details = target.closest('details'); if (details) details.open = true; target.scrollIntoView({ block: 'start' }); }
+    }
   }
   /* 뒤로·앞으로 버튼: 앱 안 브라우저처럼 이동 버튼이 없는 곳을 위해 페이지 안에 둔다.
      브라우저 기록을 쓸 수 있으면 그대로 따르고(history.state.hgn = 몇 번째 화면인지), 막힌 환경이면 페이지가 H.list에 직접 기록한다.
@@ -2381,8 +2406,17 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
   });
   window.addEventListener('hashchange', () => { const h = fromHash(); if (h !== state.route) { state.route = h; route(); } });
 
+  const Learning = window.JapaneseLearning({ esc, rich, renderJP, plainOf, readingOf, store, CATALOG, loadSong, loadWords, canonical: canonicalTok, Progress,
+    state, setView, speakBtn, speechOf, catOf, words: () => WORDS || {}, FOOD, FOOD_CULTURE, phraseJP });
+
   /* ── 이벤트 ───────────────────────────────────────────── */
   document.addEventListener('click', (e) => {
+    const study = e.target.closest('[data-study]');
+    if (study) {
+      if (study.dataset.study === 'kana-practice') { const c = study.dataset.k; speak(c); $('#kana-practice-feedback').textContent = c + ' · ' + kanaRo(c) + ' · ' + kanaHg(c); }
+      else Learning.click(study);
+      return;
+    }
     const tokEl = e.target.closest('.lyric .tok');
     if (tokEl) { if (!tokEl.classList.contains('punct')) selectTok(tokEl.closest('.line'), +tokEl.dataset.i); return; }
     const el = e.target.closest('[data-a]'); if (!el) return;
@@ -2423,20 +2457,25 @@ td.p-ro{ font-family:var(--font-mono); font-size:.82rem; color:var(--ink-3) }
       }
       case 'q-next': qNew(); renderQuiz(); { const b0 = $('#quiz .q-btn'); if (b0) b0.focus({ preventScroll: true }); } break;
       case 'q-opt': state.quiz[el.dataset.key] = el.dataset.v; qNew(); renderQuiz(); break;
-      case 'jump': { const t = document.getElementById(el.dataset.target); if (t) t.scrollIntoView({ block: 'start', behavior: smooth() }); break; }
+      case 'jump': { const t = document.getElementById(el.dataset.target); if (t) { const d = t.closest('details'); if (d) d.open = true; } if (t) t.scrollIntoView({ block: 'start', behavior: smooth() }); break; }
       case 'hist': histGo(+el.dataset.d); break;
       case 'download': saveOffline(el); break;
       case 'open-settings': openSheet(); break;
       case 'close-settings': closeSheet(); break;
       case 'reset':
         if (el.classList.contains('armed')) {
-          clearTimeout(state.resetT); Progress.clear(); el.classList.remove('armed'); el.textContent = '학습 기록 지우기'; toast('학습 기록을 모두 지웠어요');
+          clearTimeout(state.resetT); Progress.clear(); Learning.reset(); el.classList.remove('armed'); el.textContent = '학습 기록 지우기'; toast('학습 기록을 모두 지웠어요');
         } else {
           el.classList.add('armed'); el.textContent = '한 번 더 누르면 모두 지워져요';
           clearTimeout(state.resetT); state.resetT = setTimeout(() => { el.classList.remove('armed'); el.textContent = '학습 기록 지우기'; }, 4000);
         }
         break;
     }
+  });
+  document.addEventListener('change', (e) => { if (e.target.matches('[data-study-source]')) Learning.change(e.target); });
+  document.addEventListener('keydown', (e) => {
+    const tok = e.target.closest('.lyric .tok[role="button"]');
+    if (tok && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); selectTok(tok.closest('.line'), +tok.dataset.i); }
   });
   $('#sheet').addEventListener('change', (e) => { const i = e.target.closest('input[data-opt]'); if (i) setOpt(i.dataset.opt, i.checked); });
   $('#scrim').addEventListener('click', closeSheet);

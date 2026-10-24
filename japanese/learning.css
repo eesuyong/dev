@@ -1,0 +1,32 @@
+/* 공통 학습 흐름: 같은 문서와 기능을 PC·모바일에서 사용한다. */
+.study-box{padding:18px;border:1px solid var(--rule);border-radius:12px;background:var(--sheet);display:grid;gap:12px;min-width:0}
+.study-box h2,.study-box h3{font-size:1.08rem}
+.study-box p{color:var(--ink-2);font-size:.92rem}
+.study-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;list-style:none;padding:0}
+.study-path li{min-width:0;padding:14px;border:1px solid var(--rule);border-radius:10px;background:var(--sheet)}
+.study-path b{display:block;margin-bottom:6px}.study-path p{font-size:.86rem;color:var(--ink-2);margin-bottom:10px}
+.study-path a,.study-actions a{display:inline-flex;align-items:center;min-height:44px;color:var(--accent);font-weight:600;text-underline-offset:3px}
+.study-actions{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+.study-meta{font-size:.82rem;color:var(--ink-2);line-height:1.7}
+.study-focus{display:flex;flex-wrap:wrap;gap:6px;padding:0;list-style:none}.study-focus li{padding:3px 9px;background:var(--accent-soft);border-radius:6px;font-size:.8rem}
+.study-details{margin-top:14px;padding:14px 16px;border:1px solid var(--rule);border-radius:10px;background:var(--sheet-2)}
+.study-details summary{font-weight:600;cursor:pointer;min-height:32px}.study-details[open] summary{margin-bottom:12px}
+.study-details p,.study-details li{font-size:.9rem;color:var(--ink-2)}
+.study-details ul{padding-left:20px}.study-details a,.sources a{overflow-wrap:anywhere;text-underline-offset:3px}
+.sources{font-size:.85rem;line-height:1.8;display:grid;gap:6px;padding-left:20px}
+.review-controls{display:flex;flex-wrap:wrap;gap:10px 20px;margin:20px 0 16px;padding:12px 16px 16px;min-inline-size:0;border:1px solid var(--rule);border-radius:12px;background:var(--sheet)}
+.review-controls legend{padding:0 6px;font-size:.88rem;font-weight:600;color:var(--ink-2)}.review-controls label{display:flex;align-items:center;gap:8px;min-height:44px}
+.review-controls input{width:18px;height:18px;accent-color:var(--accent)}
+.review-card{max-width:680px;margin:20px auto;padding:clamp(16px,4vw,30px);text-align:center;border:1px solid var(--rule-2);border-radius:14px;background:var(--sheet);display:grid;gap:20px;overflow-wrap:anywhere}
+.review-prompt{font-size:clamp(1.5rem,5vw,2.3rem);font-family:var(--font-jp);line-height:1.8}
+.review-answer{display:grid;gap:8px;padding:16px;background:var(--sheet-2);border-radius:10px}.review-answer p{color:var(--ink-2)}
+.review-answer .review-reading{font-family:var(--font-jp);font-size:1.1rem}
+.review-card .study-actions{justify-content:center}.review-card .tg{min-height:44px;white-space:normal;text-align:center;justify-content:center}.review-card>[data-study="reveal"]{width:100%;max-width:320px;justify-self:center}
+.review-empty{padding:24px;text-align:center}.review-stats{color:var(--ink-2);font-size:.9rem}
+.review-card button:focus-visible,.study-box a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.tok[role="button"]:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.kana-practice{display:flex;flex-wrap:wrap;gap:8px}.kana-practice button{min-width:44px;min-height:44px;font-family:var(--font-jp);font-size:1.5rem}
+.gsec,.study-box[id]{scroll-margin-top:calc(var(--topbar-h) + 20px)}
+body{margin:0} .view{overflow-wrap:anywhere}
+@media(max-width:639px){.study-path{grid-template-columns:1fr}.study-box{padding:15px}.review-card{margin-block:16px}.topbar{gap:4px;padding-inline:8px}.topbar .hist{margin-left:0;gap:0}.topbar .hist .ico{width:28px}.topbar .brand-ko{font-size:.85rem;white-space:nowrap}.topbar .mode-tg{gap:2px}.topbar .mode-tg .tg{padding:5px 7px;font-size:.75rem}.topbar>.ico{width:30px}.topbar .grow{min-width:0}.toolbar .tg{min-height:40px}.v-act{gap:0}}
+@media(min-width:960px){.study-box{padding:22px}.study-path li{padding:18px}}
